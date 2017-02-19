@@ -7477,8 +7477,8 @@
     },
     "Brace.Interpretation/1.0.0": {
       "type": "project",
-      "path": "../src/Brace.Interpretation/project.json",
-      "msbuildProject": "../src/Brace.Interpretation/Brace.Interpretation.xproj"
+      "path": "../../src/Brace.Interpretation/project.json",
+      "msbuildProject": "../../src/Brace.Interpretation/Brace.Interpretation.xproj"
     }
   },
   "projectFileDependencyGroups": {
