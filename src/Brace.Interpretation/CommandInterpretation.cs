@@ -8,5 +8,6 @@
 
         public string Command { get; set; }
         public string Argument { get; set; }
+        public string[] Parameters { get; set; }
     }
 }
