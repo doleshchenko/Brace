@@ -7,13 +7,14 @@ namespace Brace.Interpretation
 {
     public class CommandInterpreter : ICommandInterpreter
     {
-        public CommandInterpreter()
-        {
-        }
-
         public CommandInterpretation Interpret(string sentence)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(sentence))
+            {
+                return CommandInterpretation.EmptyInterpretation;
+            }
+            var commandChanks = sentence.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
+            return new CommandInterpretation {Command = commandChanks[0], Argument = commandChanks[1]};
         }
     }
 }
