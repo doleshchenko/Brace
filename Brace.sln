@@ -1,30 +1,25 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26206.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{69038CDD-EF9E-46CD-A28A-993CEDDEF10F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{ED916E02-92DE-499D-9E31-E91AE8648DC7}"
-	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
-	EndProjectSection
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Brace", "src\Brace\Brace.xproj", "{B96187FC-3D30-4A3C-BA4A-D07F3C1907DC}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{4BAB7AD5-0144-4424-AD33-720F757EB065}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Brace.Interpretation", "src\Brace.Interpretation\Brace.Interpretation.xproj", "{4ABE95E8-A1DC-4CC7-B75E-E4A97B94C7CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Brace", "src\Brace\Brace.csproj", "{B96187FC-3D30-4A3C-BA4A-D07F3C1907DC}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Brace.UnitTests", "test\Brace.UnitTests\Brace.UnitTests.xproj", "{965960F0-005B-4FC9-BC6E-80D1B37319C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Brace.Interpretation", "src\Brace.Interpretation\Brace.Interpretation.csproj", "{4ABE95E8-A1DC-4CC7-B75E-E4A97B94C7CF}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Brace.Commands", "src\Brace.Commands\Brace.Commands.xproj", "{B29EBF8A-1B81-4F6D-8C4A-F9ABB834D4E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Brace.UnitTests", "test\Brace.UnitTests\Brace.UnitTests.csproj", "{965960F0-005B-4FC9-BC6E-80D1B37319C4}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Brace.TypeExtension", "src\Brace.TypeExtension\Brace.TypeExtension.xproj", "{375E7EC8-35C9-4F03-89EE-DDDFB31499A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Brace.Commands", "src\Brace.Commands\Brace.Commands.csproj", "{B29EBF8A-1B81-4F6D-8C4A-F9ABB834D4E6}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Brace.Repository", "src\Brace.Repository\Brace.Repository.xproj", "{6FD394E3-9C64-4B86-B158-CB842DCAA7B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Brace.TypeExtension", "src\Brace.TypeExtension\Brace.TypeExtension.csproj", "{375E7EC8-35C9-4F03-89EE-DDDFB31499A1}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Brace.Repository.Interface", "src\Brace.Repository.Interface\Brace.Repository.Interface.xproj", "{18B9B419-D05A-459B-BAB4-2086C374CE56}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Brace.Repository", "src\Brace.Repository\Brace.Repository.csproj", "{6FD394E3-9C64-4B86-B158-CB842DCAA7B5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Brace.Repository.Interface", "src\Brace.Repository.Interface\Brace.Repository.Interface.csproj", "{18B9B419-D05A-459B-BAB4-2086C374CE56}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
