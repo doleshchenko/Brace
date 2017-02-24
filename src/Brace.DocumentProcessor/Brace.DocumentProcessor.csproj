@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Brace.DomainModel\Brace.DomainModel.csproj" />
+    <ProjectReference Include="..\Brace.DomainService\Brace.DomainService.csproj" />
+    <ProjectReference Include="..\Brace.Repository.Interface\Brace.Repository.Interface.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Strategies\" />
+  </ItemGroup>
+
+</Project>

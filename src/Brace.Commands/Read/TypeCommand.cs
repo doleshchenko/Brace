@@ -1,15 +1,18 @@
-﻿using System.Threading.Tasks;
-using Brace.TypeExtension;
+﻿using Brace.DomainModel;
+using Brace.DomainService.DocumentProcessor;
 
 namespace Brace.Commands.Read
 {
-    public class TypeCommand : IBraceCommand
+    public class TypeCommand : BraceCommand
     {
-        public async Task<string> ExecuteAsync(string argument, string[] parameters)
+        public TypeCommand(IDocumentProcessor documentProcessor, string argument, string[] parameters) :base(documentProcessor, argument, parameters)
         {
-            return "Type command executed";
         }
 
-        public string Name => ReadCommands.Type.ToStringUpper();
+        public override CommandType Type => CommandType.Type;
+        protected override ActionType GetActionType()
+        {
+            return ActionType.Print;
+        }
     }
 }
