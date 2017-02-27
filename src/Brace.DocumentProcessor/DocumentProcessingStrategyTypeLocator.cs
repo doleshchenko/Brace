@@ -41,10 +41,6 @@ namespace Brace.DocumentProcessor
 
         public Type GetStrategyType(ActionType actionType)
         {
-            if (!_processingStrategies.ContainsKey(actionType))
-            {
-                throw new DocumentProcessorException($"Document processing strategy is not defined for Action Type - {actionType}");
-            }
             var strategyType = _processingStrategies[actionType];
             return strategyType;
         }

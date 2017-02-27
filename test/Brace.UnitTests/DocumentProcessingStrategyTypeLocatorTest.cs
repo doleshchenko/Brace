@@ -12,7 +12,7 @@ namespace Brace.UnitTests
     public class DocumentProcessingStrategyTypeLocatorTest
     {
         [Fact]
-        public void Constructor_ValidAssembly_CreateAnInstanceOfLocator()
+        public void Constructor_ValidAssembly_CreatesAnInstanceOfLocator()
         {
             new DocumentProcessingStrategyTypeLocator(typeof(ValidProcessingStrgategies).GetTypeInfo().Assembly);
         }
@@ -29,6 +29,14 @@ namespace Brace.UnitTests
         {
             var result = Assert.Throws<DocumentProcessorException>(() => new DocumentProcessingStrategyTypeLocator(typeof(SeveralProcessingStrategiesForOneAactionType).GetTypeInfo().Assembly));
             Assert.Equal($"Document processing strategies configured incorrectly. Several strategies associated with the same Action Type - {ActionType.Print}. Please verify configuration.", result.Message);
+        }
+
+        [Fact]
+        public void GetStrategyType_ValidAssembly_ReturnsProcessingStrategy()
+        {
+            var locator = new DocumentProcessingStrategyTypeLocator(typeof(ValidProcessingStrgategies).GetTypeInfo().Assembly);
+            var strategyType = locator.GetStrategyType(ActionType.Print);
+            Assert.Equal(typeof(PrintProcessingStrategyStub), strategyType);
         }
     }
 }

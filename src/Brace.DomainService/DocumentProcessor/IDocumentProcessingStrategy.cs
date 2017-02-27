@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Brace.DomainModel;
 
-namespace Brace.DocumentProcessor.Strategies
+namespace Brace.DomainService.DocumentProcessor
 {
     public interface IDocumentProcessingStrategy
     {
