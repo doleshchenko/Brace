@@ -6,19 +6,19 @@ using Brace.DomainModel;
 
 namespace Brace.DomainService.TypeLinker
 {
-    public abstract class TypeLinker<TLinkAttribute, TTargetType> 
-        where TLinkAttribute : Attribute, ITypeLink<TLinkAttribute>
+    public abstract class TypeLinker<TLinkAttribute, TTargetType, TKey> 
+        where TLinkAttribute : Attribute, ITypeLink<TKey>
     {
-        protected Dictionary<TLinkAttribute, Type> _links;
+        protected Dictionary<TKey, Type> _links;
 
         protected void Init(Assembly assembly)
         {
-            _links = new Dictionary<TLinkAttribute, Type>();
+            _links = new Dictionary<TKey, Type>();
             var types = assembly.GetTypes().Where(t => typeof(TTargetType).IsAssignableFrom(t)).ToArray();
 
-            foreach (var strategyType in types)
+            foreach (var type in types)
             {
-                var classAttributes = strategyType.GetTypeInfo().GetCustomAttributes<TLinkAttribute>().ToArray();
+                var classAttributes = type.GetTypeInfo().GetCustomAttributes<TLinkAttribute>().ToArray();
                 if (classAttributes != null && classAttributes.Any())
                 {
                     var linkAttribute = classAttributes.First();
@@ -27,15 +27,20 @@ namespace Brace.DomainService.TypeLinker
                     {
                         throw new LinkerException($"Several types associated with the same Attribute - {key}. Please verify configuration.");
                     }
-                    _links.Add(key, strategyType);
+                    _links.Add(key, type);
                 }
             }
 
-            var allPossibleActions = Enum.GetValues(typeof(TLinkAttribute)).Cast<TLinkAttribute>().ToArray();
+            var allPossibleActions = Enum.GetValues(typeof(TKey)).Cast<TKey>().ToArray();
             if (_links.Count != allPossibleActions.Length)
             {
                 throw new LinkerException("Type Links configured incorrectly. Cannot find Types for the all Keys.");
             }
+        }
+
+        protected Type GetType(TKey key)
+        {
+            return _links[key];
         }
     }
 }

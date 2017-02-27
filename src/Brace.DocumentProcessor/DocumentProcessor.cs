@@ -9,17 +9,17 @@ namespace Brace.DocumentProcessor
     public class DocumentProcessor : IDocumentProcessor
     {
         private readonly IDocumentRepository _documentRepository;
-        private readonly IDocumentProcessingStrategyTypeLocator _processingStrategyTypeLocator;
+        private readonly IDocumentProcessingStrategyTypeLinker _processingStrategyTypeLinker;
 
-        public DocumentProcessor(IDocumentRepository documentRepository, IDocumentProcessingStrategyTypeLocator processingStrategyTypeLocator)
+        public DocumentProcessor(IDocumentRepository documentRepository, IDocumentProcessingStrategyTypeLinker processingStrategyTypeLinker)
         {
             _documentRepository = documentRepository;
-            _processingStrategyTypeLocator = processingStrategyTypeLocator;
+            _processingStrategyTypeLinker = processingStrategyTypeLinker;
         }
 
         public async Task<Document> ProcessAsync(string documentName, ActionType action, string[] actionParameters)
         {
-            var strategyType = _processingStrategyTypeLocator.GetStrategyType(action);
+            var strategyType = _processingStrategyTypeLinker.GetStrategyType(action);
             var strategy = (IDocumentProcessingStrategy)Activator.CreateInstance(strategyType, _documentRepository);
             return await strategy.ProcessAsync(documentName, actionParameters);
         }

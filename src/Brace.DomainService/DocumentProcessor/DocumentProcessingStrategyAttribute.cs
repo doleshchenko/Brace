@@ -1,17 +1,16 @@
 ﻿using System;
 using Brace.DomainModel;
-using Brace.DomainService.DocumentProcessor;
 
-namespace Brace.DocumentProcessor.Strategies
+namespace Brace.DomainService.DocumentProcessor
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public class DocumentProcessingStrategyAttribute : Attribute
+    public class DocumentProcessingStrategyAttribute : Attribute, ITypeLink<ActionType>
     {
-        public DocumentProcessingStrategyAttribute(ActionType associatedWith)
+        public DocumentProcessingStrategyAttribute(ActionType linkKey)
         {
-            AssociatedWith = associatedWith;
+            LinkKey = linkKey;
         }
 
-        public ActionType AssociatedWith { get; set; }
+        public ActionType LinkKey { get; set; }
     }
 }

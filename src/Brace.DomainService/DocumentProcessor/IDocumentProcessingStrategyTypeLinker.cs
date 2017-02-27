@@ -2,7 +2,7 @@
 
 namespace Brace.DomainService.DocumentProcessor
 {
-    public interface IDocumentProcessingStrategyTypeLocator
+    public interface IDocumentProcessingStrategyTypeLinker
     {
         Type GetStrategyType(ActionType actionType);
     }

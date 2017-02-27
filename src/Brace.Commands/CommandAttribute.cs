@@ -1,15 +1,16 @@
 ﻿using System;
+using Brace.DomainModel;
 
 namespace Brace.Commands
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public class CommandAttribute : Attribute
+    public class CommandAttribute : Attribute, ITypeLink<CommandType>
     {
         public CommandAttribute(CommandType type)
         {
-            Type = type;
+            LinkKey = type;
         }
 
-        public CommandType Type { get; set; }
+        public CommandType LinkKey { get; set; }
     }
 }
