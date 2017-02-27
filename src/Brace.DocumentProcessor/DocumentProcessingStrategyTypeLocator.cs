@@ -15,8 +15,8 @@ namespace Brace.DocumentProcessor
         {
              _processingStrategies = new Dictionary<ActionType, Type>();
 
-            //var strategyTypes = typeof(DocumentProcessor).GetTypeInfo().Assembly.GetTypes().Where(t => typeof(IDocumentProcessingStrategy).IsAssignableFrom(t));
-            var strategyTypes = assembly.GetTypes().Where(t => typeof(IDocumentProcessingStrategy).IsAssignableFrom(t));
+            var strategyTypes = assembly.GetTypes().Where(t => typeof(IDocumentProcessingStrategy).IsAssignableFrom(t)).ToArray();
+            
             foreach (var strategyType in strategyTypes)
             {
                 var classAttributes = strategyType.GetTypeInfo().GetCustomAttributes<DocumentProcessingStrategyAttribute>().ToArray();
@@ -30,6 +30,12 @@ namespace Brace.DocumentProcessor
                     }
                     _processingStrategies.Add(actionType, strategyType);
                 }
+            }
+
+            var allPossibleActions = Enum.GetValues(typeof(ActionType)).Cast<ActionType>().ToArray();
+            if (_processingStrategies.Count != allPossibleActions.Length)
+            {
+                throw new DocumentProcessorException("Document processing strategies configured incorrectly. Strategies not defined for all action types.");
             }
         }
 
