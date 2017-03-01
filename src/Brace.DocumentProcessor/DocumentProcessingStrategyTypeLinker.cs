@@ -16,7 +16,7 @@ namespace Brace.DocumentProcessor
 
         public Type GetStrategyType(ActionType actionType)
         {
-            return GetType(actionType);
+            return GetLinkedTypeByKey(actionType);
         }
     }
 }

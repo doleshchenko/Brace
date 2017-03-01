@@ -8,8 +8,8 @@
     <ProjectReference Include="..\..\src\Brace.DocumentProcessor\Brace.DocumentProcessor.csproj" />
     <ProjectReference Include="..\..\src\Brace.Interpretation\Brace.Interpretation.csproj" />
     <ProjectReference Include="..\Brace.Stub.Linker\Brace.Stub.Linker.csproj" />
-    <ProjectReference Include="..\Brace.Stub.SeveralProcessingStrategiesForOneAction\Brace.Stub.SeveralProcessingStrategiesForOneAction.csproj" />
     <ProjectReference Include="..\Brace.Stub.TypeLinkerInvalidMissedLinkedItem\Brace.Stub.TypeLinkerInvalidMissedLinkedItem.csproj" />
+    <ProjectReference Include="..\Brace.Stub.TypeLinkerInvalidSeveralLinkedItemsForOneKey\Brace.Stub.TypeLinkerInvalidSeveralLinkedItemsForOneKey.csproj" />
     <ProjectReference Include="..\Brace.Stub.TypeLinkerInvalidWithoutLinkedItems\Brace.Stub.TypeLinkerInvalidWithoutLinkedItems.csproj" />
     <ProjectReference Include="..\Brace.Stub.TypeLinkerValidConfiguration\Brace.Stub.TypeLinkerValidConfiguration.csproj" />
   </ItemGroup>

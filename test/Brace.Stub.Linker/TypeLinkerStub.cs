@@ -13,7 +13,7 @@ namespace Brace.Stub.Linker
 
         public Type GetLinkedType(LinkerKey key)
         {
-            return GetType(key);
+            return GetLinkedTypeByKey(key);
         }
     }
 }

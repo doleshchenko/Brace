@@ -38,7 +38,7 @@ namespace Brace.DomainService.TypeLinker
             }
         }
 
-        protected Type GetType(TKey key)
+        protected Type GetLinkedTypeByKey(TKey key)
         {
             return _links[key];
         }

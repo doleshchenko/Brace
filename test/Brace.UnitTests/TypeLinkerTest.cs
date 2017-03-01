@@ -1,12 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Reflection;
-using Brace.DocumentProcessor;
-using Brace.DomainService.DocumentProcessor;
 using Brace.DomainService.TypeLinker;
 using Brace.Stub.Linker;
-using Brace.Stub.SeveralProcessingStrategiesForOneAction;
 using Brace.Stub.TypeLinkerInvalidMissedLinkedItem;
+using Brace.Stub.TypeLinkerInvalidSeveralLinkedItemsForOneKey;
 using Brace.Stub.TypeLinkerInvalidWithoutLinkedItems;
 using Brace.Stub.TypeLinkerValidConfiguration;
 using Xunit;
@@ -24,22 +21,24 @@ namespace Brace.UnitTests
         }
 
         [Theory]
+        [MemberData(nameof(AssembliesWithoutLinkedItems))]
         public void Init_InvalidAssemblyWithoutLinkedItems_ThrowsLinkerException(Assembly assembly)
         {
             var linkerStub = new TypeLinkerStub();
-            var result = Assert.Throws(typeof(LinkerException), () => linkerStub.Initialize(typeof(TypeLinkerInvalidWithoutLinkedItems).GetTypeInfo().Assembly));
+            var result = Assert.Throws(typeof(LinkerException), () => linkerStub.Initialize(assembly));
             Assert.Equal("Type Links configured incorrectly. Cannot find Types for the all Keys.", result.Message);
         }
 
         [Fact]
-        public void Constructor_InvalidAssemblySeveralStrategiesForOneActionType_ThrowsDocumentProcessorException()
+        public void Init_InvalidAssemblySeveralLinkedItemsForOneKey_ThrowsLinkerException()
         {
-            var result = Assert.Throws<LinkerException>(() => new DocumentProcessingStrategyTypeLinker(typeof(TypeLinkerInvalidMissedLinkedItem).GetTypeInfo().Assembly));
-            Assert.Equal($"Several types associated with the same Attribute - {ActionType.Print}. Please verify configuration.", result.Message);
+            var linkerStub = new TypeLinkerStub();
+            var result = Assert.Throws(typeof(LinkerException), () => linkerStub.Initialize(typeof(TypeLinkerInvalidSeveralLinkedItemsForOneKey).GetTypeInfo().Assembly));
+            Assert.Equal($"Several types associated with the same Attribute - {LinkerKey.Item2}. Please verify configuration.", result.Message);
         }
 
         [Fact]
-        public void GetStrategyType_ValidAssembly_ReturnsProcessingStrategy()
+        public void GetLinkedTypeByKey_ValidAssembly_ReturnsLinkedType()
         {
             var linkerStub = new TypeLinkerStub();
             linkerStub.Initialize(typeof(TypeLinkerValidConfiguration).GetTypeInfo().Assembly);
@@ -47,12 +46,12 @@ namespace Brace.UnitTests
             Assert.Equal(typeof(LinkedItem1), strategyType);
         }
 
-        public static IEnumerable<Assembly> AssembliesWithoutLinkedItems
+        public static IEnumerable<object[]> AssembliesWithoutLinkedItems
         {
             get
             {
-                yield return typeof(TypeLinkerInvalidWithoutLinkedItems).GetTypeInfo().Assembly;
-                yield return typeof(TypeLinkerInvalidMissedLinkedItem).GetTypeInfo().Assembly;
+                yield return new object[] {typeof(TypeLinkerInvalidWithoutLinkedItems).GetTypeInfo().Assembly};
+                yield return new object[] {typeof(TypeLinkerInvalidMissedLinkedItem).GetTypeInfo().Assembly};
             }
         }
     }
