@@ -7,9 +7,11 @@
   <ItemGroup>    
     <ProjectReference Include="..\..\src\Brace.DocumentProcessor\Brace.DocumentProcessor.csproj" />
     <ProjectReference Include="..\..\src\Brace.Interpretation\Brace.Interpretation.csproj" />
+    <ProjectReference Include="..\Brace.Stub.Linker\Brace.Stub.Linker.csproj" />
     <ProjectReference Include="..\Brace.Stub.SeveralProcessingStrategiesForOneAction\Brace.Stub.SeveralProcessingStrategiesForOneAction.csproj" />
-    <ProjectReference Include="..\Brace.Stub.ValidProcessingStrategies\Brace.Stub.ValidProcessingStrategies.csproj" />
-    <ProjectReference Include="..\Brace.Stub.WithoutProcessingStrategies\Brace.Stub.WithoutProcessingStrategies.csproj" />
+    <ProjectReference Include="..\Brace.Stub.TypeLinkerInvalidMissedLinkedItem\Brace.Stub.TypeLinkerInvalidMissedLinkedItem.csproj" />
+    <ProjectReference Include="..\Brace.Stub.TypeLinkerInvalidWithoutLinkedItems\Brace.Stub.TypeLinkerInvalidWithoutLinkedItems.csproj" />
+    <ProjectReference Include="..\Brace.Stub.TypeLinkerValidConfiguration\Brace.Stub.TypeLinkerValidConfiguration.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,10 +22,6 @@
 
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Stub\" />
   </ItemGroup>
 
 </Project>
