@@ -6,8 +6,8 @@ namespace Brace.Repository.Interface
     public interface IDocumentRepository
     {
         Task<Document> FindDocumentAsync(string name);
-        void Add(Document document);
-        void Delete(Document document);
-        void Update(Document document);
+        Task AddAsync(Document document);
+        Task DeleteAsync(Document document);
+        Task UpdateAsync(Document document);
     }
 }

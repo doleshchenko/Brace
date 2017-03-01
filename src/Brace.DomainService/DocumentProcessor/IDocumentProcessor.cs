@@ -5,6 +5,6 @@ namespace Brace.DomainService.DocumentProcessor
 {
     public interface IDocumentProcessor
     {
-        Task<Document> ProcessAsync(string documentName, ActionType action, string[] actionParameters);
+        Task<DocumentView> ProcessAsync(string documentName, ActionType action, string[] actionParameters);
     }
 }

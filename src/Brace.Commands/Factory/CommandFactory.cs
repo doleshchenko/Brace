@@ -1,23 +1,24 @@
 ﻿using System;
-using Brace.DomainService.DocumentProcessor;
 
 namespace Brace.Commands.Factory
 {
     public class CommandFactory
     {
         private readonly CommandLinker _commandLinker;
-        private readonly IDocumentProcessor _documentProcessor;
+        private readonly IServiceProvider _serviceProvider;
 
-        public CommandFactory(CommandLinker commandLinker, IDocumentProcessor documentProcessor)
+        public CommandFactory(CommandLinker commandLinker, IServiceProvider serviceProvider)
         {
             _commandLinker = commandLinker;
-            _documentProcessor = documentProcessor;
+            _serviceProvider = serviceProvider;
         }
 
         public ICommand CreateCommand(string command, string argument, string[] parameters)
         {
             var commandType = _commandLinker.GetCommandType(command);
-            return (ICommand)Activator.CreateInstance(commandType, _documentProcessor, argument, parameters);
+            var commandObject = (ICommand) _serviceProvider.GetService(commandType);
+            commandObject.SetParameters(argument, parameters);
+            return commandObject;
         }
     }
 }

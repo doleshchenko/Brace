@@ -10,8 +10,4 @@
     <ProjectReference Include="..\Brace.Repository.Interface\Brace.Repository.Interface.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Strategies\" />
-  </ItemGroup>
-
 </Project>
