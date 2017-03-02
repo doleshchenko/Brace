@@ -1,4 +1,4 @@
-﻿namespace Brace.DomainService.DocumentProcessor
+﻿namespace Brace.DomainModel
 {
     public enum ActionType
     {

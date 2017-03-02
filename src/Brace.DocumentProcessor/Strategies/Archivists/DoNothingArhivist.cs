@@ -3,6 +3,7 @@ using Brace.DomainService.DocumentProcessor;
 
 namespace Brace.DocumentProcessor.Strategies.Archivists
 {
+    [Archivist(ArchivistType.DoNothing)]
     public class DoNothingArhivist : Archivist
     {
         public DoNothingArhivist()

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using Brace.DomainModel;
 using Brace.DomainService.DocumentProcessor;
 using Brace.DomainService.TypeLinker;
 
