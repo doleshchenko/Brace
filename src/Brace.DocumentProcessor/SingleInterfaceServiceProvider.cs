@@ -5,11 +5,11 @@ using Brace.DomainService.DocumentProcessor;
 
 namespace Brace.DocumentProcessor
 {
-    public class DocumentProcessingStrategyProvider : IDocumentProcessingStrategyProvider
+    public class SingleInterfaceServiceProvider : ISingleInterfaceServiceProvider
     {
         private readonly IServiceProvider _serviceProvider;
 
-        public DocumentProcessingStrategyProvider(IServiceProvider serviceProvider)
+        public SingleInterfaceServiceProvider(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
         }

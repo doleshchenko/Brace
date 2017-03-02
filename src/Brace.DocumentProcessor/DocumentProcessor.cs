@@ -6,21 +6,21 @@ namespace Brace.DocumentProcessor
 {
     public class DocumentProcessor : IDocumentProcessor
     {
-        private readonly IDocumentProcessingStrategyProvider _documentProcessingStrategyProvider;
+        private readonly ISingleInterfaceServiceProvider _singleInterfaceServiceProvider;
         private readonly IDocumentProcessingStrategyTypeLinker _processingStrategyTypeLinker;
 
         public DocumentProcessor(
             IDocumentProcessingStrategyTypeLinker processingStrategyTypeLinker, 
-            IDocumentProcessingStrategyProvider documentProcessingStrategyProvider)
+            ISingleInterfaceServiceProvider singleInterfaceServiceProvider)
         {
             _processingStrategyTypeLinker = processingStrategyTypeLinker;
-            _documentProcessingStrategyProvider = documentProcessingStrategyProvider;
+            _singleInterfaceServiceProvider = singleInterfaceServiceProvider;
         }
 
         public async Task<DocumentView> ProcessAsync(string documentName, ActionType action, string[] actionParameters)
         {
             var strategyType = _processingStrategyTypeLinker.GetStrategyType(action);
-            var strategy = _documentProcessingStrategyProvider.GetStrategy(strategyType);
+            var strategy = _singleInterfaceServiceProvider.GetStrategy(strategyType);
             return await strategy.ProcessAsync(documentName, actionParameters);
         }
     }
