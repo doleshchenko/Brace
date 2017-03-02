@@ -7,7 +7,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Brace.DomainModel\Brace.DomainModel.csproj" />
     <ProjectReference Include="..\Brace.DomainService\Brace.DomainService.csproj" />
-    <ProjectReference Include="..\Brace.TypeExtension\Brace.TypeExtension.csproj" />
   </ItemGroup>
 
 </Project>

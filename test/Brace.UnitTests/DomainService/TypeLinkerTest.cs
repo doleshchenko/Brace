@@ -9,7 +9,7 @@ using Brace.Stub.TypeLinkerValidConfiguration;
 using Xunit;
 using LinkedItem1 = Brace.Stub.TypeLinkerValidConfiguration.LinkedItem1;
 
-namespace Brace.UnitTests
+namespace Brace.UnitTests.DomainService
 {
     public class TypeLinkerTest
     {

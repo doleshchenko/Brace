@@ -1,4 +1,4 @@
-﻿namespace Brace.DomainModel
+﻿namespace Brace.DomainModel.DocumentProcessing
 {
     public class Document
     {

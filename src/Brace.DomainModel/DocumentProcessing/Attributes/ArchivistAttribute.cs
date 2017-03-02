@@ -1,7 +1,6 @@
 ﻿using System;
-using Brace.DomainModel;
 
-namespace Brace.DocumentProcessor.Strategies.Archivists
+namespace Brace.DomainModel.DocumentProcessing.Attributes
 {
     public class ArchivistAttribute : Attribute, ITypeLink<ArchivistType>
     {

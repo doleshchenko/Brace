@@ -1,7 +1,6 @@
 ﻿using System;
-using Brace.DomainModel;
 
-namespace Brace.DomainService.DocumentProcessor
+namespace Brace.DomainModel.DocumentProcessing.Attributes
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class DocumentProcessingStrategyAttribute : Attribute, ITypeLink<ActionType>

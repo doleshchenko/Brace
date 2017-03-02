@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Brace.DomainModel
+namespace Brace.DomainModel.DocumentProcessing.Attributes
 {
     [AttributeUsage(AttributeTargets.Field)]
     public class ArchivistTypeDescriptionAttribute: Attribute

@@ -1,4 +1,6 @@
-﻿namespace Brace.DomainModel
+﻿using Brace.DomainModel.DocumentProcessing.Attributes;
+
+namespace Brace.DomainModel.DocumentProcessing
 {
     public enum ArchivistType
     {

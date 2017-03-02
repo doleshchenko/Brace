@@ -1,11 +1,13 @@
 ﻿using System.Threading.Tasks;
 using Brace.DocumentProcessor.Strategies;
-using Brace.DomainModel;
+using Brace.DocumentProcessor.Strategies.Archivists;
+using Brace.DocumentProcessor.Strategies.Archivists.Factory;
+using Brace.DomainModel.DocumentProcessing;
 using Brace.Repository.Interface;
 using Moq;
 using Xunit;
 
-namespace Brace.UnitTests.DocumentProcessingStrategies
+namespace Brace.UnitTests.DocumentProcessor.DocumentProcessingStrategies
 {
     public class PrintDocumentStrategyTest
     {
@@ -21,8 +23,10 @@ namespace Brace.UnitTests.DocumentProcessingStrategies
                 IsProtected = false
             };
             var repositoryStab = new Mock<IDocumentRepository>();
+            var archivistFactoryStub = new Mock<IArchivistFactory>();
             repositoryStab.Setup(repository => repository.FindDocumentAsync(expectedDocumentName)).ReturnsAsync(expectedDocument);
-            var strategy = new PrintDocumentStrategy(repositoryStab.Object);
+            archivistFactoryStub.Setup(factory => factory.CreateArchivistChain(null)).Returns(new DoNothingArhivist());
+            var strategy = new PrintDocumentStrategy(repositoryStab.Object, archivistFactoryStub.Object);
             var documentView = await strategy.ProcessAsync(expectedDocumentName, null);
             Assert.Equal(expectedContent, documentView.Content);
         }

@@ -1,9 +1,9 @@
-﻿using Brace.DomainModel;
+﻿using Brace.DomainModel.DocumentProcessing;
 using Brace.DomainService.DocumentProcessor;
 
 namespace Brace.DocumentProcessor.Strategies.Archivists
 {
-    [Archivist(ArchivistType.DoNothing)]
+    [DomainModel.DocumentProcessing.Attributes.Archivist(ArchivistType.DoNothing)]
     public class DoNothingArhivist : Archivist
     {
         public DoNothingArhivist()

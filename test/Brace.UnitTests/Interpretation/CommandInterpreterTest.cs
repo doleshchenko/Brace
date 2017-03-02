@@ -2,7 +2,7 @@
 using Brace.Interpretation.Exceptions;
 using Xunit;
 
-namespace Brace.UnitTests
+namespace Brace.UnitTests.Interpretation
 {
     public class CommandInterpreterTest
     {
