@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using Brace.DomainModel;
 using Brace.DomainModel.DocumentProcessing;
 using Brace.DomainService;
 using Brace.DomainService.DocumentProcessor;

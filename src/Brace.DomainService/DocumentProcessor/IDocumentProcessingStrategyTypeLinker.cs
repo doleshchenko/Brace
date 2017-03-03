@@ -1,5 +1,4 @@
 ﻿using System;
-using Brace.DomainModel;
 using Brace.DomainModel.DocumentProcessing;
 
 namespace Brace.DomainService.DocumentProcessor

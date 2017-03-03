@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using Brace.DocumentProcessor.Strategies.Archivists.Factory;
-using Brace.DomainModel;
 using Brace.DomainModel.DocumentProcessing;
 using Brace.DomainModel.DocumentProcessing.Attributes;
 using Brace.DomainService.DocumentProcessor;

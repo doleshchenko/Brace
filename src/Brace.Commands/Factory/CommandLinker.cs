@@ -4,7 +4,7 @@ using Brace.DomainService.TypeLinker;
 
 namespace Brace.Commands.Factory
 {
-    public class CommandLinker : TypeLinker<CommandAttribute, ICommand, CommandType>
+    public class CommandLinker : TypeLinker<CommandAttribute, ICommand, CommandType>, ICommandLinker
     {
         public CommandLinker(Assembly assembly)
         {

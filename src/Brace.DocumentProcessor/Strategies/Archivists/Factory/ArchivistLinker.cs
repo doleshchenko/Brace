@@ -9,9 +9,9 @@ namespace Brace.DocumentProcessor.Strategies.Archivists.Factory
 {
     public class ArchivistLinker : TypeLinker<ArchivistAttribute, IArchivist, ArchivistType>, IArchivistLinker
     {
-        public ArchivistLinker()
+        public ArchivistLinker(Assembly assembly)
         {
-            Init(typeof(Archivist).GetTypeInfo().Assembly);
+            Init(assembly);
         }
 
         public Type GetArchivistType(ArchivistType key)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Brace.Commands.Factory;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Brace.Controllers
@@ -9,6 +10,13 @@ namespace Brace.Controllers
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
+        private readonly ICommandFactory _commandFactory;
+
+        public ValuesController(ICommandFactory commandFactory)
+        {
+            _commandFactory = commandFactory;
+        }
+
         // GET api/values
         [HttpGet]
         public IEnumerable<string> Get()

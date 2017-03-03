@@ -1,5 +1,4 @@
-﻿using Brace.DomainModel;
-using Brace.DomainModel.DocumentProcessing;
+﻿using Brace.DomainModel.DocumentProcessing;
 using Brace.DomainService.DocumentProcessor;
 
 namespace Brace.Commands.Read

@@ -1,14 +1,13 @@
-﻿using System;
-using Brace.DomainService;
+﻿using Brace.DomainService;
 
 namespace Brace.Commands.Factory
 {
-    public class CommandFactory
+    public class CommandFactory : ICommandFactory
     {
-        private readonly CommandLinker _commandLinker;
+        private readonly ICommandLinker _commandLinker;
         private readonly ISingleInterfaceServiceProvider<ICommand> _commandProvider;
 
-        public CommandFactory(CommandLinker commandLinker, ISingleInterfaceServiceProvider<ICommand> commandProvider)
+        public CommandFactory(ICommandLinker commandLinker, ISingleInterfaceServiceProvider<ICommand> commandProvider)
         {
             _commandLinker = commandLinker;
             _commandProvider = commandProvider;

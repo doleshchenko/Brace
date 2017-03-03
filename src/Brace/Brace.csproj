@@ -19,7 +19,13 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0-msbuild3-final" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Brace.Commands\Brace.Commands.csproj" />
     <ProjectReference Include="..\Brace.DocumentProcessor\Brace.DocumentProcessor.csproj" />
+    <ProjectReference Include="..\Brace.DomainModel\Brace.DomainModel.csproj" />
+    <ProjectReference Include="..\Brace.DomainService\Brace.DomainService.csproj" />
+    <ProjectReference Include="..\Brace.Interpretation\Brace.Interpretation.csproj" />
+    <ProjectReference Include="..\Brace.Repository.Interface\Brace.Repository.Interface.csproj" />
+    <ProjectReference Include="..\Brace.Repository\Brace.Repository.csproj" />
   </ItemGroup>
 
 </Project>
