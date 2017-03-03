@@ -3,7 +3,7 @@ using Brace.DomainModel.DocumentProcessing;
 
 namespace Brace.UnitTests.DocumentProcessor.Stub
 {
-    public class EncryptArchivist : Archivist
+    public class EncryptArchivistStub : Archivist
     {
         public override Document Rethink(Document document)
         {
