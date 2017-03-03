@@ -5,8 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>    
+    <ProjectReference Include="..\..\src\Brace.Commands\Brace.Commands.csproj" />    
     <ProjectReference Include="..\..\src\Brace.DocumentProcessor\Brace.DocumentProcessor.csproj" />
     <ProjectReference Include="..\..\src\Brace.Interpretation\Brace.Interpretation.csproj" />
+    <ProjectReference Include="..\Brace.Stub.CommandLinker\Brace.Stub.CommandLinker.csproj" />
     <ProjectReference Include="..\Brace.Stub.Linker\Brace.Stub.Linker.csproj" />
     <ProjectReference Include="..\Brace.Stub.TypeLinkerInvalidMissedLinkedItem\Brace.Stub.TypeLinkerInvalidMissedLinkedItem.csproj" />
     <ProjectReference Include="..\Brace.Stub.TypeLinkerInvalidSeveralLinkedItemsForOneKey\Brace.Stub.TypeLinkerInvalidSeveralLinkedItemsForOneKey.csproj" />
