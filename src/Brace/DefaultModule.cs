@@ -34,7 +34,7 @@ namespace Brace
             builder.RegisterType<ArchivistFactory>().As<IArchivistFactory>().SingleInstance();
             builder.RegisterType<CommandFactory>().As<ICommandFactory>().SingleInstance();
 
-            builder.RegisterType<DocumentRepository>().As<IDocumentRepository>().InstancePerRequest();
+            builder.RegisterType<DocumentRepository>().As<IDocumentRepository>();
 
             builder.RegisterType<PrintDocumentStrategy>();
             builder.RegisterType<DoNothingArhivist>();

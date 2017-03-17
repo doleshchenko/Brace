@@ -1,6 +1,8 @@
 ﻿using Brace.DomainModel;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.IdGenerators;
+using MongoDB.Bson.Serialization.Serializers;
 
 namespace Brace.Repository.EntityMapping
 {
@@ -13,7 +15,8 @@ namespace Brace.Repository.EntityMapping
             {
                 BsonClassMap.RegisterClassMap<Entity>(cm =>
                 {
-                    cm.MapIdMember(c => c.Id).SetIdGenerator(StringObjectIdGenerator.Instance);
+                    cm.MapIdMember(c => c.Id).SetIdGenerator(StringObjectIdGenerator.Instance)
+                    .SetSerializer(new StringSerializer(BsonType.ObjectId));
                 });
                 _isMapped = true;
             }
