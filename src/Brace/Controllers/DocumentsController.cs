@@ -1,6 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Brace.Commands.Factory;
+using Brace.DomainModel.DocumentProcessing;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Brace.Controllers
@@ -16,18 +16,11 @@ namespace Brace.Controllers
         }
 
         [HttpPost("{command}")]
-        public async Task Post(string command)
+        public async Task<DocumentView> Post(string command)
         {
-            try
-            {
-                var c = _commandFactory.CreateCommand(command, null, null);
-                var result = await c.ExecuteAsync();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
+            var c = _commandFactory.CreateCommand(command, null, null);
+            var result = await c.ExecuteAsync();
+            return result;
         }
     }
 }

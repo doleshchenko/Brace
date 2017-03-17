@@ -17,7 +17,8 @@ namespace Brace.Repository
 
         public async Task<Document> FindDocumentAsync(string name)
         {
-            var filter = Builders<Document>.Filter.Eq(it => it.Name, "test document");
+            var builder = Builders<Document>.Filter;
+            var filter = builder.Eq(it => it.Name, name);
             var database = _mongoClient.GetDatabase("Brace");
             var collection = database.GetCollection<Document>("Documents");
             var document = await collection.Find(filter).FirstOrDefaultAsync();

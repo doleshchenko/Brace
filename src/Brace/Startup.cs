@@ -47,6 +47,7 @@ namespace Brace
             loggerFactory.AddDebug();
 
             app.UseMvc();
+            app.UseStaticFiles();
         }
     }
 }
