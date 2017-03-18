@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Brace.Controllers
+namespace Brace.Controllers.ViewControllers
 {
     public class ShellController : Controller
     {

@@ -6,5 +6,6 @@
 {
     
 }
-
-<input type="text" id="commandLine" class="command-line" />
+<div id="shell">
+    <input type="text" id="commandLine" class="command-line" data-bind="value: commandLine, event: {keypress: onkeypress}" />
+</div>

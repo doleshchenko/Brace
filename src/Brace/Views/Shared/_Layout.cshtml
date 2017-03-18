@@ -1,15 +1,26 @@
-﻿<!DOCTYPE html>
-
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
 <html>
 <head>
     <title>Brace shell</title>
-    <link rel="stylesheet" type="text/css" href="~/css/site.min.css">
+    <environment names="Development">
+        <link rel="stylesheet" href="~/css/shell.css" />
+    </environment>
+    <environment names="Production">
+        <link rel="stylesheet" type="text/css" href="~/css/site.min.css">
+    </environment>
     @RenderSection("Styles")
 </head>
 <body>
 <div>
     @RenderBody()
 </div>
-    <script type="text/javascript" src="~/js/site.min.js"></script>
+    <environment names="Development">
+        <script type="text/javascript" src="~/js/lib/knockout-latest.js"></script>
+        <script type="text/javascript" src="~/js/shell.js"></script>
+    </environment>
+    <environment names="Production">
+        <script type="text/javascript" src="~/js/site.min.js"></script>
+    </environment>
 </body>
 </html>
