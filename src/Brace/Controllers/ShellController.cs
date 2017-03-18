@@ -2,9 +2,9 @@
 
 namespace Brace.Controllers
 {
-    public class ConsoleController : Controller
+    public class ShellController : Controller
     {
-        [Route("console/index")]
+        [Route("shell/index")]
         public IActionResult Index()
         {
             return View();

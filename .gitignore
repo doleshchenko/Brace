@@ -7,9 +7,10 @@ bin/
 obj/
 Debug/
 Release/
+node_modules/
 *.opensdf
 *.tlog
-*.log
+*.lognode_modules
 TestResult.xml
 *.VisualState.xml
 Version.cs

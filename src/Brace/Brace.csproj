@@ -5,15 +5,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="wwwroot\css\console.css" />
+    <Content Include="wwwroot\css\shell.css" />
+    <Content Include="wwwroot\js\shell.js" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Console\" />
+    <Folder Include="Views\Shell\" />
+    <Folder Include="wwwroot\js\lib\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.4.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.0.0" />
+    <PackageReference Include="BuildBundlerMinifier" Version="2.4.337" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.1" />
