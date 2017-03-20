@@ -3,9 +3,19 @@
     Layout = "_Layout";
 }
 @section Styles
-{
-    
-}
+{}
+
 <div id="shell">
-    <input type="text" id="commandLine" class="command-line" data-bind="value: commandLine, event: {keypress: onkeypress}" />
+    <ul id="output" class="output-list" data-bind="foreach: commandResults">
+        <li>
+            <div data-bind="text: $data">
+            </div>
+        </li>
+    </ul>
+    <div class="command-line">
+        <label>\></label>
+        <div>
+            <input type="text" id="commandLineValue" data-bind="value: commandLineValue, hasFocus: commandLineHasFocus, event: {keypress: onKeyPress, change: onCommandChange}" />
+        </div>
+    </div>
 </div>

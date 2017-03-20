@@ -1,3 +1,26 @@
 ﻿.command-line {
     width: 100%;
 }
+
+.command-line label {
+    float: left;
+    margin-right: 5px;
+}
+
+.command-line div {
+    overflow: hidden;
+}
+
+.command-line input {
+    width: 100%;
+    display: block;
+    outline: none;
+    border: none;
+    background-color: transparent;
+}
+
+.output-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}

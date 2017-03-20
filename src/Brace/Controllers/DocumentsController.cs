@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Brace.Commands.Factory;
-using Brace.DomainModel.DocumentProcessing;
+using Brace.Interpretation;
 using Brace.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,18 +11,25 @@ namespace Brace.Controllers
     public class DocumentsController : Controller
     {
         private readonly ICommandFactory _commandFactory;
+        private readonly ICommandInterpreter _commandInterpreter;
 
-        public DocumentsController(ICommandFactory commandFactory)
+        public DocumentsController(ICommandFactory commandFactory, ICommandInterpreter commandInterpreter)
         {
             _commandFactory = commandFactory;
+            _commandInterpreter = commandInterpreter;
         }
 
         [HttpPost]
-        public async Task<DocumentView> Post([FromBody]string command)
+        public async Task<IActionResult> Post([FromBody]Command command)
         {
-            var c = _commandFactory.CreateCommand(command, null, null);
-            var result = await c.ExecuteAsync();
-            return result;
+            var interpretation = _commandInterpreter.Interpret(command.CommandText);
+            var concreteCommand = _commandFactory.CreateCommand(interpretation.Command, interpretation.Argument, interpretation.Parameters);
+            var result = await concreteCommand.ExecuteAsync();
+            if (result == null)
+            {
+                return NoContent();
+            }
+            return Ok(result);
         }
     }
 }

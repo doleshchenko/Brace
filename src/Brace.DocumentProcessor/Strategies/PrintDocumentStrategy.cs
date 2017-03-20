@@ -22,6 +22,10 @@ namespace Brace.DocumentProcessor.Strategies
         public async Task<DocumentView> ProcessAsync(string documentName, string[] actions)
         {
             var document = await _documentRepository.FindDocumentAsync(documentName);
+            if (document == null)
+            {
+                return null;
+            }
             var archivist = _archivistFactory.CreateArchivistChain(actions);
             var rethinkedDocument = archivist.Rethink(document);
             return new DocumentView {Content = rethinkedDocument.Content};
