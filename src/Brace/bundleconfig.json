@@ -9,6 +9,7 @@
     "outputFileName": "wwwroot/js/site.min.js",
     "inputFiles": [
       "wwwroot/js/lib/knockout-latest.js",
+      "wwwroot/js/lib/superagent.js",
       "wwwroot/js/shell.js"
     ],
     "minify": {
