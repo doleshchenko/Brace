@@ -8,14 +8,14 @@
 <div id="shell">
     <ul id="output" class="output-list" data-bind="foreach: commandResults">
         <li>
-            <div data-bind="text: $data">
+            <div data-bind="text: text, css: statusStyle">
             </div>
         </li>
     </ul>
     <div class="command-line">
         <label>\></label>
         <div>
-            <input type="text" id="commandLineValue" data-bind="value: commandLineValue, hasFocus: commandLineHasFocus, event: {keypress: onKeyPress, change: onCommandChange}" />
+            <input type="text" id="commandLineValue" data-bind="value: commandLineValue, hasFocus: commandLineHasFocus, enable: commandLineEnabled, event: {keypress: onKeyPress, change: onCommandChange}" />
         </div>
     </div>
 </div>

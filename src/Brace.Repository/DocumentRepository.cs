@@ -17,12 +17,19 @@ namespace Brace.Repository
 
         public async Task<Document> FindDocumentAsync(string name)
         {
-            var builder = Builders<Document>.Filter;
-            var filter = builder.Eq(it => it.Name, name);
-            var database = _mongoClient.GetDatabase("Brace");
-            var collection = database.GetCollection<Document>("documents");
-            var document = await collection.Find(filter).FirstOrDefaultAsync();
-            return document;
+            try
+            {
+                var builder = Builders<Document>.Filter;
+                var filter = builder.Eq(it => it.Name, name);
+                var database = _mongoClient.GetDatabase("Brace");
+                var collection = database.GetCollection<Document>("documents");
+                var document = await collection.Find(filter).FirstOrDefaultAsync();
+                return document;
+            }
+            catch (Exception e)
+            {
+                throw new RepositoryException($"Exception occured when searching for document '{name}'. Please see inner exception for details.", e);
+            }
         }
 
         public Task AddAsync(Document document)

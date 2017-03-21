@@ -1,25 +1,45 @@
 ﻿(function (ko, request) {
     "use strict";
+
+    var CommandResultViewModel = function(text, error) {
+        this.text = ko.observable(text);
+        this.isError = ko.observable(error);
+        this.statusStyle = ko.pureComputed(function () {
+            return this.isError() ? "error" : "profitPositive";
+        }, this);
+    }
+
     var ShellViewModel = function () {
         this.commandReady = false;
+        this.commandLineEnabled = ko.observable(true);
         this.commandLineHasFocus = ko.observable(true);
         this.commandLineValue = ko.observable("");
         this.commandResults = ko.observableArray();
+
         this.onCommandChange = function() {
             if (this.commandReady) {
-                var cr = this.commandResults;
+                var that = this;
+                var animationId;
                 request
                     .post('/api/documents')
                     .send({ commandText: event.target.value })
                     .set('Accept', 'application/json')
                     .end(function (err, res) {
-                        if (res.statusCode === 204) {
-                            cr.push("nothing to process");
-                        } else {
-                            cr.push(res.body.content);
+                        if (res.statusCode >= 200 && res.statusCode < 300) {
+                            var text;
+                            if (res.statusCode === 204) {
+                                text = "nothing to process";
+                            } else {
+                                text = res.body.content;
+                            }
+                            that.commandResults.push(new CommandResultViewModel(text, false));
+
+                        } else if (res.statusCode >= 500) {
+                            that.commandResults.push(new CommandResultViewModel("[something went wrong. please try it again]", true));
                         }
+                        that.commandLineStopAnimation(animationId);
                     });
-                this.commandLineValue("");
+                animationId = this.commandLineStartAnimation();
             }
         };
         this.onKeyPress = function (data, e) {
@@ -28,6 +48,25 @@
             this.commandReady = charCode === 13;
             return true;
         };
+
+        this.commandLineStartAnimation = function () {
+            this.commandLineHasFocus(false);
+            this.commandLineEnabled(false);
+            var commandLineValue = this.commandLineValue;
+            var current = 0;
+            var animationChars = ["/", "-", "\\", "|"];
+            return setInterval(function() {
+                commandLineValue(animationChars[current % 4]);
+                current++;
+            }, 100);
+        }
+
+        this.commandLineStopAnimation = function(animationId) {
+            clearInterval(animationId);
+            this.commandLineValue("");
+            this.commandLineEnabled(true);
+            this.commandLineHasFocus(true);
+        }
     };
 
     ko.applyBindings(new ShellViewModel(), document.getElementById("shell"));

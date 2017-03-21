@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Brace.Commands.Factory;
 using Brace.Interpretation;
 using Brace.Models;
@@ -20,7 +21,7 @@ namespace Brace.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]Command command)
+        public async Task<IActionResult> Post([FromBody] Command command)
         {
             var interpretation = _commandInterpreter.Interpret(command.CommandText);
             var concreteCommand = _commandFactory.CreateCommand(interpretation.Command, interpretation.Argument, interpretation.Parameters);
