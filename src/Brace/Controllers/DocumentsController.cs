@@ -26,10 +26,6 @@ namespace Brace.Controllers
             var interpretation = _commandInterpreter.Interpret(command.CommandText);
             var concreteCommand = _commandFactory.CreateCommand(interpretation.Command, interpretation.Argument, interpretation.Parameters);
             var result = await concreteCommand.ExecuteAsync();
-            if (result == null)
-            {
-                return NoContent();
-            }
             return Ok(result);
         }
     }
