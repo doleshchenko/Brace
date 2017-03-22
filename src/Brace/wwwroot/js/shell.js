@@ -1,11 +1,21 @@
 ﻿(function (ko, request) {
     "use strict";
 
-    var CommandResultViewModel = function(text, error) {
+    var CommandResultViewModel = function(text, type) {
         this.text = ko.observable(text);
-        this.isError = ko.observable(error);
+        this.type = ko.observable(type);
+
         this.statusStyle = ko.pureComputed(function () {
-            return this.isError() ? "error" : "profitPositive";
+            switch (this.type()) {
+            case 0:
+                return "info";
+            case 1:
+                return "warning";
+            case 2:
+                return "error";
+            default:
+                return "info";
+            }
         }, this);
     }
 
@@ -26,16 +36,9 @@
                     .set('Accept', 'application/json')
                     .end(function (err, res) {
                         if (res.statusCode >= 200 && res.statusCode < 300) {
-                            var text;
-                            if (res.statusCode === 204) {
-                                text = "nothing to process";
-                            } else {
-                                text = res.body.content;
-                            }
-                            that.commandResults.push(new CommandResultViewModel(text, false));
-
+                            that.commandResults.push(new CommandResultViewModel(res.body.content, res.body.type));
                         } else if (res.statusCode >= 500) {
-                            that.commandResults.push(new CommandResultViewModel("[something went wrong. please try it again]", true));
+                            that.commandResults.push(new CommandResultViewModel("error occured. please make sure that command is correct.", 2));
                         }
                         that.commandLineStopAnimation(animationId);
                     });

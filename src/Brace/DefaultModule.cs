@@ -39,7 +39,7 @@ namespace Brace
             builder.RegisterType<PrintDocumentStrategy>();
             builder.RegisterType<DoNothingArhivist>();
             builder.RegisterType<PrintCommand>();
-
+            builder.RegisterType<VoidCommand>();
         }
     }
 }

@@ -1,10 +1,15 @@
-﻿.command-line {
+﻿body {
+    background-color: #323232;
+}
+
+.command-line {
     width: 100%;
 }
 
 .command-line label {
     float: left;
     margin-right: 5px;
+    color: #A63C58;
 }
 
 .command-line div {
@@ -17,6 +22,7 @@
     outline: none;
     border: none;
     background-color: transparent;
+    color: #F2F2F2;
 }
 
 .output-list {
@@ -25,6 +31,14 @@
     margin: 0;
 }
 
-.error {
-    color: red;
+.output-list li > div.error {
+    color: #E4B4BF;
+}
+
+.output-list li > div.info {
+    color: #9FBF5A;
+}
+
+.output-list li > div.warning {
+    color: #f2f0a1;
 }
