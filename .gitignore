@@ -16,4 +16,5 @@ TestResult.xml
 Version.cs
 Version.h
 Version.cpp
-.vs/restore.dg
+/.vs/
+debug.log
