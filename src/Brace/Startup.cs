@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using NLog.Extensions.Logging;
+using NLog.Web;
 
 namespace Brace
 {
@@ -14,6 +16,7 @@ namespace Brace
     {
         public Startup(IHostingEnvironment env)
         {
+            env.ConfigureNLog("nlog.config");
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -43,11 +46,16 @@ namespace Brace
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            //add NLog to ASP.NET Core
+            loggerFactory.AddNLog();
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
             app.UseMvc();
             app.UseStaticFiles();
+
+            //add NLog.Web
+            app.AddNLogWeb();
         }
     }
 }
