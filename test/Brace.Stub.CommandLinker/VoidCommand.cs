@@ -12,14 +12,14 @@ namespace Brace.Stub.CommandLinker
         {
             throw new NotImplementedException();
         }
-
-        public void SetParameters(string argument, string[] parameters)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public DateTime CreationDate { get; }
         public string Argument { get; }
         public string[] Parameters { get; }
+        public string CommandText { get; }
+        public void SetParameters(string commandText, string argument, string[] parameters)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

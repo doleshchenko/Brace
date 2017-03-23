@@ -2,10 +2,10 @@
 using System.Threading.Tasks;
 using Brace.DomainModel.DocumentProcessing;
 
-namespace Brace.Commands
+namespace Brace.Commands.InternalCommands
 {
     [Command(CommandType.Void)]
-    public class VoidCommand: ICommand
+    public class VoidCommand : ICommand
     {
         public VoidCommand()
         {
@@ -17,12 +17,13 @@ namespace Brace.Commands
             return await Task.FromResult(new DocumentView {Content = "void command", Type = DocumentViewType.Warning});
         }
 
-        public void SetParameters(string argument, string[] parameters)
+        public void SetParameters(string commandText, string argument, string[] parameters)
         {
         }
 
         public DateTime CreationDate { get; }
         public string Argument => null;
         public string[] Parameters => null;
+        public string CommandText => null;
     }
 }

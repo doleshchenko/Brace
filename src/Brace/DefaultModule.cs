@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using Autofac;
 using Brace.Commands;
+using Brace.Commands.InternalCommands;
 using Brace.Commands.Factory;
 using Brace.Commands.Read;
 using Brace.DocumentProcessor;
@@ -40,6 +41,7 @@ namespace Brace
             builder.RegisterType<DoNothingArhivist>();
             builder.RegisterType<PrintCommand>();
             builder.RegisterType<VoidCommand>();
+            builder.RegisterType<UnknowCommand>();
         }
     }
 }

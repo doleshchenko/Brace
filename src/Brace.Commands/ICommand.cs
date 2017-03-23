@@ -6,10 +6,11 @@ namespace Brace.Commands
 {
     public interface ICommand
     {
-        Task<DocumentView> ExecuteAsync();
-        void SetParameters(string argument, string[] parameters);
-        DateTime CreationDate { get; }
         string Argument { get; }
+        string CommandText { get; }
         string[] Parameters { get; }
+        DateTime CreationDate { get; }
+        Task<DocumentView> ExecuteAsync();
+        void SetParameters(string commandText, string argument, string[] parameters);
     }
 }

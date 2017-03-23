@@ -6,17 +6,23 @@ using Xunit;
 
 namespace Brace.UnitTests.Commands
 {
-    public class VoidCommandTest
+    public class UnknownCommandTest
     {
         [Fact]
         public async Task ExecuteAsync_ValidParameters_ReturnsVoidResult()
         {
             var beforCommandCreated = DateTime.Now;
-            var voidCommand = new VoidCommand();
+            var voidCommand = new UnknowCommand();
             var afterCommandCreated = DateTime.Now;
-            voidCommand.SetParameters(null, null, null);
+            var command = "someunknowncommand";
+            var argument = "argument";
+            var parameters = new[] { "1", "2", "3" };
+            voidCommand.SetParameters(command, argument, parameters);
             var result = await voidCommand.ExecuteAsync();
-            Assert.Equal("void command", result.Content);
+            Assert.Equal(argument, voidCommand.Argument);
+            Assert.Equal(command, voidCommand.CommandText);
+            Assert.Equal(parameters, voidCommand.Parameters);
+            Assert.Equal($"unknown command [{command}]", result.Content);
             Assert.Equal(DocumentViewType.Warning, result.Type);
             Assert.True(voidCommand.CreationDate >= beforCommandCreated && voidCommand.CreationDate <= afterCommandCreated);
         }

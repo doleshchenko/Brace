@@ -5,13 +5,14 @@ using Brace.DomainModel.DocumentProcessing;
 
 namespace Brace.Stub.CommandLinker
 {
-    [Command(CommandType.Print)]
-    public class PrintCommand : ICommand
+    [Command(CommandType.Unknown)]
+    public class UnknownCommand : ICommand
     {
         public Task<DocumentView> ExecuteAsync()
         {
             throw new NotImplementedException();
         }
+        
         public DateTime CreationDate { get; }
         public string Argument { get; }
         public string[] Parameters { get; }

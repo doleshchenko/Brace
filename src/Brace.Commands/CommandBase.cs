@@ -10,6 +10,7 @@ namespace Brace.Commands
         protected readonly IDocumentProcessor _documentProcessor;
         private string _argument;
         private string[] _parameters;
+        private string _commandText;
 
         protected CommandBase(IDocumentProcessor documentProcessor)
         {
@@ -17,6 +18,7 @@ namespace Brace.Commands
             CreationDate = DateTime.Now;
         }
         public DateTime CreationDate { get; }
+        public string CommandText => _commandText;
         public string Argument => _argument;
         public string[] Parameters => _parameters;
        
@@ -26,10 +28,11 @@ namespace Brace.Commands
         }
 
         protected abstract ActionType GetActionType();
-        public void SetParameters(string argument, string[] parameters)
+        public void SetParameters(string commandText, string argument, string[] parameters)
         {
             _argument = argument;
             _parameters = parameters;
+            _commandText = commandText;
         }
     }
 }
