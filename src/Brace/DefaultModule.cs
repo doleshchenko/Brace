@@ -1,9 +1,7 @@
 ﻿using System.Reflection;
 using Autofac;
 using Brace.Commands;
-using Brace.Commands.InternalCommands;
 using Brace.Commands.Factory;
-using Brace.Commands.Read;
 using Brace.DocumentProcessor;
 using Brace.DocumentProcessor.Strategies;
 using Brace.DocumentProcessor.Strategies.Archivists;
@@ -39,9 +37,9 @@ namespace Brace
 
             builder.RegisterType<PrintDocumentStrategy>();
             builder.RegisterType<DoNothingArhivist>();
-            builder.RegisterType<PrintCommand>();
-            builder.RegisterType<VoidCommand>();
-            builder.RegisterType<UnknowCommand>();
+
+            var commandAssemblies = typeof(ICommand).GetTypeInfo().Assembly;
+            builder.RegisterAssemblyTypes(commandAssemblies).Where(t => t.Namespace.Contains("Brace.Commands.CommandImplementation"));
         }
     }
 }

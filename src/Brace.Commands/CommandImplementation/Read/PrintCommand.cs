@@ -1,7 +1,7 @@
 ﻿using Brace.DomainModel.DocumentProcessing;
 using Brace.DomainService.DocumentProcessor;
 
-namespace Brace.Commands.Read
+namespace Brace.Commands.CommandImplementation.Read
 {
     [Command(CommandType.Print)]
     public class PrintCommand : CommandBase

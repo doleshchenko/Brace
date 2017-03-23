@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Brace.DomainModel.DocumentProcessing;
 
-namespace Brace.Commands.InternalCommands
+namespace Brace.Commands.CommandImplementation.InternalCommands
 {
     [Command(CommandType.Unknown)]
     public class UnknowCommand : ICommand

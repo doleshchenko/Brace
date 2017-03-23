@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Brace.Commands.InternalCommands;
+using Brace.Commands.CommandImplementation.InternalCommands;
 using Brace.DomainModel.DocumentProcessing;
 using Xunit;
 
