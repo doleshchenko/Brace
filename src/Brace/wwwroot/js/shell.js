@@ -38,7 +38,7 @@
                         if (res.statusCode >= 200 && res.statusCode < 300) {
                             that.commandResults.push(new CommandResultViewModel(res.body.content, res.body.type));
                         } else if (res.statusCode >= 500) {
-                            that.commandResults.push(new CommandResultViewModel("error occured. please make sure that command is correct.", 2));
+                            that.commandResults.push(new CommandResultViewModel("error occured. it seems somethig wrong with the server...", 2));
                         }
                         that.commandLineStopAnimation(animationId);
                     });

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Brace.Commands.Validation;
 using Brace.DomainModel.DocumentProcessing;
 
 namespace Brace.Commands
@@ -11,6 +12,7 @@ namespace Brace.Commands
         string[] Parameters { get; }
         DateTime CreationDate { get; }
         Task<DocumentView> ExecuteAsync();
+        CommandValidationResult Validate();
         void SetParameters(string commandText, string argument, string[] parameters);
     }
 }

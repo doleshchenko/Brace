@@ -1,5 +1,6 @@
 ﻿using System;
 using Brace.DomainModel;
+using Brace.DomainModel.DocumentProcessing;
 
 namespace Brace.Commands
 {
@@ -12,5 +13,6 @@ namespace Brace.Commands
         }
 
         public CommandType LinkKey { get; set; }
+        public ArchivistType[] AssociatedArchivists { get; set; }
     }
 }

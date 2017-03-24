@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Brace.Commands.Validation;
 using Brace.DomainModel.DocumentProcessing;
 
 namespace Brace.Commands.CommandImplementation.InternalCommands
@@ -25,5 +26,10 @@ namespace Brace.Commands.CommandImplementation.InternalCommands
         public string Argument => null;
         public string[] Parameters => null;
         public string CommandText => null;
+        public CommandValidationResult Validate()
+        {
+            //Void command is always valid
+            return CommandValidationResult.Valid;
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Brace.Commands;
+using Brace.Commands.Validation;
 using Brace.DomainModel.DocumentProcessing;
 
 namespace Brace.Stub.CommandLinker
@@ -18,6 +19,10 @@ namespace Brace.Stub.CommandLinker
         public string[] Parameters { get; }
         public string CommandText { get; }
         public void SetParameters(string commandText, string argument, string[] parameters)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandValidationResult Validate()
         {
             throw new NotImplementedException();
         }
