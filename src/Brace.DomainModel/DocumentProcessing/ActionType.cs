@@ -2,6 +2,6 @@
 {
     public enum ActionType
     {
-        Print
+        GetContent
     }
 }

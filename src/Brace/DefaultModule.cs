@@ -28,14 +28,14 @@ namespace Brace
 
             builder.RegisterType<CommandLinker>().As<ICommandLinker>().WithParameter("assembly", typeof(CommandBase).GetTypeInfo().Assembly).SingleInstance();
             builder.RegisterType<ArchivistLinker>().As<IArchivistLinker>().WithParameter("assembly", typeof(Archivist).GetTypeInfo().Assembly).SingleInstance();
-            builder.RegisterType<DocumentProcessingStrategyTypeLinker>().As<IDocumentProcessingStrategyTypeLinker>().WithParameter("assembly", typeof(PrintDocumentStrategy).GetTypeInfo().Assembly).SingleInstance();
+            builder.RegisterType<DocumentProcessingStrategyTypeLinker>().As<IDocumentProcessingStrategyTypeLinker>().WithParameter("assembly", typeof(GetContentDocumentStrategy).GetTypeInfo().Assembly).SingleInstance();
 
             builder.RegisterType<ArchivistFactory>().As<IArchivistFactory>().SingleInstance();
             builder.RegisterType<CommandFactory>().As<ICommandFactory>().SingleInstance();
 
             builder.RegisterType<DocumentRepository>().As<IDocumentRepository>();
 
-            builder.RegisterType<PrintDocumentStrategy>();
+            builder.RegisterType<GetContentDocumentStrategy>();
             builder.RegisterType<DoNothingArhivist>();
 
             var commandAssemblies = typeof(ICommand).GetTypeInfo().Assembly;

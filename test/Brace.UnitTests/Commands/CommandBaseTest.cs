@@ -47,7 +47,7 @@ namespace Brace.UnitTests.Commands
 
             command.SetParameters(commandText, commandArgument, commandParameters);
             await command.ExecuteAsync();
-            documentProcessorMock.Verify(it => it.ProcessAsync(commandArgument, ActionType.Print, commandParameters), Times.Once);
+            documentProcessorMock.Verify(it => it.ProcessAsync(commandArgument, ActionType.GetContent, commandParameters), Times.Once);
         }
 
         [Fact]
@@ -70,14 +70,14 @@ namespace Brace.UnitTests.Commands
         {
             var documentProcessorStub = new Mock<IDocumentProcessor>();
             var command = new CommandForTest(documentProcessorStub.Object);
-            var commandText = "print";
+            var commandText = CommandType.GetContent.ToString();
             var commandArgument = "test";
             var commandParameters = new[] { "decrypt", "encrypt" };
 
             command.SetParameters(commandText, commandArgument, commandParameters);
             var validationResult = command.Validate();
             Assert.False(validationResult.IsValid);
-            Assert.Equal("Invalid command parameters: parameter 'encrypt' can't be used with the 'print' command", validationResult.ValidationMessage);
+            Assert.Equal($"Invalid command parameters: parameter 'encrypt' can't be used with the '{CommandType.GetContent.ToString().ToLower()}' command", validationResult.ValidationMessage);
         }
 
         [Fact]
@@ -96,7 +96,7 @@ namespace Brace.UnitTests.Commands
         }
     }
 
-    [Command(CommandType.Print, AssociatedArchivists = new[] { ArchivistType.Decrypt })]
+    [Command(CommandType.GetContent, AssociatedArchivists = new[] { ArchivistType.Decrypt })]
     public class CommandForTest : CommandBase
     {
         public CommandForTest(IDocumentProcessor documentProcessor) : base(documentProcessor)
@@ -105,7 +105,7 @@ namespace Brace.UnitTests.Commands
 
         protected override ActionType GetActionType()
         {
-            return ActionType.Print;
+            return ActionType.GetContent;
         }
     }
 }

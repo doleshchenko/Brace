@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Brace.Commands;
 using Brace.Commands.CommandImplementation.Read;
 using Brace.DomainService.DocumentProcessor;
 using Moq;
@@ -6,21 +7,21 @@ using Xunit;
 
 namespace Brace.UnitTests.Commands
 {
-    public class PrintCommandTest
+    public class GetContentCommandTest
     {
         [Fact]
         public void Validate_InvalidParameters_InvalidValidationResult()
         {
             var documentProcessorStub = new Mock<IDocumentProcessor>();
-            var command = new PrintCommand(documentProcessorStub.Object);
-            var commandText = "print";
+            var command = new GetContentCommand(documentProcessorStub.Object);
+            var commandText = CommandType.GetContent.ToString();
             var commandArgument = "test";
             var commandParameters = new[] { "decrypt", "encrypt" };
 
             command.SetParameters(commandText, commandArgument, commandParameters);
             var validationResult = command.Validate();
             Assert.False(validationResult.IsValid);
-            Assert.Equal("Invalid command parameters: parameter 'encrypt' can't be used with the 'print' command", validationResult.ValidationMessage);
+            Assert.Equal($"Invalid command parameters: parameter 'encrypt' can't be used with the '{CommandType.GetContent.ToString().ToLower()}' command", validationResult.ValidationMessage);
         }
 
         [Theory]
@@ -28,7 +29,7 @@ namespace Brace.UnitTests.Commands
         public void Validate_ArgumentIsNullOrEmpty_InvalidValidationResult(string argument)
         {
             var documentProcessorStub = new Mock<IDocumentProcessor>();
-            var command = new PrintCommand(documentProcessorStub.Object);
+            var command = new GetContentCommand(documentProcessorStub.Object);
             var commandText = "print";
             var commandParameters = new[] { "decrypt" };
 

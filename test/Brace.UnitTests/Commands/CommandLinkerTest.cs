@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Brace.Commands;
 using Brace.Commands.Factory;
 using Brace.DomainService.TypeLinker;
 using Brace.Stub.CommandLinker;
@@ -18,9 +19,9 @@ namespace Brace.UnitTests.Commands
         [Fact]
         public void GetCommandType_ValidCommand_ReturnsCommand()
         {
-            var command = "print";
+            var command = CommandType.GetContent.ToString();
             var commandType = _commandLinker.GetCommandType(command);
-            Assert.Equal(typeof(PrintCommand), commandType);
+            Assert.Equal(typeof(GetContentCommand), commandType);
         }
 
         [Fact]

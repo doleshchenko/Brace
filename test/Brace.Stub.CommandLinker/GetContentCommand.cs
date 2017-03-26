@@ -6,8 +6,8 @@ using Brace.DomainModel.DocumentProcessing;
 
 namespace Brace.Stub.CommandLinker
 {
-    [Command(CommandType.Print)]
-    public class PrintCommand : ICommand
+    [Command(CommandType.GetContent)]
+    public class GetContentCommand : ICommand
     {
         public Task<DocumentView> ExecuteAsync()
         {

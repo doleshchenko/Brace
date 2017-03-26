@@ -7,13 +7,13 @@ using Brace.Repository.Interface;
 
 namespace Brace.DocumentProcessor.Strategies
 {
-    [DocumentProcessingStrategy(ActionType.Print)]
-    public class PrintDocumentStrategy : IDocumentProcessingStrategy
+    [DocumentProcessingStrategy(ActionType.GetContent)]
+    public class GetContentDocumentStrategy : IDocumentProcessingStrategy
     {
         private readonly IDocumentRepository _documentRepository;
         private readonly IArchivistFactory _archivistFactory;
 
-        public PrintDocumentStrategy(IDocumentRepository documentRepository, IArchivistFactory archivistFactory)
+        public GetContentDocumentStrategy(IDocumentRepository documentRepository, IArchivistFactory archivistFactory)
         {
             _documentRepository = documentRepository;
             _archivistFactory = archivistFactory;

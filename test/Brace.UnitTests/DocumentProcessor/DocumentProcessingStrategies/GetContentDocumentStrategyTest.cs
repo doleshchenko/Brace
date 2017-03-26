@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Brace.UnitTests.DocumentProcessor.DocumentProcessingStrategies
 {
-    public class PrintDocumentStrategyTest
+    public class GetContentDocumentStrategyTest
     {
         [Fact]
         public async Task ProcessAsync_DocumentName_ReturnsDocumentViewWithDocumentContent()
@@ -26,7 +26,7 @@ namespace Brace.UnitTests.DocumentProcessor.DocumentProcessingStrategies
             var archivistFactoryStub = new Mock<IArchivistFactory>();
             repositoryStab.Setup(repository => repository.FindDocumentAsync(expectedDocumentName)).ReturnsAsync(expectedDocument);
             archivistFactoryStub.Setup(factory => factory.CreateArchivistChain(null)).Returns(new DoNothingArhivist());
-            var strategy = new PrintDocumentStrategy(repositoryStab.Object, archivistFactoryStub.Object);
+            var strategy = new GetContentDocumentStrategy(repositoryStab.Object, archivistFactoryStub.Object);
             var documentView = await strategy.ProcessAsync(expectedDocumentName, null);
             Assert.Equal(expectedContent, documentView.Content);
             Assert.Equal(DocumentViewType.Information, documentView.Type);
@@ -40,7 +40,7 @@ namespace Brace.UnitTests.DocumentProcessor.DocumentProcessingStrategies
             var archivistFactoryStub = new Mock<IArchivistFactory>();
             repositoryStab.Setup(repository => repository.FindDocumentAsync(expectedDocumentName)).ReturnsAsync((Document)null);
             archivistFactoryStub.Setup(factory => factory.CreateArchivistChain(null)).Returns(new DoNothingArhivist());
-            var strategy = new PrintDocumentStrategy(repositoryStab.Object, archivistFactoryStub.Object);
+            var strategy = new GetContentDocumentStrategy(repositoryStab.Object, archivistFactoryStub.Object);
             var documentView = await strategy.ProcessAsync(expectedDocumentName, null);
             Assert.Equal($"document '{expectedDocumentName}' not found", documentView.Content);
             Assert.Equal(DocumentViewType.Warning, documentView.Type);

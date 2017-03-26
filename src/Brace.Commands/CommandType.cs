@@ -4,6 +4,6 @@
     {
         Unknown,
         Void,
-        Print
+        GetContent
     }
 }

@@ -4,10 +4,10 @@ using Brace.DomainService.DocumentProcessor;
 
 namespace Brace.Commands.CommandImplementation.Read
 {
-    [Command(CommandType.Print, AssociatedArchivists = new[]{ArchivistType.Decrypt})]
-    public class PrintCommand : CommandBase
+    [Command(CommandType.GetContent, AssociatedArchivists = new[]{ArchivistType.Decrypt})]
+    public class GetContentCommand : CommandBase
     {
-        public PrintCommand(IDocumentProcessor documentProcessor) :base(documentProcessor)
+        public GetContentCommand(IDocumentProcessor documentProcessor) :base(documentProcessor)
         {
         }
 
@@ -29,7 +29,7 @@ namespace Brace.Commands.CommandImplementation.Read
 
         protected override ActionType GetActionType()
         {
-            return ActionType.Print;
+            return ActionType.GetContent;
         }
     }
 }
