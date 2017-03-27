@@ -6,10 +6,6 @@ namespace Brace.DocumentProcessor.Strategies.Archivists
     [DomainModel.DocumentProcessing.Attributes.Archivist(ArchivistType.DoNothing)]
     public class DoNothingArhivist : Archivist
     {
-        public DoNothingArhivist()
-        {
-        }
-
         public DoNothingArhivist(IArchivist successor) : base(successor)
         {
         }

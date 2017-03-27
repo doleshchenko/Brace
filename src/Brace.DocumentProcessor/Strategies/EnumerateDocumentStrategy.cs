@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Brace.DocumentProcessor.Strategies.Archivists.Factory;
 using Brace.DomainModel.DocumentProcessing;
 using Brace.DomainModel.DocumentProcessing.Attributes;
@@ -21,7 +22,17 @@ namespace Brace.DocumentProcessor.Strategies
 
         public async Task<DocumentView> ProcessAsync(string documentName, string[] actions)
         {
-            _documentRepository.
+            var allDocumnents = await _documentRepository.FindDocumentsAsync();
+            var archivist = _archivistFactory.CreateArchivistChain(actions);
+            var resultedDocuments = new List<Document>();
+            foreach (var document in allDocumnents)
+            {
+                var result = archivist.Rethink(document);
+                if (result != null)
+                {
+                    resultedDocuments.Add(result);
+                }
+            }
             throw new System.NotImplementedException();
         }
     }

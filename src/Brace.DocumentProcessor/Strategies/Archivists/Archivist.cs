@@ -7,10 +7,6 @@ namespace Brace.DocumentProcessor.Strategies.Archivists
     {
         protected IArchivist _successor;
 
-        protected Archivist()
-        {
-        }
-
         protected Archivist(IArchivist successor)
         {
             _successor = successor;
