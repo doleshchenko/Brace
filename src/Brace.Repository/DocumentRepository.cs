@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Brace.DomainModel.DocumentProcessing;
 using Brace.Repository.Interface;
 using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 
 namespace Brace.Repository
 {
@@ -24,6 +26,7 @@ namespace Brace.Repository
                 var database = _mongoClient.GetDatabase("Brace");
                 var collection = database.GetCollection<Document>("documents");
                 var document = await collection.Find(filter).FirstOrDefaultAsync();
+                //Expression<Func<Document, bool>> myMethod = null;
                 return document;
             }
             catch (Exception e)

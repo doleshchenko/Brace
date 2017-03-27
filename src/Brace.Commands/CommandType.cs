@@ -4,6 +4,7 @@
     {
         Unknown,
         Void,
-        GetContent
+        GetContent,
+        Emumerate
     }
 }
