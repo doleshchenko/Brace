@@ -7,6 +7,10 @@ namespace Brace.UnitTests.DocumentProcessor.Mock
 {
     public class DecryptArchivistMock : Archivist
     {
+        public DecryptArchivistMock(IArchivist successor) : base(successor)
+        {
+        }
+
         public override Document Rethink(Document document)
         {
             throw new NotImplementedException();

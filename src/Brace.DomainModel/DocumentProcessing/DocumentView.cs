@@ -1,8 +1,17 @@
 ﻿namespace Brace.DomainModel.DocumentProcessing
 {
-    public class DocumentView
+    public abstract class DocumentView
     {
-        public string Content { get; set; }
+        public object Content { get; set; }
         public DocumentViewType Type { get; set; }
+    }
+
+    public class DocumentView<TContent> : DocumentView
+    {
+        public new TContent Content
+        {
+            get { return (TContent)base.Content; }
+            set { base.Content = value; }
+        }
     }
 }
