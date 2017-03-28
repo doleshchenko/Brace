@@ -15,12 +15,19 @@ namespace Brace.Repository
             _mongoClient = new MongoClient("mongodb://localhost:27017");
         }
 
-        public async Task<Document[]> FindDocumentsAsync()
+        public async Task<DocumentWithoutContent[]> GetDocumentsListAsync()
         {
-            var database = _mongoClient.GetDatabase("Brace");
-            var collection = database.GetCollection<Document>("documents");
-            var resultList = await collection.Find(Builders<Document>.Filter.Empty).ToListAsync();
-            return resultList.ToArray();
+            try
+            {
+                var database = _mongoClient.GetDatabase("Brace");
+                var collection = database.GetCollection<DocumentWithoutContent>("documents");
+                var resultList = await collection.Find(Builders<DocumentWithoutContent>.Filter.Empty).ToListAsync();
+                return resultList.ToArray();
+            }
+            catch (Exception e)
+            {
+                throw new RepositoryException("Exception occured while getting the list of documents. Please see inner exception for details.", e);
+            }
         }
 
         public async Task<Document> FindDocumentAsync(string name)

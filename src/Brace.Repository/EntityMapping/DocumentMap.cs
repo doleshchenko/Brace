@@ -8,12 +8,16 @@ namespace Brace.Repository.EntityMapping
         public override void RegisterMap()
         {
             base.RegisterMap();
-            BsonClassMap.RegisterClassMap<Document>(cm =>
+            BsonClassMap.RegisterClassMap<DocumentWithoutContent>(cm =>
             {
                 cm.MapMember(c => c.Name).SetElementName("name");
-                cm.MapMember(c => c.Content).SetElementName("content");
                 cm.MapMember(c => c.IsVisible).SetElementName("is_visible");
                 cm.MapMember(c => c.IsProtected).SetElementName("is_protected");
+            });
+
+            BsonClassMap.RegisterClassMap<Document>(cm =>
+            {
+                cm.MapMember(c => c.Content).SetElementName("content");
             });
         }
     }

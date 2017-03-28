@@ -25,7 +25,7 @@ namespace Brace.UnitTests.DocumentProcessor.DocumentProcessingStrategies
             var repositoryStab = new Mock<IDocumentRepository>();
             var archivistFactoryStub = new Mock<IArchivistFactory>();
             repositoryStab.Setup(repository => repository.FindDocumentAsync(expectedDocumentName)).ReturnsAsync(expectedDocument);
-            archivistFactoryStub.Setup(factory => factory.CreateArchivistChain(null)).Returns(new DoNothingArhivist(null));
+            archivistFactoryStub.Setup(factory => factory.CreateArchivistChain(null)).Returns(new DoNothingArhivist());
             var strategy = new GetContentDocumentStrategy(repositoryStab.Object, archivistFactoryStub.Object);
             var documentView = await strategy.ProcessAsync(expectedDocumentName, null);
             Assert.Equal(expectedContent, documentView.Content);
@@ -39,7 +39,7 @@ namespace Brace.UnitTests.DocumentProcessor.DocumentProcessingStrategies
             var repositoryStab = new Mock<IDocumentRepository>();
             var archivistFactoryStub = new Mock<IArchivistFactory>();
             repositoryStab.Setup(repository => repository.FindDocumentAsync(expectedDocumentName)).ReturnsAsync((Document)null);
-            archivistFactoryStub.Setup(factory => factory.CreateArchivistChain(null)).Returns(new DoNothingArhivist(null));
+            archivistFactoryStub.Setup(factory => factory.CreateArchivistChain(null)).Returns(new DoNothingArhivist());
             var strategy = new GetContentDocumentStrategy(repositoryStab.Object, archivistFactoryStub.Object);
             var documentView = await strategy.ProcessAsync(expectedDocumentName, null);
             Assert.Equal($"document '{expectedDocumentName}' not found", documentView.Content);

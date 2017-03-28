@@ -22,9 +22,18 @@ namespace Brace.DocumentProcessor.Strategies
 
         public async Task<DocumentView> ProcessAsync(string documentName, string[] actions)
         {
-            var allDocumnents = await _documentRepository.FindDocumentsAsync();
+            var allDocumnents = await _documentRepository.GetDocumentsListAsync();
             var archivist = _archivistFactory.CreateArchivistChain(actions);
-            var resultedDocuments = allDocumnents.Select(document => archivist.Rethink(document)).Where(result => result != null);
+            var resultedDocuments = allDocumnents.Select(it =>
+                            new Document
+                            {
+                                Id = it.Id,
+                                Name = it.Name,
+                                IsProtected = it.IsProtected,
+                                IsVisible = it.IsVisible
+                            })
+                    .Select(document => archivist.Rethink(document))
+                    .Where(result => result != null);
             var documentView = new DocumentView<string[]>
             {
                 Content = resultedDocuments.Select(it => it.Content).ToArray(),

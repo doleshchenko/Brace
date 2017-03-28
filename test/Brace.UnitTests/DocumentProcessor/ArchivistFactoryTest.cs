@@ -20,7 +20,7 @@ namespace Brace.UnitTests.DocumentProcessor
         [MemberData(nameof(NullOrEmptyArrayOfActions))]
         public void CreateArchivistChain_NullOrEmptyArrayOfActions_ReturnsDoNothingArchivist(string[] actions)
         {
-            var expectedArchivist = new DoNothingArchivistStub(null);
+            var expectedArchivist = new DoNothingArchivistStub();
             var archivistProviderStub = new Mock<ISingleInterfaceServiceProvider<IArchivist>>();
             var archivistLinkerStub = new Mock<IArchivistLinker>();
             archivistLinkerStub.Setup(linker => linker.GetArchivistType(ArchivistType.DoNothing)).Returns(expectedArchivist.GetType);
@@ -34,7 +34,7 @@ namespace Brace.UnitTests.DocumentProcessor
         public void CreateArchivistChain_CorrectOneAction_ReturnsArchivist()
         {
             var parameters = new[] { "encrypt" };
-            var expectedArchivist = new EncryptArchivistStub(null);
+            var expectedArchivist = new EncryptArchivistStub();
             var archivistProviderStub = new Mock<ISingleInterfaceServiceProvider<IArchivist>>();
             var archivistLinkerStub = new Mock<IArchivistLinker>();
             archivistLinkerStub.Setup(linker => linker.GetArchivistType(ArchivistType.Encrypt)).Returns(expectedArchivist.GetType);
@@ -48,8 +48,8 @@ namespace Brace.UnitTests.DocumentProcessor
         public void CreateArchivistChain_CorrectSeveralActions_ReturnsArchivistChain()
         {
             var parameters = new[] {"decrypt", "getstatus" };
-            var decryptArchivistMock = new DecryptArchivistMock(null);
-            var getStatusArchivsitMock = new GetStatusArchivistMock(null);
+            var decryptArchivistMock = new DecryptArchivistMock();
+            var getStatusArchivsitMock = new GetStatusArchivistMock();
             var archivistProviderStub = new Mock<ISingleInterfaceServiceProvider<IArchivist>>();
             var archivistLinkerStub = new Mock<IArchivistLinker>();
             archivistProviderStub.Setup(provider => provider.Resolve(decryptArchivistMock.GetType())).Returns(decryptArchivistMock);
