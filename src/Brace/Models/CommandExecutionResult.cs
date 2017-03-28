@@ -2,7 +2,7 @@
 {
     public class CommandExecutionResult
     {
-        public string Content { get; set; }
+        public object Content { get; set; }
         public CommandExecutionResultType Type { get; set; }
     }
 

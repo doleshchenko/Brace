@@ -24,11 +24,11 @@ namespace Brace.DocumentProcessor.Strategies
             var document = await _documentRepository.FindDocumentAsync(documentName);
             if (document == null)
             {
-                return new DocumentView {Content = $"document '{documentName}' not found", Type = DocumentViewType.Warning};
+                return new DocumentView<string> {Content = $"document '{documentName}' not found", Type = DocumentViewType.Warning};
             }
             var archivist = _archivistFactory.CreateArchivistChain(actions);
             var rethinkedDocument = archivist.Rethink(document);
-            return new DocumentView {Content = rethinkedDocument.Content, Type = DocumentViewType.Information};
+            return new DocumentView<string> {Content = rethinkedDocument.Content, Type = DocumentViewType.Information};
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Brace.DocumentProcessor.Strategies.Archivists.Factory;
 using Brace.DomainModel.DocumentProcessing;
@@ -24,16 +24,13 @@ namespace Brace.DocumentProcessor.Strategies
         {
             var allDocumnents = await _documentRepository.FindDocumentsAsync();
             var archivist = _archivistFactory.CreateArchivistChain(actions);
-            var resultedDocuments = new List<Document>();
-            foreach (var document in allDocumnents)
+            var resultedDocuments = allDocumnents.Select(document => archivist.Rethink(document)).Where(result => result != null);
+            var documentView = new DocumentView<string[]>
             {
-                var result = archivist.Rethink(document);
-                if (result != null)
-                {
-                    resultedDocuments.Add(result);
-                }
-            }
-            throw new System.NotImplementedException();
+                Content = resultedDocuments.Select(it => it.Content).ToArray(),
+                Type = DocumentViewType.Information
+            };
+            return documentView;
         }
     }
 }
