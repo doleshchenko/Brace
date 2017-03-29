@@ -1,8 +1,8 @@
-﻿namespace Brace.DomainModel.DocumentProcessing
+﻿namespace Brace.DomainModel.DocumentProcessing.Decorator
 {
     public enum DocumentViewType
     {
-        Information,
+        Ok,
         Warning,
         Error
     }

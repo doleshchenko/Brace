@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Brace.Commands.CommandImplementation.InternalCommands;
 using Brace.DomainModel.DocumentProcessing;
+using Brace.DomainModel.DocumentProcessing.Decorator;
 using Xunit;
 
 namespace Brace.UnitTests.Commands
@@ -22,7 +23,7 @@ namespace Brace.UnitTests.Commands
             Assert.Equal(argument, voidCommand.Argument);
             Assert.Equal(command, voidCommand.CommandText);
             Assert.Equal(parameters, voidCommand.Parameters);
-            Assert.Equal($"unknown command [{command}]", result.Content);
+            Assert.Equal($"unknown command [{command}]", result.Content.ContentAsString());
             Assert.Equal(DocumentViewType.Warning, result.Type);
             Assert.True(voidCommand.CreationDate >= beforCommandCreated && voidCommand.CreationDate <= afterCommandCreated);
         }

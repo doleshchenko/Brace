@@ -35,8 +35,13 @@ namespace Brace
 
             builder.RegisterType<DocumentRepository>().As<IDocumentRepository>();
 
-            builder.RegisterType<GetContentDocumentStrategy>();
-            builder.RegisterType<DoNothingArhivist>();
+            var documentProcessorAssembly = typeof(DocumentProcessor.DocumentProcessor).GetTypeInfo().Assembly;
+            builder.RegisterAssemblyTypes(documentProcessorAssembly)
+                .Where(
+                    t =>
+                        t.Namespace.Contains("Brace.DocumentProcessor.Strategies") ||
+                        t.Namespace.Contains("Brace.DocumentProcessor.Strategies.Archivists"));
+            //builder.RegisterAssemblyTypes(documentProcessorAssembly).Where(t => t.Namespace.Contains("Brace.DocumentProcessor.Strategies.Archivists"));
 
             var commandAssemblies = typeof(ICommand).GetTypeInfo().Assembly;
             builder.RegisterAssemblyTypes(commandAssemblies).Where(t => t.Namespace.Contains("Brace.Commands.CommandImplementation"));

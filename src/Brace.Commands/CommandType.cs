@@ -5,6 +5,6 @@
         Unknown,
         Void,
         GetContent,
-        Emumerate
+        Enumerate
     }
 }

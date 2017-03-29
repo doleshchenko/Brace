@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Brace.Commands.Factory;
-using Brace.DomainModel.DocumentProcessing;
+using Brace.DomainModel.DocumentProcessing.Decorator;
 using Brace.Interpretation;
 using Brace.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -45,7 +45,7 @@ namespace Brace.Controllers
             {
                 switch (it)
                 {
-                        case DocumentViewType.Information:
+                        case DocumentViewType.Ok:
                         return CommandExecutionResultType.Ok;
                         case DocumentViewType.Warning:
                         return CommandExecutionResultType.Warning;

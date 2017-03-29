@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Brace.DocumentProcessor.Strategies.Archivists.Factory;
 using Brace.DomainModel.DocumentProcessing;
 using Brace.DomainModel.DocumentProcessing.Attributes;
+using Brace.DomainModel.DocumentProcessing.Decorator;
+using Brace.DomainModel.DocumentProcessing.Decorator.Content;
 using Brace.DomainService.DocumentProcessor;
 using Brace.Repository.Interface;
 
@@ -34,10 +36,18 @@ namespace Brace.DocumentProcessor.Strategies
                             })
                     .Select(document => archivist.Rethink(document))
                     .Where(result => result != null);
-            var documentView = new DocumentView<string[]>
+            var content = new DocumentListContent<DocumentDescriptionContent>();
+            content.AddRange(resultedDocuments.Select(it =>
+                            new DocumentDescriptionContent
+                            {
+                                DocumentName = it.Name,
+                                IsDocumentProtected = it.IsProtected,
+                                IsDocumentVisible = it.IsVisible
+                            }));
+            var documentView = new DocumentView<DocumentListContent<DocumentDescriptionContent>>
             {
-                Content = resultedDocuments.Select(it => it.Content).ToArray(),
-                Type = DocumentViewType.Information
+                Content = content,
+                Type = DocumentViewType.Ok
             };
             return documentView;
         }

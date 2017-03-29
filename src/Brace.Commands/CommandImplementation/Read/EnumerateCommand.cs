@@ -3,7 +3,7 @@ using Brace.DomainService.DocumentProcessor;
 
 namespace Brace.Commands.CommandImplementation.Read
 {
-    [Command(CommandType.Emumerate, AssociatedArchivists = new[]
+    [Command(CommandType.Enumerate, AssociatedArchivists = new[]
     {
         ArchivistType.GetAll, ArchivistType.GetInvisible, ArchivistType.GetVisible, ArchivistType.GetStatus
     })]

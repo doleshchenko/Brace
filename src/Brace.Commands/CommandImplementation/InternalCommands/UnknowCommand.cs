@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Brace.Commands.Validation;
-using Brace.DomainModel.DocumentProcessing;
+using Brace.DomainModel.DocumentProcessing.Decorator;
+using Brace.DomainModel.DocumentProcessing.Decorator.Content;
 
 namespace Brace.Commands.CommandImplementation.InternalCommands
 {
@@ -15,7 +16,11 @@ namespace Brace.Commands.CommandImplementation.InternalCommands
 
         public async Task<DocumentView> ExecuteAsync()
         {
-            return await Task.FromResult(new DocumentView<string> { Content = $"unknown command [{CommandText}]", Type = DocumentViewType.Warning });
+            return await Task.FromResult(new DocumentView<DocumentPlainContent>
+                {
+                    Content = new DocumentPlainContent {PlainText = $"unknown command [{CommandText}]"},
+                    Type = DocumentViewType.Warning
+                });
         }
 
         public void SetParameters(string commandText, string argument, string[] parameters)

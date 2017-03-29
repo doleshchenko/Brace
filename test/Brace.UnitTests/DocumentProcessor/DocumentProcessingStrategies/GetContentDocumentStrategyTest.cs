@@ -3,6 +3,7 @@ using Brace.DocumentProcessor.Strategies;
 using Brace.DocumentProcessor.Strategies.Archivists;
 using Brace.DocumentProcessor.Strategies.Archivists.Factory;
 using Brace.DomainModel.DocumentProcessing;
+using Brace.DomainModel.DocumentProcessing.Decorator;
 using Brace.Repository.Interface;
 using Moq;
 using Xunit;
@@ -28,8 +29,8 @@ namespace Brace.UnitTests.DocumentProcessor.DocumentProcessingStrategies
             archivistFactoryStub.Setup(factory => factory.CreateArchivistChain(null)).Returns(new DoNothingArhivist());
             var strategy = new GetContentDocumentStrategy(repositoryStab.Object, archivistFactoryStub.Object);
             var documentView = await strategy.ProcessAsync(expectedDocumentName, null);
-            Assert.Equal(expectedContent, documentView.Content);
-            Assert.Equal(DocumentViewType.Information, documentView.Type);
+            Assert.Equal(expectedContent, documentView.Content.ContentAsString());
+            Assert.Equal(DocumentViewType.Ok, documentView.Type);
         }
 
         [Fact]
@@ -42,7 +43,7 @@ namespace Brace.UnitTests.DocumentProcessor.DocumentProcessingStrategies
             archivistFactoryStub.Setup(factory => factory.CreateArchivistChain(null)).Returns(new DoNothingArhivist());
             var strategy = new GetContentDocumentStrategy(repositoryStab.Object, archivistFactoryStub.Object);
             var documentView = await strategy.ProcessAsync(expectedDocumentName, null);
-            Assert.Equal($"document '{expectedDocumentName}' not found", documentView.Content);
+            Assert.Equal($"document '{expectedDocumentName}' not found", documentView.Content.ContentAsString());
             Assert.Equal(DocumentViewType.Warning, documentView.Type);
         }
     }

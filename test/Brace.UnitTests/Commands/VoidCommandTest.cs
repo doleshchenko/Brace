@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Brace.Commands.CommandImplementation.InternalCommands;
 using Brace.DomainModel.DocumentProcessing;
+using Brace.DomainModel.DocumentProcessing.Decorator;
 using Xunit;
 
 namespace Brace.UnitTests.Commands
@@ -16,7 +17,7 @@ namespace Brace.UnitTests.Commands
             var afterCommandCreated = DateTime.Now;
             voidCommand.SetParameters(null, null, null);
             var result = await voidCommand.ExecuteAsync();
-            Assert.Equal("void command", result.Content);
+            Assert.Equal("void command", result.Content.ContentAsString());
             Assert.Equal(DocumentViewType.Warning, result.Type);
             Assert.True(voidCommand.CreationDate >= beforCommandCreated && voidCommand.CreationDate <= afterCommandCreated);
         }
