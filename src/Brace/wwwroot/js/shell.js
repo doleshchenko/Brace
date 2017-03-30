@@ -4,9 +4,9 @@
     var CommandResultViewModel = function(text, type) {
         this.text = ko.observable(text);
         this.type = ko.observable(type);
-
+        var that = this;
         this.statusStyle = ko.pureComputed(function () {
-            switch (this.type()) {
+            switch (that.type()) {
             case 0:
                 return "info";
             case 1:
@@ -36,7 +36,15 @@
                     .set('Accept', 'application/json')
                     .end(function (err, res) {
                         if (res.statusCode >= 200 && res.statusCode < 300) {
-                            that.commandResults.push(new CommandResultViewModel(res.body.content, res.body.type));
+                            var content = res.body.content;
+                            if (content.length) {
+                                for (var i = 0; i < content.length; i++) {
+                                    that.commandResults.push(new CommandResultViewModel(that.formatContentToShow(content[i]), res.body.type));
+                                }
+                            } else {
+                                that.commandResults.push(new CommandResultViewModel(that.formatContentToShow(content), res.body.type));
+                            }
+                            
                         } else if (res.statusCode >= 500) {
                             that.commandResults.push(new CommandResultViewModel("error occured. it seems somethig wrong with the server...", 2));
                         }
@@ -70,6 +78,18 @@
             this.commandLineEnabled(true);
             this.commandLineHasFocus(true);
         }
+
+        this.formatContentToShow = function (content){
+            var resultStr = "";
+            
+            for (var propertyName in content) {
+                if (content.hasOwnProperty(propertyName)) {
+                    resultStr += content[propertyName] + " ";
+                }
+            }
+            return resultStr;
+        }
+
     };
 
     ko.applyBindings(new ShellViewModel(), document.getElementById("shell"));
