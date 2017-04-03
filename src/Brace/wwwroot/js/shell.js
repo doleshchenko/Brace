@@ -1,10 +1,54 @@
 ﻿(function (ko, request) {
     "use strict";
 
-    var CommandResultViewModel = function(text, type) {
-        this.text = ko.observable(text);
+    var PlainResultViewModel = function (item) {
+        this.formatItem = function(item) {
+            var resultStr = "";
+            for (var propertyName in item) {
+                if (item.hasOwnProperty(propertyName)) {
+                    resultStr += item[propertyName] + " ";
+                }
+            }
+            return resultStr;
+        }
+        this.item = ko.observable(this.formatItem(item));
+    }
+
+    var TableResultViewModel = function(items) {
+        var that = this;
+        this.items = ko.observableArray(items);
+        this.columnNames = ko.computed(function () {
+            if (that.items().length === 0) {
+                return [];
+            }
+            var props = [];
+            var obj = that.items()[0];
+            for (var name in obj) {
+                if (obj.hasOwnProperty(name)) {
+                    props.push(name);
+                }
+            }
+            return props;
+        });
+
+        this.columnNamesToDisplay = ko.komputed(function () {
+            for (var i = 0; i < that.columnNames.length; i++) {
+                var columnName = that.columnNames[i];
+                var nameArray = [];
+                for (var j = 0; j < columnName.length; j++) {
+                    if (columnName[j] === )
+                }
+            }
+        });
+    }
+
+    var CommandResultViewModel = function(result, type) {
+        this.result = result;
         this.type = ko.observable(type);
         var that = this;
+        this.displayMode = function() {
+            return that.result instanceof TableResultViewModel ? "table" : "plain";
+        };
         this.statusStyle = ko.pureComputed(function () {
             switch (that.type()) {
             case 0:
@@ -38,15 +82,15 @@
                         if (res.statusCode >= 200 && res.statusCode < 300) {
                             var content = res.body.content;
                             if (content.length) {
-                                for (var i = 0; i < content.length; i++) {
-                                    that.commandResults.push(new CommandResultViewModel(that.formatContentToShow(content[i]), res.body.type));
-                                }
+                                that.commandResults.push(new CommandResultViewModel(new TableResultViewModel(content), res.body.type));
                             } else {
-                                that.commandResults.push(new CommandResultViewModel(that.formatContentToShow(content), res.body.type));
+                                that.commandResults.push(new CommandResultViewModel(new PlainResultViewModel(content), res.body.type));
                             }
                             
                         } else if (res.statusCode >= 500) {
-                            that.commandResults.push(new CommandResultViewModel("error occured. it seems somethig wrong with the server...", 2));
+                            that.commandResults.push(new CommandResultViewModel(new PlainResultViewModel({
+                                errorText: "error occured. try it again."
+                            }), 2));
                         }
                         that.commandLineStopAnimation(animationId);
                     });
@@ -78,18 +122,6 @@
             this.commandLineEnabled(true);
             this.commandLineHasFocus(true);
         }
-
-        this.formatContentToShow = function (content){
-            var resultStr = "";
-            
-            for (var propertyName in content) {
-                if (content.hasOwnProperty(propertyName)) {
-                    resultStr += content[propertyName] + " ";
-                }
-            }
-            return resultStr;
-        }
-
     };
 
     ko.applyBindings(new ShellViewModel(), document.getElementById("shell"));
