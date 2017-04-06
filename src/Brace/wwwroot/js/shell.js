@@ -31,19 +31,27 @@
             return props;
         });
 
-        this.columnNamesToDisplay = ko.komputed(function () {
-            for (var i = 0; i < that.columnNames.length; i++) {
-                var columnName = that.columnNames[i];
-                var nameArray = [];
-                for (var j = 0; j < columnName.length; j++) {
-                    if (columnName[j] === )
+        this.columnNamesToDisplay = ko.computed(function () {
+            var names = [];
+            var columnNames = that.columnNames();
+            for (var i = 0; i < columnNames.length; i++) {
+                var columnName = columnNames[i];
+                var j = columnName.length - 1;
+                for (; j > 0; j--) {
+                    if (columnName[j] === columnName[j].toUpperCase()) {
+                        break;
+                    }
                 }
+                var name = columnName.substring(j, columnName.length);
+                names.push(name[0].toLowerCase() + name.slice(1));
             }
+            return names;
         });
     }
 
-    var CommandResultViewModel = function(result, type) {
+    var CommandResultViewModel = function(result, type, forCommand) {
         this.result = result;
+        this.forCommand = ko.observable(forCommand);
         this.type = ko.observable(type);
         var that = this;
         this.displayMode = function() {
@@ -74,23 +82,24 @@
             if (this.commandReady) {
                 var that = this;
                 var animationId;
+                var commandText = event.target.value;
                 request
                     .post('/api/documents')
-                    .send({ commandText: event.target.value })
+                    .send({ commandText: commandText })
                     .set('Accept', 'application/json')
                     .end(function (err, res) {
                         if (res.statusCode >= 200 && res.statusCode < 300) {
                             var content = res.body.content;
-                            if (content.length) {
-                                that.commandResults.push(new CommandResultViewModel(new TableResultViewModel(content), res.body.type));
+                            if (content.constructor === Array) {
+                                that.commandResults.push(new CommandResultViewModel(new TableResultViewModel(content), res.body.type, commandText));
                             } else {
-                                that.commandResults.push(new CommandResultViewModel(new PlainResultViewModel(content), res.body.type));
+                                that.commandResults.push(new CommandResultViewModel(new PlainResultViewModel(content), res.body.type, commandText));
                             }
                             
                         } else if (res.statusCode >= 500) {
                             that.commandResults.push(new CommandResultViewModel(new PlainResultViewModel({
                                 errorText: "error occured. try it again."
-                            }), 2));
+                            }), 2, commandText));
                         }
                         that.commandLineStopAnimation(animationId);
                     });

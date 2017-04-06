@@ -14,12 +14,10 @@ namespace Brace.DomainModel.DocumentProcessing
         MakeVisible,
         [ArchivistTypeDescription("makeinvisible")]
         MakeInvisible,
-        [ArchivistTypeDescription("getvisible")]
+        [ArchivistTypeDescription("visible")]
         GetVisible,
-        [ArchivistTypeDescription("getinvisible")]
+        [ArchivistTypeDescription("invisible")]
         GetInvisible,
-        [ArchivistTypeDescription("getall")]
-        GetAll,
         [ArchivistTypeDescription("getstatus")]
         GetStatus
     }

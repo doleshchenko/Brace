@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Brace.Commands.Validation;
 using Brace.DomainModel.DocumentProcessing;
+using Brace.DomainModel.DocumentProcessing.Attributes;
 using Brace.DomainModel.DocumentProcessing.Decorator;
 using Brace.DomainService.DocumentProcessor;
 
@@ -67,7 +69,18 @@ namespace Brace.Commands
         {
             var attribute = (CommandAttribute)GetType().GetTypeInfo().GetCustomAttributes(typeof(CommandAttribute)).Single();
             var archivists = attribute.AssociatedArchivists;
-            return archivists.Select(it => it.ToString().ToLower()).ToArray();
+            var type = typeof(ArchivistType);
+            var result = new List<string>();
+            foreach (var archivistType in archivists)
+            {
+                var memberInfo = type.GetMember(archivistType.ToString());
+                var archivistTypeAttribute = memberInfo[0].GetCustomAttribute(typeof(ArchivistTypeDescriptionAttribute)) as ArchivistTypeDescriptionAttribute;
+                if (archivistTypeAttribute != null)
+                {
+                    result.Add(archivistTypeAttribute.ArchivistActionName);
+                }
+            }
+            return result.ToArray();
         }
 
         protected abstract ActionType GetActionType();

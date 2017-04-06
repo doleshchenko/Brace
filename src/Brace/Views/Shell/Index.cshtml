@@ -8,6 +8,9 @@
 <div id="shell">
     <ul id="output" class="output-list" data-bind="foreach: commandResults">
         <li>
+            <div class="for-command">
+                <label>\></label><span data-bind="html: forCommand"></span>
+            </div>
             <div data-bind="template: {name: displayMode}, css: statusStyle">
             </div>
         </li>
@@ -25,7 +28,7 @@
 <script type="text/html" id="table">
     <table>
         <thead>
-            <tr data-bind="foreach: result.columnNames">
+            <tr data-bind="foreach: result.columnNamesToDisplay">
                 <th>
                     <span data-bind="text: $data"></span>
                 </th>

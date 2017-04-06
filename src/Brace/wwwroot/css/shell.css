@@ -5,6 +5,14 @@
 .command-line {
     width: 100%;
 }
+.for-command label{
+    margin-right: 5px;
+    color: #A63C58;
+}
+
+.for-command span {
+    color: #FFFFFF;
+}
 
 .command-line label {
     float: left;
@@ -41,4 +49,8 @@
 
 .output-list li > div.warning {
     color: #f2f0a1;
+}
+
+.output-list li > div > table > thead > tr> th {
+    border-bottom: dashed 1px;
 }

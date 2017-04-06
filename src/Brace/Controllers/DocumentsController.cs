@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Brace.Commands.Factory;
 using Brace.DomainModel.DocumentProcessing.Decorator;
+using Brace.DomainModel.DocumentProcessing.Decorator.Content;
 using Brace.Interpretation;
 using Brace.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -31,7 +32,7 @@ namespace Brace.Controllers
             {
                 return Ok(new CommandExecutionResult
                 {
-                    Content = validationResult.ValidationMessage,
+                    Content = new DocumentPlainContent { PlainText = validationResult.ValidationMessage},
                     Type = CommandExecutionResultType.Warning
                 });
             }
