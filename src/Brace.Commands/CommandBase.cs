@@ -65,7 +65,7 @@ namespace Brace.Commands
             return result;
         }
 
-        protected string[] GetAssociatedArchivists()
+        private string[] GetAssociatedArchivists()
         {
             var attribute = (CommandAttribute)GetType().GetTypeInfo().GetCustomAttributes(typeof(CommandAttribute)).Single();
             var archivists = attribute.AssociatedArchivists;

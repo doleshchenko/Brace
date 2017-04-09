@@ -29,7 +29,7 @@ namespace Brace.UnitTests.DocumentProcessor.DocumentProcessingStrategies
                 
             };
             repositoryStab.Setup(it => it.GetDocumentsListAsync()).ReturnsAsync(documentInfos);
-            archivistFactoryStub.Setup(it => it.CreateArchivistChain(actions)).Returns(new DoNothingArhivist());
+            archivistFactoryStub.Setup(it => it.CreateArchivistChain(actions)).Returns(new DoNothingArchivist());
             var strategy = new EnumerateDocumentStrategy(repositoryStab.Object, archivistFactoryStub.Object);
 
             var result = await strategy.ProcessAsync(string.Empty, actions);
@@ -48,9 +48,28 @@ namespace Brace.UnitTests.DocumentProcessor.DocumentProcessingStrategies
         }
 
         [Fact]
-        public async Task ProcessAsync_VisibleAction_ReturnsOnlyVisibleDocuments()
+        public async Task ProcessAsync_ValidAction_CallsCorrespondingArchivistToProcess()
         {
-            
+            var repositoryStab = new Mock<IDocumentRepository>();
+            var archivistFactoryMock = new Mock<IArchivistFactory>();
+            var visibleArchivistMock = new Mock<GetVisibleArchivist>();
+            var documentInfos = new[]
+            {
+                new DocumentWithoutContent {Id = "1", IsProtected = true, IsVisible = true, Name = "name1"},
+                new DocumentWithoutContent {Id = "12", IsProtected = false, IsVisible = true, Name = "name12"},
+                new DocumentWithoutContent {Id = "123", IsProtected = true, IsVisible = false, Name = "name123"},
+
+            };
+            const string _actionName = "visible";
+
+            repositoryStab.Setup(it => it.GetDocumentsListAsync()).ReturnsAsync(documentInfos);
+            archivistFactoryMock.Setup(it => it.CreateArchivistChain(new[] {_actionName}))
+                .Returns(visibleArchivistMock.Object);
+            var strategy = new EnumerateDocumentStrategy(repositoryStab.Object, archivistFactoryMock.Object);
+
+            await strategy.ProcessAsync(string.Empty, new[] {_actionName});
+            archivistFactoryMock.Verify(it => it.CreateArchivistChain(new[] {_actionName}), Times.Once);
+            visibleArchivistMock.Verify(it => it.Rethink(It.IsAny<Document>()), Times.Exactly(documentInfos.Length));
         }
 
         public static IEnumerable<object[]> NullOrEmptyArrayOfActions

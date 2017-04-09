@@ -3,7 +3,7 @@
 namespace Brace.DocumentProcessor.Strategies.Archivists
 {
     [DomainModel.DocumentProcessing.Attributes.Archivist(ArchivistType.DoNothing)]
-    public class DoNothingArhivist : Archivist
+    public class DoNothingArchivist : Archivist
     {
         
         public override Document Rethink(Document document)
