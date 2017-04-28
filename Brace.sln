@@ -39,6 +39,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brace", "src\Brace\Brace.cs
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brace.Stub.CommandLinker", "test\Brace.Stub.CommandLinker\Brace.Stub.CommandLinker.csproj", "{D5DE1862-29B0-458D-8201-5B7F4E2A6B7E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brace.Cryptography", "src\Brace.Cryptography\Brace.Cryptography.csproj", "{77AFF64D-84F7-48F8-AC0D-1224482BA242}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -229,6 +231,18 @@ Global
 		{D5DE1862-29B0-458D-8201-5B7F4E2A6B7E}.Release|x64.Build.0 = Release|Any CPU
 		{D5DE1862-29B0-458D-8201-5B7F4E2A6B7E}.Release|x86.ActiveCfg = Release|Any CPU
 		{D5DE1862-29B0-458D-8201-5B7F4E2A6B7E}.Release|x86.Build.0 = Release|Any CPU
+		{77AFF64D-84F7-48F8-AC0D-1224482BA242}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77AFF64D-84F7-48F8-AC0D-1224482BA242}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77AFF64D-84F7-48F8-AC0D-1224482BA242}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{77AFF64D-84F7-48F8-AC0D-1224482BA242}.Debug|x64.Build.0 = Debug|Any CPU
+		{77AFF64D-84F7-48F8-AC0D-1224482BA242}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{77AFF64D-84F7-48F8-AC0D-1224482BA242}.Debug|x86.Build.0 = Debug|Any CPU
+		{77AFF64D-84F7-48F8-AC0D-1224482BA242}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77AFF64D-84F7-48F8-AC0D-1224482BA242}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77AFF64D-84F7-48F8-AC0D-1224482BA242}.Release|x64.ActiveCfg = Release|Any CPU
+		{77AFF64D-84F7-48F8-AC0D-1224482BA242}.Release|x64.Build.0 = Release|Any CPU
+		{77AFF64D-84F7-48F8-AC0D-1224482BA242}.Release|x86.ActiveCfg = Release|Any CPU
+		{77AFF64D-84F7-48F8-AC0D-1224482BA242}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -250,5 +264,6 @@ Global
 		{72E9D46B-DD10-478D-A9C7-512402A35844} = {5300F869-37BD-4137-B3E7-4E43175D4FB7}
 		{1C86194B-3631-42EC-A4AF-577B0E14AD6C} = {69038CDD-EF9E-46CD-A28A-993CEDDEF10F}
 		{D5DE1862-29B0-458D-8201-5B7F4E2A6B7E} = {5300F869-37BD-4137-B3E7-4E43175D4FB7}
+		{77AFF64D-84F7-48F8-AC0D-1224482BA242} = {69038CDD-EF9E-46CD-A28A-993CEDDEF10F}
 	EndGlobalSection
 EndGlobal
