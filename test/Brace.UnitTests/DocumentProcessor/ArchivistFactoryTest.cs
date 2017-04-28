@@ -47,7 +47,7 @@ namespace Brace.UnitTests.DocumentProcessor
         [Fact]
         public void CreateArchivistChain_CorrectSeveralActions_ReturnsArchivistChain()
         {
-            var parameters = new[] {"decrypt", "getstatus" };
+            var parameters = new[] {"decrypt", "makevisible" };
             var decryptArchivistMock = new DecryptArchivistMock();
             var getStatusArchivsitMock = new GetStatusArchivistMock();
             var archivistProviderStub = new Mock<ISingleInterfaceServiceProvider<IArchivist>>();
@@ -55,7 +55,7 @@ namespace Brace.UnitTests.DocumentProcessor
             archivistProviderStub.Setup(provider => provider.Resolve(decryptArchivistMock.GetType())).Returns(decryptArchivistMock);
             archivistProviderStub.Setup(provider => provider.Resolve(getStatusArchivsitMock.GetType())).Returns(getStatusArchivsitMock);
             archivistLinkerStub.Setup(linker => linker.GetArchivistType(ArchivistType.Decrypt)).Returns(decryptArchivistMock.GetType);
-            archivistLinkerStub.Setup(linker => linker.GetArchivistType(ArchivistType.GetStatus)).Returns(getStatusArchivsitMock.GetType);
+            archivistLinkerStub.Setup(linker => linker.GetArchivistType(ArchivistType.MakeVisible)).Returns(getStatusArchivsitMock.GetType);
             var archivistFactory = new ArchivistFactory(archivistProviderStub.Object, archivistLinkerStub.Object);
             var root = archivistFactory.CreateArchivistChain(parameters);
             var successor1 = ((DecryptArchivistMock) root).GetSuccessor();

@@ -5,7 +5,7 @@ namespace Brace.Commands.CommandImplementation.Read
 {
     [Command(CommandType.Enumerate, AssociatedArchivists = new[]
     {
-        ArchivistType.GetInvisible, ArchivistType.GetVisible, ArchivistType.GetStatus
+        ArchivistType.GetInvisible, ArchivistType.GetVisible
     })]
     public class EnumerateCommand : CommandBase
     {

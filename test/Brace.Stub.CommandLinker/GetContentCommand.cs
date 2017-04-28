@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Brace.Commands;
 using Brace.Commands.Validation;
-using Brace.DomainModel.DocumentProcessing;
 using Brace.DomainModel.DocumentProcessing.Decorator;
 
 namespace Brace.Stub.CommandLinker
