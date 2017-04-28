@@ -1,14 +1,22 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Brace.Commands;
 using Brace.Commands.CommandImplementation.Read;
+using Brace.DomainModel.DocumentProcessing;
 using Brace.DomainService.DocumentProcessor;
 using Moq;
 using Xunit;
 
 namespace Brace.UnitTests.Commands
 {
-    public class GetContentCommandTest
+    public class GetContentCommandTest : CommandTestBase<GetContentCommand>
     {
+        [Fact]
+        public async Task GetActionType_Void_ReturnsGetContentActionType()
+        {
+            await GetActionType_Void_ReturnsActionType(ActionType.GetContent);
+        }
+
         [Fact]
         public void Validate_InvalidParameters_InvalidValidationResult()
         {
