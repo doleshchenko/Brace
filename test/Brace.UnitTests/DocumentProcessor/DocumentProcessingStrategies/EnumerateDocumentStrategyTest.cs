@@ -60,15 +60,15 @@ namespace Brace.UnitTests.DocumentProcessor.DocumentProcessingStrategies
                 new DocumentWithoutContent {Id = "123", IsProtected = true, IsVisible = false, Name = "name123"},
 
             };
-            const string _actionName = "visible";
+            const string actionName = "visible";
 
             repositoryStab.Setup(it => it.GetDocumentsListAsync()).ReturnsAsync(documentInfos);
-            archivistFactoryMock.Setup(it => it.CreateArchivistChain(new[] {_actionName}))
+            archivistFactoryMock.Setup(it => it.CreateArchivistChain(new[] {actionName}))
                 .Returns(visibleArchivistMock.Object);
             var strategy = new EnumerateDocumentStrategy(repositoryStab.Object, archivistFactoryMock.Object);
 
-            await strategy.ProcessAsync(string.Empty, new[] {_actionName});
-            archivistFactoryMock.Verify(it => it.CreateArchivistChain(new[] {_actionName}), Times.Once);
+            await strategy.ProcessAsync(string.Empty, new[] {actionName});
+            archivistFactoryMock.Verify(it => it.CreateArchivistChain(new[] {actionName}), Times.Once);
             visibleArchivistMock.Verify(it => it.Rethink(It.IsAny<Document>()), Times.Exactly(documentInfos.Length));
         }
 

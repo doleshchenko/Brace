@@ -6,24 +6,24 @@ using Xunit;
 
 namespace Brace.UnitTests.DocumentProcessor.Archivists
 {
-    public class GetVisibleArchivistTest
+    public class GetInvisibleArchivistTest
     {
         [Fact]
         public void Rethink_WithoutSuccessorAndVisibleDocument_ReturnsInitialObject()
         {
-            var archivist = new GetVisibleArchivist {Successor = null};
-            var document = new Document {IsVisible = true};
+            var archivist = new GetInvisibleArchivist { Successor = null };
+            var document = new Document { IsVisible = true };
             var result = archivist.Rethink(document);
-            Assert.Equal(document, result);
+            Assert.Null(result);
         }
 
         [Fact]
         public void Rethink_WithoutSuccessorAndInvisibleDocument_ReturnsNullObject()
         {
-            var archivist = new GetVisibleArchivist {Successor = null};
-            var document = new Document {IsVisible = false};
+            var archivist = new GetInvisibleArchivist { Successor = null };
+            var document = new Document { IsVisible = false };
             var result = archivist.Rethink(document);
-            Assert.Null(result);
+            Assert.Equal(document, result);
         }
 
         [Fact]
@@ -31,8 +31,8 @@ namespace Brace.UnitTests.DocumentProcessor.Archivists
         {
             var archivistMock = new Mock<IArchivist>();
             archivistMock.Setup(it => it.Successor).Returns((IArchivist)null);
-            var archivist = new GetVisibleArchivist { Successor = archivistMock.Object };
-            var document = new Document { IsVisible = true };
+            var archivist = new GetInvisibleArchivist { Successor = archivistMock.Object };
+            var document = new Document { IsVisible = false };
             var result = archivist.Rethink(document);
             Assert.Null(result);
             archivistMock.Verify(it => it.Rethink(document), Times.Once);
