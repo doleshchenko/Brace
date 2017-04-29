@@ -22,10 +22,10 @@ namespace Brace.DocumentProcessor.Strategies
             _archivistFactory = archivistFactory;
         }
 
-        public async Task<DocumentView> ProcessAsync(string documentName, string[] actions)
+        public async Task<DocumentView> ProcessAsync(string documentName, DocumentProcessingAction[] documentProcessingActions)
         {
             var allDocumnents = await _documentRepository.GetDocumentsListAsync();
-            var archivist = _archivistFactory.CreateArchivistChain(actions);
+            var archivist = _archivistFactory.CreateArchivistChain(documentProcessingActions?.Select(it => it.ActionName).ToArray());
             var resultedDocuments = allDocumnents.Select(it =>
                             new Document
                             {

@@ -17,7 +17,7 @@ namespace Brace.UnitTests.DocumentProcessor.DocumentProcessingStrategies
     {
         [Theory]
         [MemberData(nameof(NullOrEmptyArrayOfActions))]
-        public async Task ProcessAsync_NoActions_ReturnsAllDocuments(string[] actions)
+        public async Task ProcessAsync_NoActions_ReturnsAllDocuments(DocumentProcessingAction[] actions)
         {
             var repositoryStab = new Mock<IDocumentRepository>();
             var archivistFactoryStub = new Mock<IArchivistFactory>();
@@ -29,7 +29,7 @@ namespace Brace.UnitTests.DocumentProcessor.DocumentProcessingStrategies
                 
             };
             repositoryStab.Setup(it => it.GetDocumentsListAsync()).ReturnsAsync(documentInfos);
-            archivistFactoryStub.Setup(it => it.CreateArchivistChain(actions)).Returns(new DoNothingArchivist());
+            archivistFactoryStub.Setup(it => it.CreateArchivistChain(It.IsAny<string[]>())).Returns(new DoNothingArchivist());
             var strategy = new EnumerateDocumentStrategy(repositoryStab.Object, archivistFactoryStub.Object);
 
             var result = await strategy.ProcessAsync(string.Empty, actions);
@@ -67,7 +67,7 @@ namespace Brace.UnitTests.DocumentProcessor.DocumentProcessingStrategies
                 .Returns(visibleArchivistMock.Object);
             var strategy = new EnumerateDocumentStrategy(repositoryStab.Object, archivistFactoryMock.Object);
 
-            await strategy.ProcessAsync(string.Empty, new[] {actionName});
+            await strategy.ProcessAsync(string.Empty, new[] {new DocumentProcessingAction {ActionName = actionName}});
             archivistFactoryMock.Verify(it => it.CreateArchivistChain(new[] {actionName}), Times.Once);
             visibleArchivistMock.Verify(it => it.Rethink(It.IsAny<Document>()), Times.Exactly(documentInfos.Length));
         }
@@ -77,7 +77,7 @@ namespace Brace.UnitTests.DocumentProcessor.DocumentProcessingStrategies
             get
             {
                 yield return new object[] { null };
-                yield return new object[] { new string[0] };
+                yield return new object[] { new DocumentProcessingAction[0] };
             }
         }
     }

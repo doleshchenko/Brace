@@ -25,7 +25,7 @@ namespace Brace.Interpretation
                 argument = arguments[0];
             }
             var parameters = commandChanks.Where(it => it.StartsWith("-")).Select(it => it.Remove(0,1)).ToArray();
-            return new CommandInterpretation {Command = command, Argument = argument, Parameters = parameters};
+            return new CommandInterpretation {Command = command, Argument = argument, Parameters = parameters.ToDictionary(it => it, it => string.Empty)};
         }
     }
 }

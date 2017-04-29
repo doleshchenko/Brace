@@ -7,6 +7,7 @@ using Brace.Commands.Validation;
 using Brace.DomainModel.DocumentProcessing;
 using Brace.DomainModel.DocumentProcessing.Attributes;
 using Brace.DomainModel.DocumentProcessing.Decorator;
+using Brace.DomainService.Command;
 using Brace.DomainService.DocumentProcessor;
 
 namespace Brace.Commands
@@ -15,8 +16,8 @@ namespace Brace.Commands
     {
         protected readonly IDocumentProcessor _documentProcessor;
         private string _argument;
-        private string[] _parameters;
         private string _commandText;
+        private CommandParameter[] _parameters;
 
         protected CommandBase(IDocumentProcessor documentProcessor)
         {
@@ -25,17 +26,22 @@ namespace Brace.Commands
         }
         public DateTime CreationDate { get; }
         public string CommandText => _commandText;
-        public string Argument => _argument;
-        public string[] Parameters => _parameters;
+        public string Subject => _argument;
+        public CommandParameter[] Parameters => _parameters;
        
         public virtual async Task<DocumentView> ExecuteAsync()
         {
-            return await _documentProcessor.ProcessAsync(_argument, GetActionType(), _parameters);
+            return await _documentProcessor.ProcessAsync(_argument, GetActionType(),
+                _parameters?.Select(it => new ActionParameter
+                {
+                    Name = it.Name,
+                    Data = it.Arguments
+                }).ToArray());
         }
 
-        public void SetParameters(string commandText, string argument, string[] parameters)
+        public void SetParameters(string commandText, string subject, CommandParameter[] parameters)
         {
-            _argument = argument;
+            _argument = subject;
             _parameters = parameters;
             _commandText = commandText;
         }
@@ -45,7 +51,7 @@ namespace Brace.Commands
             var result = new CommandValidationResult();
             if (Parameters != null && Parameters.Any())
             {
-                var allParametersDistinct = Parameters.Distinct();
+                var allParametersDistinct = Parameters.GroupBy(it => it.Name);
                 if (allParametersDistinct.Count() != Parameters.Length)
                 {
                     result.IsValid = false;
@@ -54,10 +60,10 @@ namespace Brace.Commands
                 var archivists = GetAssociatedArchivists();
                 foreach (var parameter in Parameters)
                 {
-                    if (!archivists.Contains(parameter))
+                    if (!archivists.Contains(parameter.Name))
                     {
                         result.IsValid = false;
-                        result.ValidationMessage = $"Invalid command parameters: parameter '{parameter}' can't be used with the '{GetActionType().ToString().ToLowerInvariant()}' command";
+                        result.ValidationMessage = $"Invalid command parameters: parameter '{parameter.Name}' can't be used with the '{GetActionType().ToString().ToLowerInvariant()}' command";
                         break;
                     }
                 }

@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Brace.Commands.Factory;
 using Brace.DomainModel.DocumentProcessing.Decorator;
 using Brace.DomainModel.DocumentProcessing.Decorator.Content;
+using Brace.DomainService.Command;
 using Brace.Interpretation;
 using Brace.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -26,7 +28,15 @@ namespace Brace.Controllers
         public async Task<IActionResult> Post([FromBody] Command command)
         {
             var interpretation = _commandInterpreter.Interpret(command.CommandText);
-            var concreteCommand = _commandFactory.CreateCommand(interpretation.Command, interpretation.Argument, interpretation.Parameters);
+            var commandInfo = new CommandInfo
+            {
+                Command = interpretation.Command,
+                Subject = interpretation.Argument,
+                Parameters = interpretation.Parameters
+                    .Select(it => new CommandParameter {Name = it.Key, Arguments = it.Value})
+                    .ToArray()
+            };
+            var concreteCommand = _commandFactory.CreateCommand(commandInfo);
             var  validationResult = concreteCommand.Validate();
             if (!validationResult.IsValid)
             {

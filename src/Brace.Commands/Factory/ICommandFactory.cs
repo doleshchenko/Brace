@@ -1,7 +1,9 @@
-﻿namespace Brace.Commands.Factory
+﻿using Brace.DomainService.Command;
+
+namespace Brace.Commands.Factory
 {
     public interface ICommandFactory
     {
-        ICommand CreateCommand(string command, string argument, string[] parameters);
+        ICommand CreateCommand(CommandInfo commandInfo);
     }
 }

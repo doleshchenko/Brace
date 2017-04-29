@@ -3,15 +3,16 @@ using System.Threading.Tasks;
 using Brace.Commands;
 using Brace.Commands.Validation;
 using Brace.DomainModel.DocumentProcessing.Decorator;
+using Brace.DomainService.Command;
 
 namespace Brace.Stub.CommandLinker
 {
     [Command(CommandType.Enumerate)]
     public class EnumerateCommand : ICommand
     {
-        public string Argument { get; }
+        public string Subject { get; }
         public string CommandText { get; }
-        public string[] Parameters { get; }
+        public CommandParameter[] Parameters { get; }
         public DateTime CreationDate { get; }
         public Task<DocumentView> ExecuteAsync()
         {
@@ -23,7 +24,7 @@ namespace Brace.Stub.CommandLinker
             throw new NotImplementedException();
         }
 
-        public void SetParameters(string commandText, string argument, string[] parameters)
+        public void SetParameters(string commandText, string subject, CommandParameter[] parameters)
         {
             throw new NotImplementedException();
         }

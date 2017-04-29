@@ -19,7 +19,7 @@ namespace Brace.Commands.CommandImplementation.Read
                 return validationResult;
             }
 
-            if (string.IsNullOrWhiteSpace(Argument))
+            if (string.IsNullOrWhiteSpace(Subject))
             {
                 validationResult.IsValid = false;
                 validationResult.ValidationMessage = "Invalid command argument: document name can't be empty";

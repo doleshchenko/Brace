@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Brace.DocumentProcessor.Strategies.Archivists.Factory;
 using Brace.DomainModel.DocumentProcessing;
 using Brace.DomainModel.DocumentProcessing.Attributes;
@@ -21,7 +22,7 @@ namespace Brace.DocumentProcessor.Strategies
             _archivistFactory = archivistFactory;
         }
 
-        public async Task<DocumentView> ProcessAsync(string documentName, string[] actions)
+        public async Task<DocumentView> ProcessAsync(string documentName, DocumentProcessingAction[] documentProcessingActions)
         {
             var document = await _documentRepository.FindDocumentAsync(documentName);
             if (document == null)
@@ -32,7 +33,7 @@ namespace Brace.DocumentProcessor.Strategies
                     Type = DocumentViewType.Warning
                 };
             }
-            var archivist = _archivistFactory.CreateArchivistChain(actions);
+            var archivist = _archivistFactory.CreateArchivistChain(documentProcessingActions?.Select(it => it.ActionName).ToArray());
             var rethinkedDocument = archivist.Rethink(document);
             return new DocumentView<DocumentPlainContent>
             {

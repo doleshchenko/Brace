@@ -19,7 +19,7 @@ namespace Brace.UnitTests.Commands
             var result = await voidCommand.ExecuteAsync();
             Assert.Equal("void command", result.Content.ContentAsString());
             Assert.Equal(DocumentViewType.Warning, result.Type);
-            Assert.Null(voidCommand.Argument);
+            Assert.Null(voidCommand.Subject);
             Assert.Null(voidCommand.Parameters);
             Assert.Null(voidCommand.CommandText);
             Assert.True(voidCommand.CreationDate >= beforCommandCreated && voidCommand.CreationDate <= afterCommandCreated);

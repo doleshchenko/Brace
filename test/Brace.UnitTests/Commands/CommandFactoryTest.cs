@@ -1,6 +1,7 @@
 ﻿using Brace.Commands;
 using Brace.Commands.Factory;
 using Brace.DomainService;
+using Brace.DomainService.Command;
 using Brace.DomainService.TypeLinker;
 using Moq;
 using Xunit;
@@ -14,7 +15,10 @@ namespace Brace.UnitTests.Commands
         {
             var command = "test";
             var argument = "argument";
-            var parameters = new[] {"1", "2", "3"};
+            var parameters = new[]
+            {
+                new CommandParameter {Name = "1"}, new CommandParameter {Name = "2"}, new CommandParameter {Name = "3"}
+            };
             var commandMock = new Mock<ICommand>();
 
             var commandLinkerStub = new Mock<ICommandLinker>();
@@ -23,7 +27,13 @@ namespace Brace.UnitTests.Commands
             commandLinkerStub.Setup(it => it.GetCommandType(command)).Returns(commandMock.Object.GetType);
 
             var commandFactory = new CommandFactory(commandLinkerStub.Object, commandProviderStub.Object);
-            var  commandInstance = commandFactory.CreateCommand(command, argument, parameters);
+            var commandInfo = new CommandInfo
+            {
+                Command = command,
+                Subject = argument,
+                Parameters = parameters
+            };
+            var  commandInstance = commandFactory.CreateCommand(commandInfo);
             Assert.NotNull(commandInstance);
             Assert.Equal(commandInstance, commandMock.Object);
             commandMock.Verify(it => it.SetParameters(command, argument, parameters), Times.Once);
@@ -34,7 +44,10 @@ namespace Brace.UnitTests.Commands
         {
             var command = "someunknowncommand";
             var argument = "argument";
-            var parameters = new[] { "1", "2", "3" };
+            var parameters = new[]
+            {
+                new CommandParameter {Name = "1"}, new CommandParameter {Name = "2"}, new CommandParameter {Name = "3"}
+            };
             var commandMock = new Mock<ICommand>();
 
             var commandLinkerStub = new Mock<ICommandLinker>();
@@ -43,7 +56,13 @@ namespace Brace.UnitTests.Commands
             commandLinkerStub.Setup(it => it.GetCommandType(command)).Throws(new LinkerException($"Invalid command identifier - {command}. Cannot translate into CommandType."));
             commandLinkerStub.Setup(it => it.GetCommandType(CommandType.Unknown.ToString())).Returns(commandMock.Object.GetType);
             var commandFactory = new CommandFactory(commandLinkerStub.Object, commandProviderStub.Object);
-            var commandInstance = commandFactory.CreateCommand(command, argument, parameters);
+            var commandInfo = new CommandInfo
+            {
+                Command = command,
+                Subject = argument,
+                Parameters = parameters
+            };
+            var commandInstance = commandFactory.CreateCommand(commandInfo);
             Assert.NotNull(commandInstance);
             Assert.Equal(commandInstance, commandMock.Object);
             commandMock.Verify(it => it.SetParameters(command, argument, parameters), Times.Once);

@@ -53,8 +53,8 @@ namespace Brace.UnitTests.Interpretation
             Assert.Equal(expectedCommand, interpretation.Command);
             Assert.Equal(expectedArgument, interpretation.Argument);
             Assert.NotNull(interpretation.Parameters);
-            Assert.Equal(expectedParameters.Length, interpretation.Parameters.Length);
-            Assert.All(expectedParameters, it => Assert.Contains(it, interpretation.Parameters));
+            Assert.Equal(expectedParameters.Length, interpretation.Parameters.Count);
+            Assert.All(expectedParameters, it => Assert.Contains(it, interpretation.Parameters.Keys));
         }
 
         [Fact]
@@ -68,8 +68,8 @@ namespace Brace.UnitTests.Interpretation
             Assert.Equal(expectedCommand, interpretation.Command);
             Assert.Equal(expectedArgument, interpretation.Argument);
             Assert.NotNull(interpretation.Parameters);
-            Assert.Equal(expectedParameters.Length, interpretation.Parameters.Length);
-            Assert.All(expectedParameters, it => Assert.Contains(it, interpretation.Parameters));
+            Assert.Equal(expectedParameters.Length, interpretation.Parameters.Count);
+            Assert.All(expectedParameters, it => Assert.Contains(it, interpretation.Parameters.Keys));
         }
 
         [Fact]

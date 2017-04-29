@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Brace.Commands.CommandImplementation.InternalCommands;
 using Brace.Commands.Validation;
 using Brace.DomainModel.DocumentProcessing.Decorator;
+using Brace.DomainService.Command;
 using Xunit;
 
 namespace Brace.UnitTests.Commands
@@ -17,10 +18,10 @@ namespace Brace.UnitTests.Commands
             var afterCommandCreated = DateTime.Now;
             var command = "someunknowncommand";
             var argument = "argument";
-            var parameters = new[] { "1", "2", "3" };
+            var parameters = new[] { new CommandParameter { Name = "1" }, new CommandParameter { Name = "2" }, new CommandParameter { Name = "3" } };
             unknowCommand.SetParameters(command, argument, parameters);
             var result = await unknowCommand.ExecuteAsync();
-            Assert.Equal(argument, unknowCommand.Argument);
+            Assert.Equal(argument, unknowCommand.Subject);
             Assert.Equal(command, unknowCommand.CommandText);
             Assert.Equal(parameters, unknowCommand.Parameters);
             Assert.Equal($"unknown command [{command}]", result.Content.ContentAsString());

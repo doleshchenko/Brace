@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Brace.Commands;
 using Brace.Commands.CommandImplementation.Read;
 using Brace.DomainModel.DocumentProcessing;
+using Brace.DomainService.Command;
 using Brace.DomainService.DocumentProcessor;
 using Moq;
 using Xunit;
@@ -24,7 +25,7 @@ namespace Brace.UnitTests.Commands
             var command = new GetContentCommand(documentProcessorStub.Object);
             var commandText = CommandType.GetContent.ToString();
             var commandArgument = "test";
-            var commandParameters = new[] { "decrypt", "encrypt" };
+            var commandParameters = new[] {new CommandParameter{Name = "decrypt"}, new CommandParameter { Name = "encrypt" } };
 
             command.SetParameters(commandText, commandArgument, commandParameters);
             var validationResult = command.Validate();
@@ -39,7 +40,7 @@ namespace Brace.UnitTests.Commands
             var documentProcessorStub = new Mock<IDocumentProcessor>();
             var command = new GetContentCommand(documentProcessorStub.Object);
             var commandText = "print";
-            var commandParameters = new[] { "decrypt" };
+            var commandParameters = new[] { new CommandParameter { Name = "decrypt" } };
 
             command.SetParameters(commandText, argument, commandParameters);
             var validationResult = command.Validate();

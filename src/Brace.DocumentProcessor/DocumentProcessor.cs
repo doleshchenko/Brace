@@ -1,8 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
 using Brace.DomainModel.DocumentProcessing;
 using Brace.DomainModel.DocumentProcessing.Decorator;
 using Brace.DomainService;
 using Brace.DomainService.DocumentProcessor;
+using System.Threading.Tasks;
 
 namespace Brace.DocumentProcessor
 {
@@ -19,11 +20,16 @@ namespace Brace.DocumentProcessor
             _strategyProvider = strategyProvider;
         }
 
-        public async Task<DocumentView> ProcessAsync(string documentName, ActionType action, string[] actionParameters)
+        public async Task<DocumentView> ProcessAsync(string documentName, ActionType action, ActionParameter[] actionParameters)
         {
             var strategyType = _processingStrategyTypeLinker.GetStrategyType(action);
             var strategy = _strategyProvider.Resolve(strategyType);
-            return await strategy.ProcessAsync(documentName, actionParameters);
+            return await strategy.ProcessAsync(documentName, actionParameters?
+                .Select(it => new DocumentProcessingAction
+                {
+                    ActionName = it.Name,
+                    RequiredData = it.Data
+                }).ToArray());
         }
     }
 }

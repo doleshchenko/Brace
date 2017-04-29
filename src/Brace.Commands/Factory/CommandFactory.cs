@@ -1,5 +1,6 @@
 ﻿using System;
 using Brace.DomainService;
+using Brace.DomainService.Command;
 using Brace.DomainService.TypeLinker;
 
 namespace Brace.Commands.Factory
@@ -15,19 +16,19 @@ namespace Brace.Commands.Factory
             _commandProvider = commandProvider;
         }
 
-        public ICommand CreateCommand(string command, string argument, string[] parameters)
+        public ICommand CreateCommand(CommandInfo commandInfo)
         {
             Type commandType;
             try
             {
-                commandType = _commandLinker.GetCommandType(command);
+                commandType = _commandLinker.GetCommandType(commandInfo.Command);
             }
             catch (LinkerException e) when (e.Message.Contains("Invalid command identifier"))
             {
                 commandType = _commandLinker.GetCommandType(CommandType.Unknown.ToString());
             }
             var commandObject = _commandProvider.Resolve(commandType);
-            commandObject.SetParameters(command, argument, parameters);
+            commandObject.SetParameters(commandInfo.Command, commandInfo.Subject, commandInfo.Parameters);
             return commandObject;
         }
     }
