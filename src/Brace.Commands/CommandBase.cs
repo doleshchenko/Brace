@@ -80,8 +80,9 @@ namespace Brace.Commands
             foreach (var archivistType in archivists)
             {
                 var memberInfo = type.GetMember(archivistType.ToString());
-                var archivistTypeAttribute = memberInfo[0].GetCustomAttribute(typeof(ArchivistTypeDescriptionAttribute)) as ArchivistTypeDescriptionAttribute;
-                if (archivistTypeAttribute != null)
+                if (memberInfo[0].GetCustomAttribute(typeof(ArchivistTypeDescriptionAttribute)) is
+                    ArchivistTypeDescriptionAttribute
+                    archivistTypeAttribute)
                 {
                     result.Add(archivistTypeAttribute.ArchivistActionName);
                 }

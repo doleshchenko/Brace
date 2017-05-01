@@ -8,7 +8,7 @@ namespace Brace.Cryptography
     {
         private static readonly byte[] _salt = { 17, 12, 20, 14, 15, 05, 19, 86 };
 
-        public EcryptedData Encrypt(string key, string original)
+        public EncryptedData Encrypt(string key, string original)
         {
             using (var aes = Aes.Create())
             {
@@ -25,11 +25,11 @@ namespace Brace.Cryptography
                         encrypted = msEncrypt.ToArray();
                     }
                 }
-                return new EcryptedData { CipherText = encrypted, Iv = aes.IV };
+                return new EncryptedData { CipherText = encrypted, Iv = aes.IV };
             }
         }
 
-        public string Decrypt(EcryptedData encryptedData, string key)
+        public string Decrypt(EncryptedData encryptedData, string key)
         {
             string plaintext;
             using (var aes = Aes.Create())

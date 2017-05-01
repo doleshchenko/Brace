@@ -11,8 +11,7 @@ namespace Brace.UnitTests.DocumentProcessor.Archivists
         [Fact]
         public void Rethink_NullDocumentWithoutSuccessor_ReturnsNull()
         {
-            var archivist = new DoNothingArchivist();
-            archivist.Successor = null;
+            var archivist = new DoNothingArchivist {Successor = null};
             var result = archivist.Rethink(null);
             Assert.Null(result);
         }
@@ -20,8 +19,7 @@ namespace Brace.UnitTests.DocumentProcessor.Archivists
         [Fact]
         public void Rethink_WithoutSuccessor_ReturnsInitialObject()
         {
-            var archivist = new DoNothingArchivist();
-            archivist.Successor = null;
+            var archivist = new DoNothingArchivist {Successor = null};
             var document = new Document();
             var result = archivist.Rethink(document);
             Assert.Equal(document, result);

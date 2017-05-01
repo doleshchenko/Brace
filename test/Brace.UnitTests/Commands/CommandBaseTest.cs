@@ -60,6 +60,7 @@ namespace Brace.UnitTests.Commands
                     Name = parameter.Name,
                     Data = parameter.Arguments
                 }).ToArray();
+
             documentProcessorMock.Verify(
                 it => it.ProcessAsync(commandArgument, ActionType.GetContent,
                     It.Is<ActionParameter[]>(p => CompareActionParameters(p, exp))), Times.Once);

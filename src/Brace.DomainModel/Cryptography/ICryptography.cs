@@ -2,7 +2,7 @@
 {
     public interface ICryptography
     {
-        EcryptedData Encrypt(string key, string original);
-        string Decrypt(EcryptedData encryptedData, string key);
+        EncryptedData Encrypt(string key, string original);
+        string Decrypt(EncryptedData encryptedData, string key);
     }
 }
