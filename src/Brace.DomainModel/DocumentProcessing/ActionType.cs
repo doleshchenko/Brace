@@ -3,6 +3,7 @@
     public enum ActionType
     {
         GetContent,
-        Enumerate
+        Enumerate,
+        AddDocument
     }
 }

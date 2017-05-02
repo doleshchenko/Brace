@@ -5,6 +5,7 @@
         Unknown,
         Void,
         GetContent,
-        Enumerate
+        Enumerate,
+        AddDocument
     }
 }
