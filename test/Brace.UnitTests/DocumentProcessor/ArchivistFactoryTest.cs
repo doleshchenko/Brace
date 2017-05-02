@@ -18,7 +18,7 @@ namespace Brace.UnitTests.DocumentProcessor
     {
         [Theory]
         [MemberData(nameof(NullOrEmptyArrayOfActions))]
-        public void CreateArchivistChain_NullOrEmptyArrayOfActions_ReturnsDoNothingArchivist(string[] actions)
+        public void CreateArchivistChain_NullOrEmptyArrayOfActions_ReturnsDoNothingArchivist(DocumentProcessingAction[] actions)
         {
             var expectedArchivist = new DoNothingArchivistStub();
             var archivistProviderStub = new Mock<ISingleInterfaceServiceProvider<IArchivist>>();
@@ -33,7 +33,7 @@ namespace Brace.UnitTests.DocumentProcessor
         [Fact]
         public void CreateArchivistChain_CorrectOneAction_ReturnsArchivist()
         {
-            var parameters = new[] { "encrypt" };
+            var parameters = new[] { new DocumentProcessingAction {ActionName = "encrypt" }};
             var expectedArchivist = new EncryptArchivistStub();
             var archivistProviderStub = new Mock<ISingleInterfaceServiceProvider<IArchivist>>();
             var archivistLinkerStub = new Mock<IArchivistLinker>();
@@ -47,7 +47,7 @@ namespace Brace.UnitTests.DocumentProcessor
         [Fact]
         public void CreateArchivistChain_CorrectSeveralActions_ReturnsArchivistChain()
         {
-            var parameters = new[] {"decrypt", "makevisible" };
+            var parameters = new[] { new DocumentProcessingAction { ActionName = "decrypt" }, new DocumentProcessingAction { ActionName = "makevisible" } };
             var decryptArchivistMock = new DecryptArchivistMock();
             var getStatusArchivsitMock = new GetStatusArchivistMock();
             var archivistProviderStub = new Mock<ISingleInterfaceServiceProvider<IArchivist>>();
@@ -68,7 +68,7 @@ namespace Brace.UnitTests.DocumentProcessor
 
         [Theory]
         [MemberData(nameof(InvalidActionsArray))]
-        public void CreateArchivistChain_IncorrectAction_ThrowsDocumentProcessorException(string[] actions)
+        public void CreateArchivistChain_IncorrectAction_ThrowsDocumentProcessorException(DocumentProcessingAction[] actions)
         {
             var archivistProviderStub = new Mock<ISingleInterfaceServiceProvider<IArchivist>>();
             var archivistLinkerStub = new Mock<IArchivistLinker>();
@@ -79,8 +79,22 @@ namespace Brace.UnitTests.DocumentProcessor
                     .Where(it => it.Attribure != null)
                     .ToArray();
 
-            var wrongItems = actions.Except(fieldsWithAttributes.Select(it => it.Attribure.ArchivistActionName)).ToArray();
+            var wrongItems = actions.Select(item => item.ActionName).Except(fieldsWithAttributes.Select(it => it.Attribure.ArchivistActionName)).ToArray();
             Assert.Equal($"Invalid action (command parameter) \"{string.Join(",", wrongItems)}\". Cannot find corresponding Archivist type.", result.Message);
+        }
+
+        [Fact]
+        public void CreateArchivistChain_ConfigurableAction_CallConfigureMethodOfTheArchivist()
+        {
+            var parameters = new[] { new DocumentProcessingAction { ActionName = "decrypt", RequiredData = "password"} };
+            var decryptArchivistMock = new Mock<IConfigurableArchivist>();
+            var archivistProviderStub = new Mock<ISingleInterfaceServiceProvider<IArchivist>>();
+            var archivistLinkerStub = new Mock<IArchivistLinker>();
+            archivistProviderStub.Setup(provider => provider.Resolve(decryptArchivistMock.Object.GetType())).Returns(decryptArchivistMock.Object);
+            archivistLinkerStub.Setup(linker => linker.GetArchivistType(ArchivistType.Decrypt)).Returns(decryptArchivistMock.Object.GetType);
+            var archivistFactory = new ArchivistFactory(archivistProviderStub.Object, archivistLinkerStub.Object);
+            archivistFactory.CreateArchivistChain(parameters);
+            decryptArchivistMock.Verify(it => it.Configure("password"), Times.Once);
         }
 
         public static IEnumerable<object[]> NullOrEmptyArrayOfActions
@@ -88,7 +102,7 @@ namespace Brace.UnitTests.DocumentProcessor
             get
             {
                 yield return new object[] { null };
-                yield return new object[] { new string[0] };
+                yield return new object[] { new DocumentProcessingAction[0] };
             }
         }
 
@@ -96,9 +110,9 @@ namespace Brace.UnitTests.DocumentProcessor
         {
             get
             {
-                yield return new object[] { new[] {"fake", "action"} }; //both invalid
-                yield return new object[] { new[] { "fake", "encrypt"} }; //first valid, second invalid
-                yield return new object[] { new[] { "decrypt", "fake"} }; //second valid, first invalid
+                yield return new object[] { new[] { new DocumentProcessingAction {ActionName = "fake"}, new DocumentProcessingAction{ActionName = "action"}} }; //both invalid
+                yield return new object[] { new[] { new DocumentProcessingAction { ActionName = "fake" }, new DocumentProcessingAction { ActionName = "ecnrypt" }} }; //first valid, second invalid
+                yield return new object[] { new[] { new DocumentProcessingAction { ActionName = "decrypt" }, new DocumentProcessingAction { ActionName = "fake" }} }; //second valid, first invalid
             }
         }
     }

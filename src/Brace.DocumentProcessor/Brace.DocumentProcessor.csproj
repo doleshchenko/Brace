@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.ValueTuple" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Brace.DomainModel\Brace.DomainModel.csproj" />
     <ProjectReference Include="..\Brace.DomainService\Brace.DomainService.csproj" />
     <ProjectReference Include="..\Brace.Repository.Interface\Brace.Repository.Interface.csproj" />

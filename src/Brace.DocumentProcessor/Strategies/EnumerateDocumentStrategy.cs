@@ -25,7 +25,7 @@ namespace Brace.DocumentProcessor.Strategies
         public async Task<DocumentView> ProcessAsync(string documentName, DocumentProcessingAction[] documentProcessingActions)
         {
             var allDocumnents = await _documentRepository.GetDocumentsListAsync();
-            var archivist = _archivistFactory.CreateArchivistChain(documentProcessingActions?.Select(it => it.ActionName).ToArray());
+            var archivist = _archivistFactory.CreateArchivistChain(documentProcessingActions);
             var resultedDocuments = allDocumnents.Select(it =>
                             new Document
                             {

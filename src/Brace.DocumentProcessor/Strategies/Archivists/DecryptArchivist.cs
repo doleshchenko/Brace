@@ -6,7 +6,7 @@ using Brace.Repository.Interface;
 namespace Brace.DocumentProcessor.Strategies.Archivists
 {
     [DomainModel.DocumentProcessing.Attributes.Archivist(ArchivistType.Decrypt)]
-    public class DecryptArchivist : Archivist
+    public class DecryptArchivist : ConfigurableArchivist
     {
         private readonly ICryptography _cryptography;
         private readonly ICryptographyRepository _cryptographyRepository;

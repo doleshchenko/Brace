@@ -33,7 +33,7 @@ namespace Brace.DocumentProcessor.Strategies
                     Type = DocumentViewType.Warning
                 };
             }
-            var archivist = _archivistFactory.CreateArchivistChain(documentProcessingActions?.Select(it => it.ActionName).ToArray());
+            var archivist = _archivistFactory.CreateArchivistChain(documentProcessingActions);
             var rethinkedDocument = archivist.Rethink(document);
             return new DocumentView<DocumentPlainContent>
             {

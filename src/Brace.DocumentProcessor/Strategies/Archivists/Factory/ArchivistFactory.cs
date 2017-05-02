@@ -20,37 +20,42 @@ namespace Brace.DocumentProcessor.Strategies.Archivists.Factory
             _archivistLinker = archivistLinker;
         }
 
-        public IArchivist CreateArchivistChain(string[] actionsToPerform)
+        public IArchivist CreateArchivistChain(DocumentProcessingAction[] actionsToPerform)
         {
-            var archivistTypes = GetArchivistTypesByActions(actionsToPerform);
-            var archivistObjectTypes = archivistTypes.Select(archivistType => _archivistLinker.GetArchivistType(archivistType)).ToArray();
+            var archivistTypes = GetArchivistTypesByActions(actionsToPerform?.Select(it => it.ActionName).ToArray());
+            var archivistObjectTypes = archivistTypes
+                .Select(archivistType => (ArchivistType: _archivistLinker.GetArchivistType(archivistType.ActionType), ActionName: archivistType.ActionName))
+                .ToArray();
             IArchivist previous = null;
             IArchivist root = null;
             foreach (var archivistObjectType in archivistObjectTypes)
             {
-                var current = _achivistProvider.Resolve(archivistObjectType);
+                var current = _achivistProvider.Resolve(archivistObjectType.ArchivistType);
+                if (current is IConfigurableArchivist)
+                {
+                    ((IConfigurableArchivist)current).Configure(actionsToPerform.Single(it => it.ActionName == archivistObjectType.ActionName).RequiredData);
+                }
                 if (root == null)
                 {
                     root = current;
                 }
                 if (previous != null)
                 {
-                    ((Archivist) previous).Successor = current;
+                    ((Archivist)previous).Successor = current;
                 }
                 previous = current;
             }
             return root;
         }
 
-        private IEnumerable<ArchivistType> GetArchivistTypesByActions(string[] actions)
+        private IEnumerable<(ArchivistType ActionType, string ActionName)> GetArchivistTypesByActions(string[] actions)
         {
             if (actions == null || !actions.Any())
             {
-                yield return ArchivistType.DoNothing;
-                yield break;
+                return new[]{ (ActionType: ArchivistType.DoNothing, ActionName: string.Empty)};
             }
             var fields = typeof(ArchivistType).GetTypeInfo().GetFields().ToArray();
-            var fieldsWithAttributes = fields.Select(it => new {Attribure = it.GetCustomAttribute<ArchivistTypeDescriptionAttribute>(), Field = it})
+            var fieldsWithAttributes = fields.Select(it => new { Attribure = it.GetCustomAttribute<ArchivistTypeDescriptionAttribute>(), Field = it })
                     .Where(it => it.Attribure != null)
                     .ToArray();
 
@@ -59,13 +64,16 @@ namespace Brace.DocumentProcessor.Strategies.Archivists.Factory
             {
                 throw new DocumentProcessorException($"Invalid action (command parameter) \"{string.Join(",", wrongItems)}\". Cannot find corresponding Archivist type.");
             }
+            var result = new List<(ArchivistType ActionType, string ActionName)>();
             foreach (var fieldAndAttribute in fieldsWithAttributes)
             {
                 if (actions.Any(it => it == fieldAndAttribute.Attribure.ArchivistActionName))
                 {
-                    yield return (ArchivistType)fieldAndAttribute.Field.GetValue(null);
+                    result.Add( (ActionType: (ArchivistType)fieldAndAttribute.Field.GetValue(null),
+                        ActionName: fieldAndAttribute.Attribure.ArchivistActionName));
                 }
             }
+            return result;
         }
     }
 }

@@ -29,7 +29,7 @@ namespace Brace.UnitTests.DocumentProcessor.DocumentProcessingStrategies
                 
             };
             repositoryStab.Setup(it => it.GetDocumentsListAsync()).ReturnsAsync(documentInfos);
-            archivistFactoryStub.Setup(it => it.CreateArchivistChain(It.IsAny<string[]>())).Returns(new DoNothingArchivist());
+            archivistFactoryStub.Setup(it => it.CreateArchivistChain(It.IsAny<DocumentProcessingAction[]>())).Returns(new DoNothingArchivist());
             var strategy = new EnumerateDocumentStrategy(repositoryStab.Object, archivistFactoryStub.Object);
 
             var result = await strategy.ProcessAsync(string.Empty, actions);
@@ -63,12 +63,12 @@ namespace Brace.UnitTests.DocumentProcessor.DocumentProcessingStrategies
             const string actionName = "visible";
 
             repositoryStab.Setup(it => it.GetDocumentsListAsync()).ReturnsAsync(documentInfos);
-            archivistFactoryMock.Setup(it => it.CreateArchivistChain(new[] {actionName}))
+            archivistFactoryMock.Setup(it => it.CreateArchivistChain(It.Is<DocumentProcessingAction[]> (actions => actions.Single().ActionName == actionName)))
                 .Returns(visibleArchivistMock.Object);
             var strategy = new EnumerateDocumentStrategy(repositoryStab.Object, archivistFactoryMock.Object);
 
             await strategy.ProcessAsync(string.Empty, new[] {new DocumentProcessingAction {ActionName = actionName}});
-            archivistFactoryMock.Verify(it => it.CreateArchivistChain(new[] {actionName}), Times.Once);
+            archivistFactoryMock.Verify(it => it.CreateArchivistChain(It.Is<DocumentProcessingAction[]>(actions => actions.Single().ActionName == actionName)), Times.Once);
             visibleArchivistMock.Verify(it => it.Rethink(It.IsAny<Document>()), Times.Exactly(documentInfos.Length));
         }
 

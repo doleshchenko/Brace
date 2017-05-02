@@ -5,7 +5,7 @@ using Brace.DomainService.DocumentProcessor;
 
 namespace Brace.UnitTests.DocumentProcessor.Mock
 {
-    public class DecryptArchivistMock : Archivist
+    public class DecryptArchivistMock : ConfigurableArchivist
     {
         public override Document Rethink(Document document)
         {
