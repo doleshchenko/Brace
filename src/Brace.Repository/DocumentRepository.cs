@@ -47,9 +47,18 @@ namespace Brace.Repository
             }
         }
 
-        public Task AddAsync(Document document)
+        public async Task AddAsync(Document document)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var database = _mongoClient.GetDatabase("Brace");
+                var collection = database.GetCollection<Document>("documents");
+                await collection.InsertOneAsync(document);
+            }
+            catch (Exception e)
+            {
+                throw new RepositoryException("Exception occured when inserting a new document. Please see inner exception for details.", e);
+            }
         }
 
         public Task DeleteAsync(Document document)

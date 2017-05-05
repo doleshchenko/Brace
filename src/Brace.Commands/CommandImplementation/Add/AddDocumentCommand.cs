@@ -2,7 +2,7 @@
 using Brace.DomainModel.DocumentProcessing;
 using Brace.DomainService.DocumentProcessor;
 
-namespace Brace.Commands.CommandImplementation.Read
+namespace Brace.Commands.CommandImplementation.Add
 {
     [Command(CommandType.AddDocument, AssociatedArchivists = new[] {ArchivistType.Encrypt})]
     public class AddDocumentCommand : CommandBase
@@ -22,7 +22,7 @@ namespace Brace.Commands.CommandImplementation.Read
             if (string.IsNullOrWhiteSpace(Subject))
             {
                 validationResult.IsValid = false;
-                validationResult.ValidationMessage = "Invalid command argument: document name can't be empty";
+                validationResult.ValidationMessage = "Invalid command argument: empty document.";
             }
             return validationResult;
         }

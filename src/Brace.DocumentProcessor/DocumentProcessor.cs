@@ -20,11 +20,11 @@ namespace Brace.DocumentProcessor
             _strategyProvider = strategyProvider;
         }
 
-        public async Task<DocumentView> ProcessAsync(string documentName, ActionType action, ActionParameter[] actionParameters)
+        public async Task<DocumentView> ProcessAsync(string subject, ActionType action, ActionParameter[] actionParameters)
         {
             var strategyType = _processingStrategyTypeLinker.GetStrategyType(action);
             var strategy = _strategyProvider.Resolve(strategyType);
-            return await strategy.ProcessAsync(documentName, actionParameters?
+            return await strategy.ProcessAsync(subject, actionParameters?
                 .Select(it => new DocumentProcessingAction
                 {
                     ActionName = it.Name,
