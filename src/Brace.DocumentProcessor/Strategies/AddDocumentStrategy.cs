@@ -3,6 +3,7 @@ using Brace.DocumentProcessor.Strategies.Archivists.Factory;
 using Brace.DomainModel.DocumentProcessing;
 using Brace.DomainModel.DocumentProcessing.Attributes;
 using Brace.DomainModel.DocumentProcessing.Decorator;
+using Brace.DomainModel.DocumentProcessing.Subjects;
 using Brace.DomainService.DocumentProcessor;
 using Brace.Repository.Interface;
 
@@ -20,7 +21,7 @@ namespace Brace.DocumentProcessor.Strategies
             _archivistFactory = archivistFactory;
         }
 
-        public async Task<DocumentView> ProcessAsync(string documentName, DocumentProcessingAction[] documentProcessingActions)
+        public async Task<DocumentView> ProcessAsync(Subject subject, DocumentProcessingAction[] documentProcessingActions)
         {
             throw new System.NotImplementedException();
         }

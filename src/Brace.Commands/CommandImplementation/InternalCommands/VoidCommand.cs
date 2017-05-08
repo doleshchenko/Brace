@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Brace.Commands.Validation;
 using Brace.DomainModel.DocumentProcessing.Decorator;
 using Brace.DomainModel.DocumentProcessing.Decorator.Content;
+using Brace.DomainModel.DocumentProcessing.Subjects;
 using Brace.DomainService.Command;
 
 namespace Brace.Commands.CommandImplementation.InternalCommands
@@ -24,12 +25,12 @@ namespace Brace.Commands.CommandImplementation.InternalCommands
                 });
         }
 
-        public void SetParameters(string commandText, string subject, CommandParameter[] parameters)
+        public void SetParameters(string commandText, Subject subject, CommandParameter[] parameters)
         {
         }
 
         public DateTime CreationDate { get; }
-        public string Subject => null;
+        public Subject Subject => null;
         public CommandParameter[] Parameters => null;
         public string CommandText => null;
         public CommandValidationResult Validate()

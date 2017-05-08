@@ -7,6 +7,7 @@ using Brace.Commands.Validation;
 using Brace.DomainModel.DocumentProcessing;
 using Brace.DomainModel.DocumentProcessing.Attributes;
 using Brace.DomainModel.DocumentProcessing.Decorator;
+using Brace.DomainModel.DocumentProcessing.Subjects;
 using Brace.DomainService.Command;
 using Brace.DomainService.DocumentProcessor;
 
@@ -15,7 +16,7 @@ namespace Brace.Commands
     public abstract class CommandBase : ICommand
     {
         protected readonly IDocumentProcessor _documentProcessor;
-        private string _argument;
+        private Subject _subject;
         private string _commandText;
         private CommandParameter[] _parameters;
 
@@ -26,22 +27,23 @@ namespace Brace.Commands
         }
         public DateTime CreationDate { get; }
         public string CommandText => _commandText;
-        public string Subject => _argument;
+        public Subject Subject => _subject;
         public CommandParameter[] Parameters => _parameters;
        
         public virtual async Task<DocumentView> ExecuteAsync()
         {
-            return await _documentProcessor.ProcessAsync(_argument, GetActionType(),
+            return await _documentProcessor.ProcessAsync(_subject, GetActionType(),
                 _parameters?.Select(it => new ActionParameter
-                {
-                    Name = it.Name,
-                    Data = it.Arguments
-                }).ToArray());
+                    {
+                        Name = it.Name,
+                        Data = it.Arguments
+                    })
+                    .ToArray());
         }
 
-        public void SetParameters(string commandText, string subject, CommandParameter[] parameters)
+        public void SetParameters(string commandText, Subject subject, CommandParameter[] parameters)
         {
-            _argument = subject;
+            _subject = subject;
             _parameters = parameters;
             _commandText = commandText;
         }
@@ -91,6 +93,5 @@ namespace Brace.Commands
         }
 
         protected abstract ActionType GetActionType();
-
     }
 }

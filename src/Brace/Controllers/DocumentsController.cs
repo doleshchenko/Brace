@@ -4,10 +4,12 @@ using System.Threading.Tasks;
 using Brace.Commands.Factory;
 using Brace.DomainModel.DocumentProcessing.Decorator;
 using Brace.DomainModel.DocumentProcessing.Decorator.Content;
+using Brace.DomainModel.DocumentProcessing.Subjects;
 using Brace.DomainService.Command;
 using Brace.Interpretation;
 using Brace.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Brace.Controllers
 {
@@ -31,7 +33,7 @@ namespace Brace.Controllers
             var commandInfo = new CommandInfo
             {
                 Command = interpretation.Command,
-                Subject = interpretation.Argument,
+                Subject = (Subject)JsonConvert.DeserializeObject(interpretation.Argument),
                 Parameters = interpretation.Parameters
                     .Select(it => new CommandParameter {Name = it.Key, Arguments = it.Value})
                     .ToArray()

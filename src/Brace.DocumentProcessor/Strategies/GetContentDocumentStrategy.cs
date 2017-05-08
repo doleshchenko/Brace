@@ -1,10 +1,10 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Brace.DocumentProcessor.Strategies.Archivists.Factory;
 using Brace.DomainModel.DocumentProcessing;
 using Brace.DomainModel.DocumentProcessing.Attributes;
 using Brace.DomainModel.DocumentProcessing.Decorator;
 using Brace.DomainModel.DocumentProcessing.Decorator.Content;
+using Brace.DomainModel.DocumentProcessing.Subjects;
 using Brace.DomainService.DocumentProcessor;
 using Brace.Repository.Interface;
 
@@ -22,14 +22,14 @@ namespace Brace.DocumentProcessor.Strategies
             _archivistFactory = archivistFactory;
         }
 
-        public async Task<DocumentView> ProcessAsync(string documentName, DocumentProcessingAction[] documentProcessingActions)
+        public async Task<DocumentView> ProcessAsync(Subject subject, DocumentProcessingAction[] documentProcessingActions)
         {
-            var document = await _documentRepository.FindDocumentAsync(documentName);
+            var document = await _documentRepository.FindDocumentAsync(subject.Id);
             if (document == null)
             {
                 return new DocumentView<DocumentPlainContent>
                 {
-                    Content = new DocumentPlainContent {PlainText = $"document '{documentName}' not found"},
+                    Content = new DocumentPlainContent {PlainText = $"document '{subject.Id}' not found"},
                     Type = DocumentViewType.Warning
                 };
             }

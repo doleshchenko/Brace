@@ -1,5 +1,6 @@
 ﻿using Brace.Commands;
 using Brace.Commands.Factory;
+using Brace.DomainModel.DocumentProcessing.Subjects;
 using Brace.DomainService;
 using Brace.DomainService.Command;
 using Brace.DomainService.TypeLinker;
@@ -14,7 +15,7 @@ namespace Brace.UnitTests.Commands
         public void CreateCommand_ValidCommandName_CreatesCommand()
         {
             var command = "test";
-            var argument = "argument";
+            var subject = new DocumentName {Id = "subject"};
             var parameters = new[]
             {
                 new CommandParameter {Name = "1"}, new CommandParameter {Name = "2"}, new CommandParameter {Name = "3"}
@@ -30,20 +31,20 @@ namespace Brace.UnitTests.Commands
             var commandInfo = new CommandInfo
             {
                 Command = command,
-                Subject = argument,
+                Subject = subject,
                 Parameters = parameters
             };
             var  commandInstance = commandFactory.CreateCommand(commandInfo);
             Assert.NotNull(commandInstance);
             Assert.Equal(commandInstance, commandMock.Object);
-            commandMock.Verify(it => it.SetParameters(command, argument, parameters), Times.Once);
+            commandMock.Verify(it => it.SetParameters(command, subject, parameters), Times.Once);
         }
 
         [Fact]
         public void CreateCommand_InvalidCommandName_CreatesUnknownCommand()
         {
             var command = "someunknowncommand";
-            var argument = "argument";
+            var subject = new DocumentName { Id = "subject" };
             var parameters = new[]
             {
                 new CommandParameter {Name = "1"}, new CommandParameter {Name = "2"}, new CommandParameter {Name = "3"}
@@ -59,13 +60,13 @@ namespace Brace.UnitTests.Commands
             var commandInfo = new CommandInfo
             {
                 Command = command,
-                Subject = argument,
+                Subject = subject,
                 Parameters = parameters
             };
             var commandInstance = commandFactory.CreateCommand(commandInfo);
             Assert.NotNull(commandInstance);
             Assert.Equal(commandInstance, commandMock.Object);
-            commandMock.Verify(it => it.SetParameters(command, argument, parameters), Times.Once);
+            commandMock.Verify(it => it.SetParameters(command, subject, parameters), Times.Once);
         }
     }
 }

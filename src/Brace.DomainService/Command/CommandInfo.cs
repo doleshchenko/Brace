@@ -1,4 +1,6 @@
-﻿namespace Brace.DomainService.Command
+﻿using Brace.DomainModel.DocumentProcessing.Subjects;
+
+namespace Brace.DomainService.Command
 {
     public class CommandInfo
     {
@@ -9,10 +11,9 @@
         public string Command { get; set; }
 
         /// <summary>
-        /// In most of cases it's document on which command will be executed.
-        /// Can be empty.
+        /// The target of the command. Document or its name (id).
         /// </summary>
-        public string Subject { get; set; }
+        public Subject Subject { get; set; }
 
         /// <summary>
         /// Parameters to execute a command. For instance key to protect a document.

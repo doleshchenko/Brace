@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Brace.Commands;
 using Brace.DomainModel.DocumentProcessing;
+using Brace.DomainModel.DocumentProcessing.Subjects;
 using Brace.DomainService.Command;
 using Brace.DomainService.DocumentProcessor;
 using Moq;
@@ -32,12 +33,12 @@ namespace Brace.UnitTests.Commands
             {
                 new CommandParameter {Name = "1"}, new CommandParameter {Name = "2"}, new CommandParameter {Name = "3"}
             };
-            var commandArgument = "parameter";
+            var commandSubject = new DocumentName {Id = "subject"};
 
-            command.SetParameters(commandText, commandArgument, commandParameters);
+            command.SetParameters(commandText, commandSubject, commandParameters);
 
             Assert.Equal(commandText, command.CommandText);
-            Assert.Equal(commandArgument, command.Subject);
+            Assert.Equal(commandSubject, command.Subject);
             Assert.Equal(commandParameters, command.Parameters);
         }
 
@@ -51,9 +52,9 @@ namespace Brace.UnitTests.Commands
             {
                 new CommandParameter {Name = "1"}, new CommandParameter {Name = "2"}, new CommandParameter {Name = "3"}
             };
-            var commandArgument = "parameter";
+            var commandSubject = new DocumentName { Id = "subject" };
 
-            command.SetParameters(commandText, commandArgument, commandParameters);
+            command.SetParameters(commandText, commandSubject, commandParameters);
             await command.ExecuteAsync();
             var exp = commandParameters.Select(parameter => new ActionParameter
                 {
@@ -62,7 +63,7 @@ namespace Brace.UnitTests.Commands
                 }).ToArray();
 
             documentProcessorMock.Verify(
-                it => it.ProcessAsync(commandArgument, ActionType.GetContent,
+                it => it.ProcessAsync(commandSubject, ActionType.GetContent,
                     It.Is<ActionParameter[]>(p => CompareActionParameters(p, exp))), Times.Once);
         }
 
@@ -72,10 +73,10 @@ namespace Brace.UnitTests.Commands
             var documentProcessorStub = new Mock<IDocumentProcessor>();
             var command = new CommandForTest(documentProcessorStub.Object);
             var commandText = "print";
-            var commandArgument = "test";
+            var commandSubject = new DocumentName {Id = "test"};
             var commandParameters = new[] { new CommandParameter { Name = "decrypt" }};
 
-            command.SetParameters(commandText, commandArgument, commandParameters);
+            command.SetParameters(commandText, commandSubject, commandParameters);
             var validationResult = command.Validate();
             Assert.True(validationResult.IsValid);
             Assert.Null(validationResult.ValidationMessage);
@@ -87,10 +88,10 @@ namespace Brace.UnitTests.Commands
             var documentProcessorStub = new Mock<IDocumentProcessor>();
             var command = new CommandForTest(documentProcessorStub.Object);
             var commandText = CommandType.GetContent.ToString();
-            var commandArgument = "test";
+            var commandSubject = new DocumentName { Id = "test" };
             var commandParameters = new[] { new CommandParameter { Name = "decrypt" }, new CommandParameter { Name = "encrypt" } };
 
-            command.SetParameters(commandText, commandArgument, commandParameters);
+            command.SetParameters(commandText, commandSubject, commandParameters);
             var validationResult = command.Validate();
             Assert.False(validationResult.IsValid);
             Assert.Equal($"Invalid command parameters: parameter 'encrypt' can't be used with the '{CommandType.GetContent.ToString().ToLower()}' command", validationResult.ValidationMessage);
@@ -102,10 +103,10 @@ namespace Brace.UnitTests.Commands
             var documentProcessorStub = new Mock<IDocumentProcessor>();
             var command = new CommandForTest(documentProcessorStub.Object);
             var commandText = "print";
-            var commandArgument = "test";
+            var commandSubject = new DocumentName { Id = "test" };
             var commandParameters = new[] { new CommandParameter { Name = "decrypt" }, new CommandParameter { Name = "decrypt" } };
 
-            command.SetParameters(commandText, commandArgument, commandParameters);
+            command.SetParameters(commandText, commandSubject, commandParameters);
             var validationResult = command.Validate();
             Assert.False(validationResult.IsValid);
             Assert.Equal("Invalid command parameters: duplicates found", validationResult.ValidationMessage);

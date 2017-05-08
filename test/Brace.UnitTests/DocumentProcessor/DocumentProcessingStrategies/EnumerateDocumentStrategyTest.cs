@@ -7,6 +7,7 @@ using Brace.DocumentProcessor.Strategies.Archivists.Factory;
 using Brace.DomainModel.DocumentProcessing;
 using Brace.DomainModel.DocumentProcessing.Decorator;
 using Brace.DomainModel.DocumentProcessing.Decorator.Content;
+using Brace.DomainModel.DocumentProcessing.Subjects;
 using Brace.Repository.Interface;
 using Moq;
 using Xunit;
@@ -32,7 +33,7 @@ namespace Brace.UnitTests.DocumentProcessor.DocumentProcessingStrategies
             archivistFactoryStub.Setup(it => it.CreateArchivistChain(It.IsAny<DocumentProcessingAction[]>())).Returns(new DoNothingArchivist());
             var strategy = new EnumerateDocumentStrategy(repositoryStab.Object, archivistFactoryStub.Object);
 
-            var result = await strategy.ProcessAsync(string.Empty, actions);
+            var result = await strategy.ProcessAsync(Subject.Nothing, actions);
 
             Assert.Equal(result.Type, DocumentViewType.Ok);
             var documentListContent = result.Content as DocumentListContent<DocumentDescriptionContent>;
@@ -67,7 +68,7 @@ namespace Brace.UnitTests.DocumentProcessor.DocumentProcessingStrategies
                 .Returns(visibleArchivistMock.Object);
             var strategy = new EnumerateDocumentStrategy(repositoryStab.Object, archivistFactoryMock.Object);
 
-            await strategy.ProcessAsync(string.Empty, new[] {new DocumentProcessingAction {ActionName = actionName}});
+            await strategy.ProcessAsync(Subject.Nothing, new[] {new DocumentProcessingAction {ActionName = actionName}});
             archivistFactoryMock.Verify(it => it.CreateArchivistChain(It.Is<DocumentProcessingAction[]>(actions => actions.Single().ActionName == actionName)), Times.Once);
             visibleArchivistMock.Verify(it => it.Rethink(It.IsAny<Document>()), Times.Exactly(documentInfos.Length));
         }

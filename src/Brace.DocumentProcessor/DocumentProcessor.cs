@@ -4,6 +4,7 @@ using Brace.DomainModel.DocumentProcessing.Decorator;
 using Brace.DomainService;
 using Brace.DomainService.DocumentProcessor;
 using System.Threading.Tasks;
+using Brace.DomainModel.DocumentProcessing.Subjects;
 
 namespace Brace.DocumentProcessor
 {
@@ -20,7 +21,7 @@ namespace Brace.DocumentProcessor
             _strategyProvider = strategyProvider;
         }
 
-        public async Task<DocumentView> ProcessAsync(string subject, ActionType action, ActionParameter[] actionParameters)
+        public async Task<DocumentView> ProcessAsync(Subject subject, ActionType action, ActionParameter[] actionParameters)
         {
             var strategyType = _processingStrategyTypeLinker.GetStrategyType(action);
             var strategy = _strategyProvider.Resolve(strategyType);
