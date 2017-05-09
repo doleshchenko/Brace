@@ -25,13 +25,13 @@ namespace Brace.Commands.CommandImplementation.InternalCommands
                 });
         }
 
-        public void SetParameters(string commandText, Subject subject, Predicate[] predicates)
+        public void SetParameters(string commandId, Subject subject, Modifier[] modifiers)
         {
         }
 
         public DateTime CreationDate { get; }
         public Subject Subject => null;
-        public Predicate[] Predicates => null;
+        public Modifier[] Modifiers => null;
         public string CommandText => null;
         public CommandValidationResult Validate()
         {

@@ -21,7 +21,7 @@ namespace Brace.UnitTests.Commands
             documentProcessorMock.Setup(it => it.ProcessAsync(subject, actionType, actionParameters))
                 .ReturnsAsync(Mock.Of<DocumentView>());
             var command = (TCommand)Activator.CreateInstance(typeof(TCommand), documentProcessorMock.Object);
-            command.SetParameters(string.Empty, subject, new Predicate[0]);
+            command.SetParameters(string.Empty, subject, new Modifier[0]);
             await command.ExecuteAsync();
             documentProcessorMock.Verify(it => it.ProcessAsync(subject, actionType, actionParameters), Times.Once);
         }

@@ -16,9 +16,9 @@ namespace Brace.UnitTests.Commands
         {
             var command = "test";
             var subject = new DocumentName {Id = "subject"};
-            var predicates = new[]
+            var modifiers = new[]
             {
-                new Predicate {Name = "1"}, new Predicate {Name = "2"}, new Predicate {Name = "3"}
+                new Modifier {Name = "1"}, new Modifier {Name = "2"}, new Modifier {Name = "3"}
             };
             var commandMock = new Mock<ICommand>();
 
@@ -32,12 +32,12 @@ namespace Brace.UnitTests.Commands
             {
                 Command = command,
                 Subject = subject,
-                Predicates = predicates
+                Modifiers = modifiers
             };
             var  commandInstance = commandFactory.CreateCommand(commandInfo);
             Assert.NotNull(commandInstance);
             Assert.Equal(commandInstance, commandMock.Object);
-            commandMock.Verify(it => it.SetParameters(command, subject, predicates), Times.Once);
+            commandMock.Verify(it => it.SetParameters(command, subject, modifiers), Times.Once);
         }
 
         [Fact]
@@ -45,9 +45,9 @@ namespace Brace.UnitTests.Commands
         {
             var command = "someunknowncommand";
             var subject = new DocumentName { Id = "subject" };
-            var predicates = new[]
+            var modifiers = new[]
             {
-                new Predicate {Name = "1"}, new Predicate {Name = "2"}, new Predicate {Name = "3"}
+                new Modifier {Name = "1"}, new Modifier {Name = "2"}, new Modifier {Name = "3"}
             };
             var commandMock = new Mock<ICommand>();
 
@@ -61,12 +61,12 @@ namespace Brace.UnitTests.Commands
             {
                 Command = command,
                 Subject = subject,
-                Predicates = predicates
+                Modifiers = modifiers
             };
             var commandInstance = commandFactory.CreateCommand(commandInfo);
             Assert.NotNull(commandInstance);
             Assert.Equal(commandInstance, commandMock.Object);
-            commandMock.Verify(it => it.SetParameters(command, subject, predicates), Times.Once);
+            commandMock.Verify(it => it.SetParameters(command, subject, modifiers), Times.Once);
         }
     }
 }

@@ -26,12 +26,12 @@ namespace Brace.UnitTests.Commands
             var command = new GetContentCommand(documentProcessorStub.Object);
             var commandText = CommandType.GetContent.ToString();
             var subject = new DocumentName {Id = "test"};
-            var predicates = new[] {new Predicate{Name = "decrypt"}, new Predicate { Name = "encrypt" } };
+            var modifiers = new[] {new Modifier{Name = "decrypt"}, new Modifier { Name = "encrypt" } };
 
-            command.SetParameters(commandText, subject, predicates);
+            command.SetParameters(commandText, subject, modifiers);
             var validationResult = command.Validate();
             Assert.False(validationResult.IsValid);
-            Assert.Equal($"Invalid command predicates: parameter 'encrypt' can't be used with the '{CommandType.GetContent.ToString().ToLower()}' command", validationResult.ValidationMessage);
+            Assert.Equal($"Invalid command modifiers: parameter 'encrypt' can't be used with the '{CommandType.GetContent.ToString().ToLower()}' command", validationResult.ValidationMessage);
         }
 
         [Theory]
@@ -41,9 +41,9 @@ namespace Brace.UnitTests.Commands
             var documentProcessorStub = new Mock<IDocumentProcessor>();
             var command = new GetContentCommand(documentProcessorStub.Object);
             var commandText = "print";
-            var predicates = new[] { new Predicate { Name = "decrypt" } };
+            var modifiers = new[] { new Modifier { Name = "decrypt" } };
 
-            command.SetParameters(commandText, subject, predicates);
+            command.SetParameters(commandText, subject, modifiers);
             var validationResult = command.Validate();
             Assert.False(validationResult.IsValid);
             Assert.Equal("Invalid command subject: document name can't be empty", validationResult.ValidationMessage);

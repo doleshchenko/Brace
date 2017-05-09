@@ -11,10 +11,10 @@ namespace Brace.Commands
     {
         string CommandText { get; }
         Subject Subject { get; }
-        Predicate[] Predicates { get; }
+        Modifier[] Modifiers { get; }
         DateTime CreationDate { get; }
         Task<DocumentView> ExecuteAsync();
         CommandValidationResult Validate();
-        void SetParameters(string commandText, Subject subject, Predicate[] predicates);
+        void SetParameters(string commandId, Subject subject, Modifier[] modifiers);
     }
 }

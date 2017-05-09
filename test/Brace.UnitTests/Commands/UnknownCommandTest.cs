@@ -19,12 +19,12 @@ namespace Brace.UnitTests.Commands
             var afterCommandCreated = DateTime.Now;
             var command = "someunknowncommand";
             var subject = new DocumentName {Id = "subject"};
-            var predicates = new[] { new Predicate { Name = "1" }, new Predicate { Name = "2" }, new Predicate { Name = "3" } };
-            unknowCommand.SetParameters(command, subject, predicates);
+            var modifiers = new[] { new Modifier { Name = "1" }, new Modifier { Name = "2" }, new Modifier { Name = "3" } };
+            unknowCommand.SetParameters(command, subject, modifiers);
             var result = await unknowCommand.ExecuteAsync();
             Assert.Equal(subject, unknowCommand.Subject);
             Assert.Equal(command, unknowCommand.CommandText);
-            Assert.Equal(predicates, unknowCommand.Predicates);
+            Assert.Equal(modifiers, unknowCommand.Modifiers);
             Assert.Equal($"unknown command [{command}]", result.Content.ContentAsString());
             Assert.Equal(DocumentViewType.Warning, result.Type);
             Assert.True(unknowCommand.CreationDate >= beforCommandCreated && unknowCommand.CreationDate <= afterCommandCreated);

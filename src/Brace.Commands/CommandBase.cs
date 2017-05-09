@@ -17,8 +17,8 @@ namespace Brace.Commands
     {
         protected readonly IDocumentProcessor _documentProcessor;
         private Subject _subject;
-        private string _commandText;
-        private Predicate[] _predicates;
+        private string _commandId;
+        private Modifier[] _modifiers;
 
         protected CommandBase(IDocumentProcessor documentProcessor)
         {
@@ -26,14 +26,14 @@ namespace Brace.Commands
             CreationDate = DateTime.Now;
         }
         public DateTime CreationDate { get; }
-        public string CommandText => _commandText;
+        public string CommandText => _commandId;
         public Subject Subject => _subject;
-        public Predicate[] Predicates => _predicates;
+        public Modifier[] Modifiers => _modifiers;
        
         public virtual async Task<DocumentView> ExecuteAsync()
         {
             return await _documentProcessor.ProcessAsync(_subject, GetActionType(),
-                _predicates?.Select(it => new ActionParameter
+                _modifiers?.Select(it => new ActionParameter
                     {
                         Name = it.Name,
                         Data = it.Arguments
@@ -41,31 +41,31 @@ namespace Brace.Commands
                     .ToArray());
         }
 
-        public void SetParameters(string commandText, Subject subject, Predicate[] predicates)
+        public void SetParameters(string commandId, Subject subject, Modifier[] modifiers)
         {
             _subject = subject;
-            _predicates = predicates;
-            _commandText = commandText;
+            _modifiers = modifiers;
+            _commandId = commandId;
         }
 
         public virtual CommandValidationResult Validate()
         {
             var result = new CommandValidationResult();
-            if (Predicates != null && Predicates.Any())
+            if (Modifiers != null && Modifiers.Any())
             {
-                var allParametersDistinct = Predicates.GroupBy(it => it.Name);
-                if (allParametersDistinct.Count() != Predicates.Length)
+                var allParametersDistinct = Modifiers.GroupBy(it => it.Name);
+                if (allParametersDistinct.Count() != Modifiers.Length)
                 {
                     result.IsValid = false;
-                    result.ValidationMessage = "Invalid command predicates: duplicates found";
+                    result.ValidationMessage = "Invalid command modifiers: duplicates found";
                 }
                 var archivists = GetAssociatedArchivists();
-                foreach (var parameter in Predicates)
+                foreach (var parameter in Modifiers)
                 {
                     if (!archivists.Contains(parameter.Name))
                     {
                         result.IsValid = false;
-                        result.ValidationMessage = $"Invalid command predicates: parameter '{parameter.Name}' can't be used with the '{GetActionType().ToString().ToLowerInvariant()}' command";
+                        result.ValidationMessage = $"Invalid command modifiers: parameter '{parameter.Name}' can't be used with the '{GetActionType().ToString().ToLowerInvariant()}' command";
                         break;
                     }
                 }

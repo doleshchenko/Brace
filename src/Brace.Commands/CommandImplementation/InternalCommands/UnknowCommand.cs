@@ -25,16 +25,16 @@ namespace Brace.Commands.CommandImplementation.InternalCommands
                 });
         }
 
-        public void SetParameters(string commandText, Subject subject, Predicate[] predicates)
+        public void SetParameters(string commandId, Subject subject, Modifier[] modifiers)
         {
             Subject = subject;
-            Predicates = predicates;
-            CommandText = commandText;
+            Modifiers = modifiers;
+            CommandText = commandId;
         }
 
         public DateTime CreationDate { get; }
         public Subject Subject { get; private set; }
-        public Predicate[] Predicates { get; private set; }
+        public Modifier[] Modifiers { get; private set; }
         public string CommandText { get; private set; }
         public CommandValidationResult Validate()
         {

@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Brace.Commands.Factory;
 using Brace.DomainModel.Command;
-using Brace.DomainModel.Command.Subjects;
 using Brace.DomainModel.DocumentProcessing.Decorator;
 using Brace.DomainModel.DocumentProcessing.Decorator.Content;
 using Brace.Interpretation;
 using Brace.Models;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace Brace.Controllers
 {
@@ -33,10 +30,8 @@ namespace Brace.Controllers
             var commandInfo = new CommandInfo
             {
                 Command = interpretation.Command,
-                Subject = (Subject)JsonConvert.DeserializeObject(interpretation.Argument),
-                Predicates = interpretation.Parameters
-                    .Select(it => new Predicate {Name = it.Key, Arguments = it.Value})
-                    .ToArray()
+                Subject = interpretation.Subject,
+                Modifiers = interpretation.Modifiers
             };
             var concreteCommand = _commandFactory.CreateCommand(commandInfo);
             var  validationResult = concreteCommand.Validate();
@@ -58,11 +53,11 @@ namespace Brace.Controllers
             {
                 switch (it)
                 {
-                        case DocumentViewType.Ok:
+                    case DocumentViewType.Ok:
                         return CommandExecutionResultType.Ok;
-                        case DocumentViewType.Warning:
+                    case DocumentViewType.Warning:
                         return CommandExecutionResultType.Warning;
-                        case DocumentViewType.Error:
+                    case DocumentViewType.Error:
                         return CommandExecutionResultType.Error;
                 }
                 throw new ArgumentException($"Unknown DocumentViewType - {it}.");

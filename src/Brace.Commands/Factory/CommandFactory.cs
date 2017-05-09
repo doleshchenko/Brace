@@ -28,7 +28,7 @@ namespace Brace.Commands.Factory
                 commandType = _commandLinker.GetCommandType(CommandType.Unknown.ToString());
             }
             var commandObject = _commandProvider.Resolve(commandType);
-            commandObject.SetParameters(commandInfo.Command, commandInfo.Subject, commandInfo.Predicates);
+            commandObject.SetParameters(commandInfo.Command, commandInfo.Subject, commandInfo.Modifiers);
             return commandObject;
         }
     }

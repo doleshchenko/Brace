@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Brace.DomainModel.Command;
+using Brace.DomainModel.Command.Subjects;
 
 namespace Brace.Interpretation
 {
@@ -9,19 +10,7 @@ namespace Brace.Interpretation
         public static CommandInterpretation EmptyInterpretation => _emptyInterpretation ?? (_emptyInterpretation = new CommandInterpretation{Command = "void"});
 
         public string Command { get; set; }
-        public string Argument { get; set; }
-
-        /// <summary>
-        /// Command parameters.
-        /// The key is parameter name. The value is its setting.
-        /// For instance "getcontent -decrypt[password]" - will be interpreted as 
-        /// decrypt         - key
-        /// password        - value
-        /// 
-        /// If parameter doesn't have setting the value will be string string.Empty. For instance "enumerate -visible" - will be interpeted as
-        /// visible         - key
-        /// string.Empty    - value
-        /// </summary>
-        public Dictionary<string, string> Parameters { get; set; }
+        public Subject Subject { get; set; }
+        public Modifier[] Modifiers { get; set; }
     }
 }
