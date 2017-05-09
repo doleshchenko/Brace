@@ -6,6 +6,7 @@ using Brace.DocumentProcessor;
 using Brace.DocumentProcessor.Strategies;
 using Brace.DocumentProcessor.Strategies.Archivists;
 using Brace.DocumentProcessor.Strategies.Archivists.Factory;
+using Brace.DomainModel.DocumentProcessing;
 using Brace.DomainService;
 using Brace.DomainService.DocumentProcessor;
 using Brace.Interpretation;

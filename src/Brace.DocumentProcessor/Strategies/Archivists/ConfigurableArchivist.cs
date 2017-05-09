@@ -1,4 +1,5 @@
-﻿using Brace.DomainService.DocumentProcessor;
+﻿using Brace.DomainModel.DocumentProcessing;
+using Brace.DomainService.DocumentProcessor;
 
 namespace Brace.DocumentProcessor.Strategies.Archivists
 {

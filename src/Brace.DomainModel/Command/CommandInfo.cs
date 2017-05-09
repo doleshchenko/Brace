@@ -16,7 +16,7 @@ namespace Brace.DomainModel.Command
         public Subject Subject { get; set; }
 
         /// <summary>
-        /// Modifiers to execute a command. For instance, a key to protect a document - encrypt[password]. Where 'encrypt' is a parameter name and  'password' is an argument of the 'encrypt'.
+        /// Modifiers to execute a command. For example, a key to protect a document - encrypt[password]. Where 'encrypt' is a parameter name and  'password' is an argument of the 'encrypt'.
         /// Can be empty.
         /// </summary>
         public Modifier[] Modifiers { get; set; }

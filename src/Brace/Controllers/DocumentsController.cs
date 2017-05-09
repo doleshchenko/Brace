@@ -23,6 +23,13 @@ namespace Brace.Controllers
             _commandInterpreter = commandInterpreter;
         }
 
+        /// <summary>
+        /// Command examples:
+        /// add {"name" : "some text for my document", "content" : "" } -encrypt[pass] -makeinvisible
+        /// getcontent {doc name} -encrypt[pass]
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Command command)
         {

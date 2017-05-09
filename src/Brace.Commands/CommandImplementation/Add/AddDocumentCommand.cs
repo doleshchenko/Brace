@@ -5,7 +5,7 @@ using Brace.DomainService.DocumentProcessor;
 
 namespace Brace.Commands.CommandImplementation.Add
 {
-    [Command(CommandType.AddDocument, AssociatedArchivists = new[] {ArchivistType.Encrypt})]
+    [Command(CommandType.AddDocument, AssociatedArchivists = new[] {ArchivistType.Encrypt, ArchivistType.MakeInvisible})]
     public class AddDocumentCommand : CommandBase
     {
         public AddDocumentCommand(IDocumentProcessor documentProcessor) : base(documentProcessor)

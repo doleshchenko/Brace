@@ -1,6 +1,4 @@
-﻿using Brace.DomainModel.DocumentProcessing;
-
-namespace Brace.DomainService.DocumentProcessor
+﻿namespace Brace.DomainModel.DocumentProcessing
 {
     public interface IArchivist
     {

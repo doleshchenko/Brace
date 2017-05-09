@@ -17,8 +17,8 @@ namespace Brace.Commands
     {
         protected readonly IDocumentProcessor _documentProcessor;
         private Subject _subject;
-        private string _commandId;
         private Modifier[] _modifiers;
+        private string _commandId;
 
         protected CommandBase(IDocumentProcessor documentProcessor)
         {
