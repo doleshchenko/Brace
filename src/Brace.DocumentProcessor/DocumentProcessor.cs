@@ -4,7 +4,7 @@ using Brace.DomainModel.DocumentProcessing.Decorator;
 using Brace.DomainService;
 using Brace.DomainService.DocumentProcessor;
 using System.Threading.Tasks;
-using Brace.DomainModel.DocumentProcessing.Subjects;
+using Brace.DomainModel.Command.Subjects;
 
 namespace Brace.DocumentProcessor
 {

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Brace.Commands.Validation;
+using Brace.DomainModel.Command;
+using Brace.DomainModel.Command.Subjects;
 using Brace.DomainModel.DocumentProcessing.Decorator;
 using Brace.DomainModel.DocumentProcessing.Decorator.Content;
-using Brace.DomainModel.DocumentProcessing.Subjects;
-using Brace.DomainService.Command;
 
 namespace Brace.Commands.CommandImplementation.InternalCommands
 {
@@ -25,16 +25,16 @@ namespace Brace.Commands.CommandImplementation.InternalCommands
                 });
         }
 
-        public void SetParameters(string commandText, Subject subject, CommandParameter[] parameters)
+        public void SetParameters(string commandText, Subject subject, Predicate[] predicates)
         {
             Subject = subject;
-            Parameters = parameters;
+            Predicates = predicates;
             CommandText = commandText;
         }
 
         public DateTime CreationDate { get; }
         public Subject Subject { get; private set; }
-        public CommandParameter[] Parameters { get; private set; }
+        public Predicate[] Predicates { get; private set; }
         public string CommandText { get; private set; }
         public CommandValidationResult Validate()
         {

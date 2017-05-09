@@ -1,6 +1,6 @@
-﻿namespace Brace.DomainService.Command
+﻿namespace Brace.DomainModel.Command
 {
-    public class CommandParameter
+    public class Predicate
     {
         public string Name { get; set; }
         public string Arguments { get; set; }

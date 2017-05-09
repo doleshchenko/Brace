@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Brace.Commands;
+using Brace.DomainModel.Command;
+using Brace.DomainModel.Command.Subjects;
 using Brace.DomainModel.DocumentProcessing;
-using Brace.DomainModel.DocumentProcessing.Subjects;
-using Brace.DomainService.Command;
 using Brace.DomainService.DocumentProcessor;
 using Moq;
 using Xunit;
@@ -29,17 +29,17 @@ namespace Brace.UnitTests.Commands
             var documentProcessorStub = new Mock<IDocumentProcessor>();
             var command = new CommandForTest(documentProcessorStub.Object);
             var commandText = "command";
-            var commandParameters = new[]
+            var predicates = new[]
             {
-                new CommandParameter {Name = "1"}, new CommandParameter {Name = "2"}, new CommandParameter {Name = "3"}
+                new Predicate {Name = "1"}, new Predicate {Name = "2"}, new Predicate {Name = "3"}
             };
             var commandSubject = new DocumentName {Id = "subject"};
 
-            command.SetParameters(commandText, commandSubject, commandParameters);
+            command.SetParameters(commandText, commandSubject, predicates);
 
             Assert.Equal(commandText, command.CommandText);
             Assert.Equal(commandSubject, command.Subject);
-            Assert.Equal(commandParameters, command.Parameters);
+            Assert.Equal(predicates, command.Predicates);
         }
 
         [Fact]
@@ -50,7 +50,7 @@ namespace Brace.UnitTests.Commands
             var commandText = "command";
             var commandParameters = new[]
             {
-                new CommandParameter {Name = "1"}, new CommandParameter {Name = "2"}, new CommandParameter {Name = "3"}
+                new Predicate {Name = "1"}, new Predicate {Name = "2"}, new Predicate {Name = "3"}
             };
             var commandSubject = new DocumentName { Id = "subject" };
 
@@ -74,9 +74,9 @@ namespace Brace.UnitTests.Commands
             var command = new CommandForTest(documentProcessorStub.Object);
             var commandText = "print";
             var commandSubject = new DocumentName {Id = "test"};
-            var commandParameters = new[] { new CommandParameter { Name = "decrypt" }};
+            var predicates = new[] { new Predicate { Name = "decrypt" }};
 
-            command.SetParameters(commandText, commandSubject, commandParameters);
+            command.SetParameters(commandText, commandSubject, predicates);
             var validationResult = command.Validate();
             Assert.True(validationResult.IsValid);
             Assert.Null(validationResult.ValidationMessage);
@@ -89,12 +89,12 @@ namespace Brace.UnitTests.Commands
             var command = new CommandForTest(documentProcessorStub.Object);
             var commandText = CommandType.GetContent.ToString();
             var commandSubject = new DocumentName { Id = "test" };
-            var commandParameters = new[] { new CommandParameter { Name = "decrypt" }, new CommandParameter { Name = "encrypt" } };
+            var predicates = new[] { new Predicate { Name = "decrypt" }, new Predicate { Name = "encrypt" } };
 
-            command.SetParameters(commandText, commandSubject, commandParameters);
+            command.SetParameters(commandText, commandSubject, predicates);
             var validationResult = command.Validate();
             Assert.False(validationResult.IsValid);
-            Assert.Equal($"Invalid command parameters: parameter 'encrypt' can't be used with the '{CommandType.GetContent.ToString().ToLower()}' command", validationResult.ValidationMessage);
+            Assert.Equal($"Invalid command predicates: parameter 'encrypt' can't be used with the '{CommandType.GetContent.ToString().ToLower()}' command", validationResult.ValidationMessage);
         }
 
         [Fact]
@@ -104,12 +104,12 @@ namespace Brace.UnitTests.Commands
             var command = new CommandForTest(documentProcessorStub.Object);
             var commandText = "print";
             var commandSubject = new DocumentName { Id = "test" };
-            var commandParameters = new[] { new CommandParameter { Name = "decrypt" }, new CommandParameter { Name = "decrypt" } };
+            var predicates = new[] { new Predicate { Name = "decrypt" }, new Predicate { Name = "decrypt" } };
 
-            command.SetParameters(commandText, commandSubject, commandParameters);
+            command.SetParameters(commandText, commandSubject, predicates);
             var validationResult = command.Validate();
             Assert.False(validationResult.IsValid);
-            Assert.Equal("Invalid command parameters: duplicates found", validationResult.ValidationMessage);
+            Assert.Equal("Invalid command predicates: duplicates found", validationResult.ValidationMessage);
         }
 
         private bool CompareActionParameters(ActionParameter[] collection1, ActionParameter[] collection2)

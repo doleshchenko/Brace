@@ -1,6 +1,6 @@
-﻿using Brace.DomainModel.DocumentProcessing.Subjects;
+﻿using Brace.DomainModel.Command.Subjects;
 
-namespace Brace.DomainService.Command
+namespace Brace.DomainModel.Command
 {
     public class CommandInfo
     {
@@ -16,9 +16,9 @@ namespace Brace.DomainService.Command
         public Subject Subject { get; set; }
 
         /// <summary>
-        /// Parameters to execute a command. For instance key to protect a document.
+        /// Predicates to execute a command. For instance, a key to protect a document - encrypt[password]. Where 'encrypt' is a parameter name and  'password' is an argument of the 'encrypt'.
         /// Can be empty.
         /// </summary>
-        public CommandParameter[] Parameters { get; set; }
+        public Predicate[] Predicates { get; set; }
     }
 }

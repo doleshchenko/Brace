@@ -2,10 +2,10 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Brace.Commands.Factory;
+using Brace.DomainModel.Command;
+using Brace.DomainModel.Command.Subjects;
 using Brace.DomainModel.DocumentProcessing.Decorator;
 using Brace.DomainModel.DocumentProcessing.Decorator.Content;
-using Brace.DomainModel.DocumentProcessing.Subjects;
-using Brace.DomainService.Command;
 using Brace.Interpretation;
 using Brace.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -34,8 +34,8 @@ namespace Brace.Controllers
             {
                 Command = interpretation.Command,
                 Subject = (Subject)JsonConvert.DeserializeObject(interpretation.Argument),
-                Parameters = interpretation.Parameters
-                    .Select(it => new CommandParameter {Name = it.Key, Arguments = it.Value})
+                Predicates = interpretation.Parameters
+                    .Select(it => new Predicate {Name = it.Key, Arguments = it.Value})
                     .ToArray()
             };
             var concreteCommand = _commandFactory.CreateCommand(commandInfo);

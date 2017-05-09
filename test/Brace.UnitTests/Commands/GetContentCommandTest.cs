@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using Brace.Commands;
 using Brace.Commands.CommandImplementation.Read;
+using Brace.DomainModel.Command;
+using Brace.DomainModel.Command.Subjects;
 using Brace.DomainModel.DocumentProcessing;
-using Brace.DomainModel.DocumentProcessing.Subjects;
-using Brace.DomainService.Command;
 using Brace.DomainService.DocumentProcessor;
 using Moq;
 using Xunit;
@@ -26,12 +26,12 @@ namespace Brace.UnitTests.Commands
             var command = new GetContentCommand(documentProcessorStub.Object);
             var commandText = CommandType.GetContent.ToString();
             var subject = new DocumentName {Id = "test"};
-            var commandParameters = new[] {new CommandParameter{Name = "decrypt"}, new CommandParameter { Name = "encrypt" } };
+            var predicates = new[] {new Predicate{Name = "decrypt"}, new Predicate { Name = "encrypt" } };
 
-            command.SetParameters(commandText, subject, commandParameters);
+            command.SetParameters(commandText, subject, predicates);
             var validationResult = command.Validate();
             Assert.False(validationResult.IsValid);
-            Assert.Equal($"Invalid command parameters: parameter 'encrypt' can't be used with the '{CommandType.GetContent.ToString().ToLower()}' command", validationResult.ValidationMessage);
+            Assert.Equal($"Invalid command predicates: parameter 'encrypt' can't be used with the '{CommandType.GetContent.ToString().ToLower()}' command", validationResult.ValidationMessage);
         }
 
         [Theory]
@@ -41,9 +41,9 @@ namespace Brace.UnitTests.Commands
             var documentProcessorStub = new Mock<IDocumentProcessor>();
             var command = new GetContentCommand(documentProcessorStub.Object);
             var commandText = "print";
-            var commandParameters = new[] { new CommandParameter { Name = "decrypt" } };
+            var predicates = new[] { new Predicate { Name = "decrypt" } };
 
-            command.SetParameters(commandText, subject, commandParameters);
+            command.SetParameters(commandText, subject, predicates);
             var validationResult = command.Validate();
             Assert.False(validationResult.IsValid);
             Assert.Equal("Invalid command subject: document name can't be empty", validationResult.ValidationMessage);

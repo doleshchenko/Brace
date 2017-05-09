@@ -2,9 +2,9 @@
 using Brace.DocumentProcessor.Strategies;
 using Brace.DocumentProcessor.Strategies.Archivists;
 using Brace.DocumentProcessor.Strategies.Archivists.Factory;
+using Brace.DomainModel.Command.Subjects;
 using Brace.DomainModel.DocumentProcessing;
 using Brace.DomainModel.DocumentProcessing.Decorator;
-using Brace.DomainModel.DocumentProcessing.Subjects;
 using Brace.Repository.Interface;
 using Moq;
 using Xunit;

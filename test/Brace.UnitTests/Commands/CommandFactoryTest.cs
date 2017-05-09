@@ -1,8 +1,8 @@
 ﻿using Brace.Commands;
 using Brace.Commands.Factory;
-using Brace.DomainModel.DocumentProcessing.Subjects;
+using Brace.DomainModel.Command;
+using Brace.DomainModel.Command.Subjects;
 using Brace.DomainService;
-using Brace.DomainService.Command;
 using Brace.DomainService.TypeLinker;
 using Moq;
 using Xunit;
@@ -16,9 +16,9 @@ namespace Brace.UnitTests.Commands
         {
             var command = "test";
             var subject = new DocumentName {Id = "subject"};
-            var parameters = new[]
+            var predicates = new[]
             {
-                new CommandParameter {Name = "1"}, new CommandParameter {Name = "2"}, new CommandParameter {Name = "3"}
+                new Predicate {Name = "1"}, new Predicate {Name = "2"}, new Predicate {Name = "3"}
             };
             var commandMock = new Mock<ICommand>();
 
@@ -32,12 +32,12 @@ namespace Brace.UnitTests.Commands
             {
                 Command = command,
                 Subject = subject,
-                Parameters = parameters
+                Predicates = predicates
             };
             var  commandInstance = commandFactory.CreateCommand(commandInfo);
             Assert.NotNull(commandInstance);
             Assert.Equal(commandInstance, commandMock.Object);
-            commandMock.Verify(it => it.SetParameters(command, subject, parameters), Times.Once);
+            commandMock.Verify(it => it.SetParameters(command, subject, predicates), Times.Once);
         }
 
         [Fact]
@@ -45,9 +45,9 @@ namespace Brace.UnitTests.Commands
         {
             var command = "someunknowncommand";
             var subject = new DocumentName { Id = "subject" };
-            var parameters = new[]
+            var predicates = new[]
             {
-                new CommandParameter {Name = "1"}, new CommandParameter {Name = "2"}, new CommandParameter {Name = "3"}
+                new Predicate {Name = "1"}, new Predicate {Name = "2"}, new Predicate {Name = "3"}
             };
             var commandMock = new Mock<ICommand>();
 
@@ -61,12 +61,12 @@ namespace Brace.UnitTests.Commands
             {
                 Command = command,
                 Subject = subject,
-                Parameters = parameters
+                Predicates = predicates
             };
             var commandInstance = commandFactory.CreateCommand(commandInfo);
             Assert.NotNull(commandInstance);
             Assert.Equal(commandInstance, commandMock.Object);
-            commandMock.Verify(it => it.SetParameters(command, subject, parameters), Times.Once);
+            commandMock.Verify(it => it.SetParameters(command, subject, predicates), Times.Once);
         }
     }
 }

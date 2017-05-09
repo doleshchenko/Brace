@@ -4,11 +4,11 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Brace.Commands.Validation;
+using Brace.DomainModel.Command;
+using Brace.DomainModel.Command.Subjects;
 using Brace.DomainModel.DocumentProcessing;
 using Brace.DomainModel.DocumentProcessing.Attributes;
 using Brace.DomainModel.DocumentProcessing.Decorator;
-using Brace.DomainModel.DocumentProcessing.Subjects;
-using Brace.DomainService.Command;
 using Brace.DomainService.DocumentProcessor;
 
 namespace Brace.Commands
@@ -18,7 +18,7 @@ namespace Brace.Commands
         protected readonly IDocumentProcessor _documentProcessor;
         private Subject _subject;
         private string _commandText;
-        private CommandParameter[] _parameters;
+        private Predicate[] _predicates;
 
         protected CommandBase(IDocumentProcessor documentProcessor)
         {
@@ -28,12 +28,12 @@ namespace Brace.Commands
         public DateTime CreationDate { get; }
         public string CommandText => _commandText;
         public Subject Subject => _subject;
-        public CommandParameter[] Parameters => _parameters;
+        public Predicate[] Predicates => _predicates;
        
         public virtual async Task<DocumentView> ExecuteAsync()
         {
             return await _documentProcessor.ProcessAsync(_subject, GetActionType(),
-                _parameters?.Select(it => new ActionParameter
+                _predicates?.Select(it => new ActionParameter
                     {
                         Name = it.Name,
                         Data = it.Arguments
@@ -41,31 +41,31 @@ namespace Brace.Commands
                     .ToArray());
         }
 
-        public void SetParameters(string commandText, Subject subject, CommandParameter[] parameters)
+        public void SetParameters(string commandText, Subject subject, Predicate[] predicates)
         {
             _subject = subject;
-            _parameters = parameters;
+            _predicates = predicates;
             _commandText = commandText;
         }
 
         public virtual CommandValidationResult Validate()
         {
             var result = new CommandValidationResult();
-            if (Parameters != null && Parameters.Any())
+            if (Predicates != null && Predicates.Any())
             {
-                var allParametersDistinct = Parameters.GroupBy(it => it.Name);
-                if (allParametersDistinct.Count() != Parameters.Length)
+                var allParametersDistinct = Predicates.GroupBy(it => it.Name);
+                if (allParametersDistinct.Count() != Predicates.Length)
                 {
                     result.IsValid = false;
-                    result.ValidationMessage = "Invalid command parameters: duplicates found";
+                    result.ValidationMessage = "Invalid command predicates: duplicates found";
                 }
                 var archivists = GetAssociatedArchivists();
-                foreach (var parameter in Parameters)
+                foreach (var parameter in Predicates)
                 {
                     if (!archivists.Contains(parameter.Name))
                     {
                         result.IsValid = false;
-                        result.ValidationMessage = $"Invalid command parameters: parameter '{parameter.Name}' can't be used with the '{GetActionType().ToString().ToLowerInvariant()}' command";
+                        result.ValidationMessage = $"Invalid command predicates: parameter '{parameter.Name}' can't be used with the '{GetActionType().ToString().ToLowerInvariant()}' command";
                         break;
                     }
                 }

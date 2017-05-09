@@ -1,4 +1,4 @@
-﻿namespace Brace.DomainModel.DocumentProcessing.Subjects
+﻿namespace Brace.DomainModel.Command.Subjects
 {
     public class NewDocument : DocumentName
     {

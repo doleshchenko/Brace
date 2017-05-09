@@ -1,4 +1,4 @@
-﻿using Brace.DomainService.Command;
+﻿using Brace.DomainModel.Command;
 
 namespace Brace.Commands.Factory
 {

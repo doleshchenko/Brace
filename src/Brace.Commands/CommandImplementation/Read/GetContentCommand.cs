@@ -1,4 +1,5 @@
 ﻿using Brace.Commands.Validation;
+using Brace.DomainModel.Command.Subjects;
 using Brace.DomainModel.DocumentProcessing;
 using Brace.DomainService.DocumentProcessor;
 
@@ -19,7 +20,7 @@ namespace Brace.Commands.CommandImplementation.Read
                 return validationResult;
             }
 
-            if (DomainModel.DocumentProcessing.Subjects.Subject.IsNullOrNothing(Subject))
+            if (Subject.IsNullOrNothing(Subject))
             {
                 validationResult.IsValid = false;
                 validationResult.ValidationMessage = "Invalid command subject: document name can't be empty";

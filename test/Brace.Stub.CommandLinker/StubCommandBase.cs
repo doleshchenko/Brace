@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using Brace.Commands;
 using Brace.Commands.Validation;
+using Brace.DomainModel.Command;
+using Brace.DomainModel.Command.Subjects;
 using Brace.DomainModel.DocumentProcessing.Decorator;
-using Brace.DomainModel.DocumentProcessing.Subjects;
-using Brace.DomainService.Command;
 
 namespace Brace.Stub.CommandLinker
 {
@@ -12,7 +12,7 @@ namespace Brace.Stub.CommandLinker
     {
         public Subject Subject => throw new NotImplementedException();
         public string CommandText => throw new NotImplementedException();
-        public CommandParameter[] Parameters => throw new NotImplementedException();
+        public Predicate[] Predicates => throw new NotImplementedException();
         public DateTime CreationDate => throw new NotImplementedException();
         public Task<DocumentView> ExecuteAsync()
         {
@@ -24,7 +24,7 @@ namespace Brace.Stub.CommandLinker
             throw new NotImplementedException();
         }
 
-        public void SetParameters(string commandText, Subject subject, CommandParameter[] parameters)
+        public void SetParameters(string commandText, Subject subject, Predicate[] predicates)
         {
             throw new NotImplementedException();
         }

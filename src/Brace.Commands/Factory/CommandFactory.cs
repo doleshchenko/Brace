@@ -1,6 +1,6 @@
 ﻿using System;
+using Brace.DomainModel.Command;
 using Brace.DomainService;
-using Brace.DomainService.Command;
 using Brace.DomainService.TypeLinker;
 
 namespace Brace.Commands.Factory
@@ -28,7 +28,7 @@ namespace Brace.Commands.Factory
                 commandType = _commandLinker.GetCommandType(CommandType.Unknown.ToString());
             }
             var commandObject = _commandProvider.Resolve(commandType);
-            commandObject.SetParameters(commandInfo.Command, commandInfo.Subject, commandInfo.Parameters);
+            commandObject.SetParameters(commandInfo.Command, commandInfo.Subject, commandInfo.Predicates);
             return commandObject;
         }
     }
