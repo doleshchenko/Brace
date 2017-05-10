@@ -115,5 +115,24 @@ namespace Brace.UnitTests.Interpretation
             Assert.Equal("mydocument", ((NewDocument)interpretation.Subject).Id);
             Assert.Equal("document content", ((NewDocument)interpretation.Subject).Content);
         }
+
+        [Fact]
+        public void Interpret_CommandWithNewDocumentWithEmptyContentSubject_ReturnsValidInterpretation()
+        {
+            var sentece = "add {\"name\": \"mydocument\", \"content\": \"\"}";
+            var interpretation = _commandInterpreter.Interpret(sentece);
+            Assert.IsType<NewDocument>(interpretation.Subject);
+            Assert.Equal("mydocument", ((NewDocument)interpretation.Subject).Id);
+            Assert.Equal(string.Empty, ((NewDocument)interpretation.Subject).Content);
+        }
+
+        [Fact]
+        public void Interpret_CommandWithDocumentSubject_ReturnsValidInterpretation()
+        {
+            var sentece = "getcontent {mydocument}";
+            var interpretation = _commandInterpreter.Interpret(sentece);
+            Assert.IsType<DocumentName>(interpretation.Subject);
+            Assert.Equal("mydocument", ((DocumentName)interpretation.Subject).Id);
+        }
     }
 }
