@@ -61,14 +61,36 @@ namespace Brace.Repository
             }
         }
 
-        public Task DeleteAsync(Document document)
+        public async Task DeleteAsync(string id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var database = _mongoClient.GetDatabase("Brace");
+                var collection = database.GetCollection<Document>("documents");
+                var builder = Builders<Document>.Filter;
+                var filter = builder.Eq(it => it.Id, id);
+                await collection.DeleteOneAsync(filter);
+            }
+            catch (Exception e)
+            {
+                throw new RepositoryException($"Exception occured when deleting a document. Document id {id}. Please see inner exception for details.", e);
+            }
         }
 
-        public Task UpdateAsync(Document document)
+        public async Task UpdateAsync(Document document)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var database = _mongoClient.GetDatabase("Brace");
+                var collection = database.GetCollection<Document>("documents");
+                var builder = Builders<Document>.Filter;
+                var filter = builder.Eq(it => it.Id, document.Id);
+                await collection.ReplaceOneAsync(filter, document);
+            }
+            catch (Exception e)
+            {
+                throw new RepositoryException($"Exception occured when updating a document. Document id {document.Id}. Please see inner exception for details.", e);
+            }
         }
     }
 }

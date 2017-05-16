@@ -22,7 +22,7 @@ namespace Brace.DomainModel.DocumentProcessing.Decorator.Content
             }
             if (!string.IsNullOrEmpty(Description))
             {
-                result += Description;
+                result += $" {Description}";
             }
             return result;
         }

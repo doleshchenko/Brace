@@ -8,7 +8,7 @@ namespace Brace.Repository.Interface
         Task<DocumentWithoutContent[]> GetDocumentsListAsync();
         Task<Document> FindDocumentAsync(string name);
         Task AddAsync(Document document);
-        Task DeleteAsync(Document document);
+        Task DeleteAsync(string id);
         Task UpdateAsync(Document document);
     }
 }

@@ -44,9 +44,10 @@ namespace Brace.DocumentProcessor.Strategies
                     Id = newDocument.Id,
                     Content = newDocument.Content
                 };
+                await _documentRepository.AddAsync(document);
                 var archivist = _archivistFactory.CreateArchivistChain(documentProcessingActions);
                 var result = archivist.Rethink(document);
-                await _documentRepository.AddAsync(result);
+                await _documentRepository.UpdateAsync(result);
                 return new DocumentView<DocumentProcessingResultContent>
                 {
                     Type = DocumentViewType.Ok,
