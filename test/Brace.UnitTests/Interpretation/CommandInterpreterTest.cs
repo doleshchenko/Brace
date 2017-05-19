@@ -134,5 +134,14 @@ namespace Brace.UnitTests.Interpretation
             Assert.IsType<DocumentName>(interpretation.Subject);
             Assert.Equal("mydocument", ((DocumentName)interpretation.Subject).Id);
         }
+
+        [Fact]
+        public void Interpret_CommandWithInvalidCommandId_ThrowsException()
+        {
+            var sentece = @"\/";
+            var exception = Assert.Throws(typeof(CommandInterpreterException), () => _commandInterpreter.Interpret(sentece));
+            Assert.Equal("Cannot indentify the command id.", exception.Message);
+        }
+
     }
 }
