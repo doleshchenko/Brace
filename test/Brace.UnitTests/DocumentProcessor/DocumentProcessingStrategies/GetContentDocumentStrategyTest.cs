@@ -29,7 +29,7 @@ namespace Brace.UnitTests.DocumentProcessor.DocumentProcessingStrategies
             repositoryStab.Setup(repository => repository.FindDocumentAsync(expectedDocumentName)).ReturnsAsync(expectedDocument);
             archivistFactoryStub.Setup(factory => factory.CreateArchivistChain(null)).Returns(new DoNothingArchivist());
             var strategy = new GetContentDocumentStrategy(repositoryStab.Object, archivistFactoryStub.Object);
-            var documentView = await strategy.ProcessAsync(new DocumentName{Id = expectedDocumentName}, null);
+            var documentView = await strategy.ProcessAsync(new DocumentIdSubject{Id = expectedDocumentName}, null);
             Assert.Equal(expectedContent, documentView.Content.ContentAsString());
             Assert.Equal(DocumentViewType.Ok, documentView.Type);
         }
@@ -43,8 +43,8 @@ namespace Brace.UnitTests.DocumentProcessor.DocumentProcessingStrategies
             repositoryStab.Setup(repository => repository.FindDocumentAsync(expectedDocumentName)).ReturnsAsync((Document)null);
             archivistFactoryStub.Setup(factory => factory.CreateArchivistChain(null)).Returns(new DoNothingArchivist());
             var strategy = new GetContentDocumentStrategy(repositoryStab.Object, archivistFactoryStub.Object);
-            var documentView = await strategy.ProcessAsync(new DocumentName { Id = expectedDocumentName }, null);
-            Assert.Equal($"document '{expectedDocumentName}' not found", documentView.Content.ContentAsString());
+            var documentView = await strategy.ProcessAsync(new DocumentIdSubject { Id = expectedDocumentName }, null);
+            Assert.Equal($"Get Failed. Document '{expectedDocumentName}' not found.", documentView.Content.ContentAsString());
             Assert.Equal(DocumentViewType.Warning, documentView.Type);
         }
     }

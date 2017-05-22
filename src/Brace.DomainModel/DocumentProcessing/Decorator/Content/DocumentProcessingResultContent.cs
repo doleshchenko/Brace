@@ -12,7 +12,8 @@ namespace Brace.DomainModel.DocumentProcessing.Decorator.Content
             string result;
             if (ProcessingResultType == DocumentProcessingResultType.AddFailed
                 || ProcessingResultType == DocumentProcessingResultType.DeleteFailed
-                || ProcessingResultType == DocumentProcessingResultType.UpdateFailed)
+                || ProcessingResultType == DocumentProcessingResultType.UpdateFailed
+                || ProcessingResultType == DocumentProcessingResultType.GetFailed)
             {
                 result = $"{Regex.Replace(ProcessingResultType.ToString(), "([A-Z])", " $1").Trim()}.";
             }
@@ -36,6 +37,7 @@ namespace Brace.DomainModel.DocumentProcessing.Decorator.Content
 
         AddFailed,
         UpdateFailed,
-        DeleteFailed
+        DeleteFailed,
+        GetFailed
     }
 }

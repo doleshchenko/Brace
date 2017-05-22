@@ -4,6 +4,8 @@
     {
         GetContent,
         Enumerate,
-        AddDocument
+        AddDocument,
+        UpdateDocument,
+        DeleteDocument
     }
 }

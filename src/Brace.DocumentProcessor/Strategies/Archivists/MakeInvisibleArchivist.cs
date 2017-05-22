@@ -7,7 +7,15 @@ namespace Brace.DocumentProcessor.Strategies.Archivists
     {
         public override Document Rethink(Document document)
         {
-            throw new System.NotImplementedException();
+            if (document != null)
+            {
+                document.IsVisible = false;
+            }
+            if (_successor != null)
+            {
+                return _successor.Rethink(document);
+            }
+            return document;
         }
     }
 }

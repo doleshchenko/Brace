@@ -5,7 +5,7 @@ using Brace.DomainService.TypeLinker;
 using Brace.Stub.CommandLinker;
 using Xunit;
 
-namespace Brace.UnitTests.Commands
+namespace Brace.UnitTests.Commands.CommandFactoryAndLinker
 {
     public class CommandLinkerTest
     {

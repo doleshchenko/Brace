@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Brace.Commands;
-using Brace.Commands.CommandImplementation.Add;
+using Brace.Commands.CommandImplementation.Delete;
 using Brace.DomainModel.Command;
 using Brace.DomainModel.Command.Subjects;
 using Brace.DomainModel.DocumentProcessing;
@@ -9,18 +9,18 @@ using Xunit;
 
 namespace Brace.UnitTests.Commands
 {
-    public class AddDocumentCommandTest : CommandRequiredSubjectTest<AddDocumentCommand>
+    public class DeleteDocumentCommandTest : CommandRequiredSubjectTest<DeleteDocumentCommand>
     {
         [Fact]
-        public async Task GetActionType_Void_ReturnsAddDocumentActionType()
+        public async Task GetActionType_Void_ReturnsDeleteDocumentActionType()
         {
-            await GetActionType_Void_ReturnsActionType(ActionType.AddDocument);
+            await GetActionType_Void_ReturnsActionType(ActionType.DeleteDocument);
         }
 
         [Fact]
         public void Validate_InvalidModifiers_ReturnsInvalidValidationResult()
         {
-            Validate_InvalidModifiers_ReturnsInvalidValidationResult(CommandType.DeleteDocument, new Modifier { Name = "decrypt" });
+            Validate_InvalidModifiers_ReturnsInvalidValidationResult(CommandType.DeleteDocument, new Modifier {Name = "encrypt" });
         }
 
         [Theory]

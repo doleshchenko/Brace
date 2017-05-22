@@ -50,6 +50,7 @@ namespace Brace.UnitTests.DomainModel.DocumentProcessing.Decorator
                 yield return new object[] { DocumentProcessingResultType.AddFailed };
                 yield return new object[] { DocumentProcessingResultType.UpdateFailed };
                 yield return new object[] { DocumentProcessingResultType.DeleteFailed };
+                yield return new object[] { DocumentProcessingResultType.GetFailed };
             }
         }
     }

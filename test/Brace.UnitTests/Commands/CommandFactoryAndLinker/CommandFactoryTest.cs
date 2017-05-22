@@ -7,7 +7,7 @@ using Brace.DomainService.TypeLinker;
 using Moq;
 using Xunit;
 
-namespace Brace.UnitTests.Commands
+namespace Brace.UnitTests.Commands.CommandFactoryAndLinker
 {
     public class CommandFactoryTest
     {
@@ -15,7 +15,7 @@ namespace Brace.UnitTests.Commands
         public void CreateCommand_ValidCommandName_CreatesCommand()
         {
             var command = "test";
-            var subject = new DocumentName {Id = "subject"};
+            var subject = new DocumentIdSubject {Id = "subject"};
             var modifiers = new[]
             {
                 new Modifier {Name = "1"}, new Modifier {Name = "2"}, new Modifier {Name = "3"}
@@ -44,7 +44,7 @@ namespace Brace.UnitTests.Commands
         public void CreateCommand_InvalidCommandName_CreatesUnknownCommand()
         {
             var command = "someunknowncommand";
-            var subject = new DocumentName { Id = "subject" };
+            var subject = new DocumentIdSubject { Id = "subject" };
             var modifiers = new[]
             {
                 new Modifier {Name = "1"}, new Modifier {Name = "2"}, new Modifier {Name = "3"}

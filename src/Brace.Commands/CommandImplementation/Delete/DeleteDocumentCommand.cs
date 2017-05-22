@@ -3,12 +3,12 @@ using Brace.DomainModel.Command.Subjects;
 using Brace.DomainModel.DocumentProcessing;
 using Brace.DomainService.DocumentProcessor;
 
-namespace Brace.Commands.CommandImplementation.Add
+namespace Brace.Commands.CommandImplementation.Delete
 {
-    [Command(CommandType.AddDocument, AssociatedArchivists = new[] {ArchivistType.Encrypt, ArchivistType.MakeInvisible})]
-    public class AddDocumentCommand : CommandBase
+    [Command(CommandType.DeleteDocument, AssociatedArchivists = new ArchivistType[0])]
+    public class DeleteDocumentCommand : CommandBase
     {
-        public AddDocumentCommand(IDocumentProcessor documentProcessor) : base(documentProcessor)
+        public DeleteDocumentCommand(IDocumentProcessor documentProcessor) : base(documentProcessor)
         {
         }
 
@@ -30,7 +30,7 @@ namespace Brace.Commands.CommandImplementation.Add
 
         protected override ActionType GetActionType()
         {
-            return ActionType.AddDocument;
+            return ActionType.DeleteDocument;
         }
     }
 }

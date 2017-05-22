@@ -1,6 +1,6 @@
 ﻿namespace Brace.DomainModel.Command.Subjects
 {
-    public class NewDocument : DocumentName
+    public class AddDocumentSubject : DocumentIdSubject
     {
         public string Content { get; set; }
     }

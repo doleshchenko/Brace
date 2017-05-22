@@ -6,6 +6,8 @@
         Void,
         GetContent,
         Enumerate,
-        AddDocument
+        AddDocument,
+        UpdateDocument,
+        DeleteDocument
     }
 }

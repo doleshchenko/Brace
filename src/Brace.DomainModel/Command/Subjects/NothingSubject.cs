@@ -1,8 +1,8 @@
 ﻿namespace Brace.DomainModel.Command.Subjects
 {
-    public class Nothing: Subject
+    public class NothingSubject: Subject
     {
-        internal Nothing()
+        internal NothingSubject()
         {
             Id = string.Empty;
         }

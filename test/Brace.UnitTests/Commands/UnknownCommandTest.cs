@@ -18,7 +18,7 @@ namespace Brace.UnitTests.Commands
             var unknowCommand = new UnknowCommand();
             var afterCommandCreated = DateTime.Now;
             var command = "someunknowncommand";
-            var subject = new DocumentName {Id = "subject"};
+            var subject = new DocumentIdSubject {Id = "subject"};
             var modifiers = new[] { new Modifier { Name = "1" }, new Modifier { Name = "2" }, new Modifier { Name = "3" } };
             unknowCommand.SetParameters(command, subject, modifiers);
             var result = await unknowCommand.ExecuteAsync();

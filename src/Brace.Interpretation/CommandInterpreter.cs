@@ -100,12 +100,12 @@ namespace Brace.Interpretation
                         }
                     }
                     subject = hasContent
-                        ? new NewDocument {Id = documentName, Content = documentContent}
-                        : new DocumentName {Id = documentName};
+                        ? new AddDocumentSubject {Id = documentName, Content = documentContent}
+                        : new DocumentIdSubject {Id = documentName};
                 }
                 catch
                 {
-                    subject = new DocumentName {Id = subjectMatch[0].Value.Trim('{', '}')};
+                    subject = new DocumentIdSubject {Id = subjectMatch[0].Value.Trim('{', '}')};
                 }
             }
             return subject;

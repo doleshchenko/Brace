@@ -27,9 +27,9 @@ namespace Brace.DocumentProcessor.Strategies
             var document = await _documentRepository.FindDocumentAsync(subject.Id);
             if (document == null)
             {
-                return new DocumentView<DocumentPlainContent>
+                return new DocumentView<DocumentProcessingResultContent>
                 {
-                    Content = new DocumentPlainContent {PlainText = $"document '{subject.Id}' not found"},
+                    Content = new DocumentProcessingResultContent {ProcessingResultType = DocumentProcessingResultType.GetFailed, Description = $"Document '{subject.Id}' not found."},
                     Type = DocumentViewType.Warning
                 };
             }

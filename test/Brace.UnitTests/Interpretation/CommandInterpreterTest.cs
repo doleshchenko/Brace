@@ -111,9 +111,9 @@ namespace Brace.UnitTests.Interpretation
         {
             var sentece = "add {\"name\": \"mydocument\", \"content\": \"document content\"}";
             var interpretation = _commandInterpreter.Interpret(sentece);
-            Assert.IsType<NewDocument>(interpretation.Subject);
-            Assert.Equal("mydocument", ((NewDocument)interpretation.Subject).Id);
-            Assert.Equal("document content", ((NewDocument)interpretation.Subject).Content);
+            Assert.IsType<AddDocumentSubject>(interpretation.Subject);
+            Assert.Equal("mydocument", ((AddDocumentSubject)interpretation.Subject).Id);
+            Assert.Equal("document content", ((AddDocumentSubject)interpretation.Subject).Content);
         }
 
         [Fact]
@@ -121,9 +121,9 @@ namespace Brace.UnitTests.Interpretation
         {
             var sentece = "add {\"name\": \"mydocument\", \"content\": \"\"}";
             var interpretation = _commandInterpreter.Interpret(sentece);
-            Assert.IsType<NewDocument>(interpretation.Subject);
-            Assert.Equal("mydocument", ((NewDocument)interpretation.Subject).Id);
-            Assert.Equal(string.Empty, ((NewDocument)interpretation.Subject).Content);
+            Assert.IsType<AddDocumentSubject>(interpretation.Subject);
+            Assert.Equal("mydocument", ((AddDocumentSubject)interpretation.Subject).Id);
+            Assert.Equal(string.Empty, ((AddDocumentSubject)interpretation.Subject).Content);
         }
 
         [Fact]
@@ -131,8 +131,8 @@ namespace Brace.UnitTests.Interpretation
         {
             var sentece = "getcontent {mydocument}";
             var interpretation = _commandInterpreter.Interpret(sentece);
-            Assert.IsType<DocumentName>(interpretation.Subject);
-            Assert.Equal("mydocument", ((DocumentName)interpretation.Subject).Id);
+            Assert.IsType<DocumentIdSubject>(interpretation.Subject);
+            Assert.Equal("mydocument", ((DocumentIdSubject)interpretation.Subject).Id);
         }
 
         [Fact]

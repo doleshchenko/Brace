@@ -33,7 +33,7 @@ namespace Brace.UnitTests.Commands
             {
                 new Modifier {Name = "1"}, new Modifier {Name = "2"}, new Modifier {Name = "3"}
             };
-            var commandSubject = new DocumentName {Id = "subject"};
+            var commandSubject = new DocumentIdSubject {Id = "subject"};
 
             command.SetParameters(commandText, commandSubject, modifiers);
 
@@ -52,7 +52,7 @@ namespace Brace.UnitTests.Commands
             {
                 new Modifier {Name = "1"}, new Modifier {Name = "2"}, new Modifier {Name = "3"}
             };
-            var commandSubject = new DocumentName { Id = "subject" };
+            var commandSubject = new DocumentIdSubject { Id = "subject" };
 
             command.SetParameters(commandText, commandSubject, modifiers);
             await command.ExecuteAsync();
@@ -73,7 +73,7 @@ namespace Brace.UnitTests.Commands
             var documentProcessorStub = new Mock<IDocumentProcessor>();
             var command = new CommandForTest(documentProcessorStub.Object);
             var commandText = "print";
-            var commandSubject = new DocumentName {Id = "test"};
+            var commandSubject = new DocumentIdSubject {Id = "test"};
             var modifiers = new[] { new Modifier { Name = "decrypt" }};
 
             command.SetParameters(commandText, commandSubject, modifiers);
@@ -88,7 +88,7 @@ namespace Brace.UnitTests.Commands
             var documentProcessorStub = new Mock<IDocumentProcessor>();
             var command = new CommandForTest(documentProcessorStub.Object);
             var commandText = CommandType.GetContent.ToString();
-            var commandSubject = new DocumentName { Id = "test" };
+            var commandSubject = new DocumentIdSubject { Id = "test" };
             var modifiers = new[] { new Modifier { Name = "decrypt" }, new Modifier { Name = "encrypt" } };
 
             command.SetParameters(commandText, commandSubject, modifiers);
@@ -103,7 +103,7 @@ namespace Brace.UnitTests.Commands
             var documentProcessorStub = new Mock<IDocumentProcessor>();
             var command = new CommandForTest(documentProcessorStub.Object);
             var commandText = "print";
-            var commandSubject = new DocumentName { Id = "test" };
+            var commandSubject = new DocumentIdSubject { Id = "test" };
             var modifiers = new[] { new Modifier { Name = "decrypt" }, new Modifier { Name = "decrypt" } };
 
             command.SetParameters(commandText, commandSubject, modifiers);

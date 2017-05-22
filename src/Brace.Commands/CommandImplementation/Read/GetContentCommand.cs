@@ -23,7 +23,7 @@ namespace Brace.Commands.CommandImplementation.Read
             if (Subject.IsNullOrNothing(Subject))
             {
                 validationResult.IsValid = false;
-                validationResult.ValidationMessage = "Invalid command subject: document name can't be empty";
+                validationResult.ValidationMessage = "Invalid command subject: it's null or empty.";
             }
             return validationResult;
         }
