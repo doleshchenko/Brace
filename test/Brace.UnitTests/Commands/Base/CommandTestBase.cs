@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Brace.Commands;
-using Brace.Commands.CommandImplementation.Delete;
 using Brace.DomainModel.Command;
 using Brace.DomainModel.Command.Subjects;
 using Brace.DomainModel.DocumentProcessing;
@@ -31,7 +30,7 @@ namespace Brace.UnitTests.Commands.Base
         protected void Validate_InvalidModifiers_ReturnsInvalidValidationResult(CommandType commandType, Modifier modifier)
         {
             var documentProcessorStub = Mock.Of<IDocumentProcessor>();
-            var command = new DeleteDocumentCommand(documentProcessorStub);
+            var command = (TCommand)Activator.CreateInstance(typeof(TCommand), documentProcessorStub);
             var commandText = CommandType.GetContent.ToString();
             var subject = new DocumentIdSubject { Id = $"{typeof(TCommand).Name} document" };
             command.SetParameters(commandText, subject, new[] {modifier});

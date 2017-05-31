@@ -11,6 +11,10 @@ namespace Brace.DocumentProcessor.Strategies.Archivists
         private readonly ICryptography _cryptography;
         private readonly ICryptographyRepository _cryptographyRepository;
 
+        public EncryptArchivist()
+        {
+        }
+
         public EncryptArchivist(ICryptography cryptography, ICryptographyRepository cryptographyRepository)
         {
             _cryptography = cryptography;
@@ -31,6 +35,7 @@ namespace Brace.DocumentProcessor.Strategies.Archivists
                     };
                     _cryptographyRepository.Add(cryptography);
                     document.Content = Convert.ToBase64String(encryptedData.CipherText);
+                    document.IsProtected = true;
                 }
             }
             if (_successor != null)

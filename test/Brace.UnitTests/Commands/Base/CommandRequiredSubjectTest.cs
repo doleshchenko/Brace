@@ -10,6 +10,7 @@ namespace Brace.UnitTests.Commands.Base
 {
     public abstract class CommandRequiredSubjectTest<TCommand>: CommandTestBase<TCommand> where TCommand : CommandBase
     {
+        private static readonly object _syncRoot = new object();
         protected void Validate_NullOrEmptySubject_ReturnsInvalidValidationResult(Subject subject)
         {
             var documentProcessorStub = Mock.Of<IDocumentProcessor>();
@@ -20,6 +21,15 @@ namespace Brace.UnitTests.Commands.Base
             Assert.Equal("Invalid command subject: it's null or empty.", validationResult.ValidationMessage);
         }
 
-        public static IEnumerable<object[]> NullAndEmptySubject => new[] {new object[] {null}, new object[] {Subject.Nothing}};
+        public static IEnumerable<object[]> NullAndEmptySubject
+        {
+            get
+            {
+                lock (_syncRoot)
+                {
+                    return new[] {new object[] {null}, new object[] {Subject.Nothing}};
+                }
+            }
+        }
     }
 }

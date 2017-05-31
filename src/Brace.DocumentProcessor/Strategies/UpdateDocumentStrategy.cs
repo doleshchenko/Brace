@@ -32,7 +32,7 @@ namespace Brace.DocumentProcessor.Strategies
                 {
                     return new DocumentView<DocumentProcessingResultContent>
                     {
-                        Content = new DocumentProcessingResultContent { ProcessingResultType = DocumentProcessingResultType.UpdateFailed, Description = $"document '{subject.Id}' not found" },
+                        Content = new DocumentProcessingResultContent { ProcessingResultType = DocumentProcessingResultType.UpdateFailed, Description = $"Document '{subject.Id}' not found." },
                         Type = DocumentViewType.Warning
                     };
                 }

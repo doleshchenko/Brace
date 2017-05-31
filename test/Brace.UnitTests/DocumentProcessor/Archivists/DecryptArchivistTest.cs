@@ -3,7 +3,6 @@ using System.Linq;
 using Brace.DocumentProcessor.Strategies.Archivists;
 using Brace.DomainModel.Cryptography;
 using Brace.DomainModel.DocumentProcessing;
-using Brace.DomainService.DocumentProcessor;
 using Brace.Repository.Interface;
 using Moq;
 using Xunit;

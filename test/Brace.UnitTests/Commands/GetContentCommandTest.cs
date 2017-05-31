@@ -20,7 +20,7 @@ namespace Brace.UnitTests.Commands
         [Fact]
         public void Validate_InvalidModifiers_ReturnsInvalidValidationResult()
         {
-            Validate_InvalidModifiers_ReturnsInvalidValidationResult(CommandType.DeleteDocument, new Modifier { Name = "encrypt" });
+            Validate_InvalidModifiers_ReturnsInvalidValidationResult(CommandType.GetContent, new Modifier { Name = "encrypt" });
         }
 
         [Theory]

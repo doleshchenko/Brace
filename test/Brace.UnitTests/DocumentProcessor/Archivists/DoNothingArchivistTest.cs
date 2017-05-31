@@ -1,6 +1,5 @@
 ﻿using Brace.DocumentProcessor.Strategies.Archivists;
 using Brace.DomainModel.DocumentProcessing;
-using Brace.DomainService.DocumentProcessor;
 using Moq;
 using Xunit;
 
