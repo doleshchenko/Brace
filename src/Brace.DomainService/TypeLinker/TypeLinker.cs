@@ -32,13 +32,18 @@ namespace Brace.DomainService.TypeLinker
             }
 
             var allPossibleActions = Enum.GetValues(typeof(TKey)).Cast<TKey>().ToArray();
+            ValidateLinksConfiguration(allPossibleActions);
+        }
+
+        protected virtual void ValidateLinksConfiguration(TKey[] allPossibleActions)
+        {
             if (_links.Count != allPossibleActions.Length)
             {
                 throw new LinkerException("Type Links configured incorrectly. Cannot find Types for the all Keys.");
             }
         }
 
-        protected Type GetLinkedTypeByKey(TKey key)
+        protected virtual Type GetLinkedTypeByKey(TKey key)
         {
             return _links[key];
         }
