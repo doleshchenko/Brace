@@ -1,9 +1,13 @@
 ﻿using System;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Brace.Identity;
+using Brace.Identity.Data;
 using Brace.Repository.EntityMapping;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -35,6 +39,13 @@ namespace Brace
             services.AddMvc();
             // Add other framework services
 
+            services.AddDbContext<BraceIdentityDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<BraceIdentityDbContext>()
+                .AddDefaultTokenProviders();
+
             // Add Autofac
             var containerBuilder = new ContainerBuilder();
             containerBuilder.RegisterModule<DefaultModule>();
@@ -52,6 +63,7 @@ namespace Brace
 
             app.UseMvc();
             app.UseStaticFiles();
+            app.UseIdentity();
 
             //add NLog.Web
             app.AddNLogWeb();
